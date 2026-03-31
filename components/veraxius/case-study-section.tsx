@@ -324,7 +324,7 @@ export function CaseStudySection() {
             {/* Column A */}
             <div>
               <p
-                className="font-dm-mono text-[14px] uppercase mb-4 text-center"
+                className="font-dm-mono text-[14px] uppercase mb-4 max-w-[620px] mx-auto text-left"
                 style={{ letterSpacing: "0.18em", color: "var(--red)", textShadow: "0 0 10px rgba(255,107,87,0.2)" }}
               >
                 Where this breaks today
@@ -351,7 +351,7 @@ export function CaseStudySection() {
             {/* Column B */}
             <div>
               <p
-                className="font-dm-mono text-[14px] uppercase mb-4 text-center"
+                className="font-dm-mono text-[14px] uppercase mb-4 max-w-[560px] mx-auto text-left"
                 style={{ letterSpacing: "0.18em", color: "var(--amber)", textShadow: "0 0 10px rgba(255,185,0,0.2)" }}
               >
                 What Veraxius changes
