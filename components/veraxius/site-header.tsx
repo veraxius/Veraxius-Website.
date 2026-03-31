@@ -20,7 +20,7 @@ export function SiteHeader() {
         {/* Logo */}
         <a href="#" aria-label="Veraxius home" className="flex items-center">
           <Image
-            src="/Veraxius Logo FINAL FINAL Horizontal Version-02.png"
+            src="/Veraxius Logo FINAL FINAL 2 Horizontal Version-02.png"
             alt="Veraxius"
             width={180}
             height={36}
