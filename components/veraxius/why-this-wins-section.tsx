@@ -164,7 +164,12 @@ export function WhyThisWinsSection() {
                   {/* Number */}
                   <span
                     className="font-dm-mono text-[11px] mt-[3px]"
-                    style={{ color: "var(--amber)", opacity: 0.6, flexShrink: 0, letterSpacing: "0.1em" }}
+                    style={{
+                      color: "var(--amber)",
+                      textShadow: "0 0 16px rgba(255,185,0,0.18)",
+                      flexShrink: 0,
+                      letterSpacing: "0.1em",
+                    }}
                   >
                     {pillar.number}
                   </span>
@@ -173,7 +178,12 @@ export function WhyThisWinsSection() {
                   <div>
                     <p
                       className="font-syne font-bold"
-                      style={{ fontSize: "15px", color: "var(--text-primary)", letterSpacing: "-0.01em" }}
+                      style={{
+                        fontSize: "15px",
+                        color: "var(--amber)",
+                        textShadow: "0 0 16px rgba(255,185,0,0.18)",
+                        letterSpacing: "-0.01em",
+                      }}
                     >
                       {pillar.title}
                     </p>

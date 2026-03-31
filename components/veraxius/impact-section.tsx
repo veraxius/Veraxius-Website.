@@ -6,14 +6,14 @@ import { useRef } from "react";
 const useCases = [
   {
     icon: "○",
-    verb: "Hire",
+    verb: "Decide",
     headline: "based on behavior, not presentation.",
     bullets: [
       "See who finishes what they start",
-      "Detect gaps before the offer",
-      "Reduce costly mis-hires",
+      "Detect gaps before commitment",
+      "Reduce costly wrong decisions",
     ],
-    subline: "Reduce hiring risk",
+    subline: "REDUCE DECISION RISK",
   },
   {
     icon: "◎",
@@ -70,7 +70,7 @@ export function ImpactSection() {
           className="font-dm-mono text-[11px] uppercase text-center"
           style={{ letterSpacing: "0.18em", color: "var(--amber)" }}
         >
-          USE CASES
+          APPLICATIONS
         </motion.div>
 
         {/* Headline */}
@@ -132,7 +132,12 @@ export function ImpactSection() {
               {/* Headline */}
               <h3
                 className="font-syne font-bold"
-                style={{ fontSize: "18px", lineHeight: "1.35", color: "var(--text-primary)" }}
+                style={{
+                  fontSize: "18px",
+                  lineHeight: "1.35",
+                  color: "var(--text-primary)",
+                  whiteSpace: card.verb === "Decide" ? "nowrap" : "normal",
+                }}
               >
                 <span
                   style={{

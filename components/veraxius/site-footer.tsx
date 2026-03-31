@@ -81,9 +81,9 @@ export function SiteFooter() {
           {/* Copyright */}
           <p
             className="font-dm-mono text-[11px]"
-            style={{ color: "var(--text-disabled)", letterSpacing: "0.06em" }}
+            style={{ color: "var(--text-secondary)", letterSpacing: "0.06em" }}
           >
-            © 2025 Veraxius. All rights reserved.
+            © 2026 Veraxius. All rights reserved.
           </p>
 
           {/* Footer CTA */}

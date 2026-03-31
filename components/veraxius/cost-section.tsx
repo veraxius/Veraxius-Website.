@@ -86,13 +86,13 @@ export function CostSection() {
             className="mt-10"
           >
             <p
-              className="font-dm-mono text-[13px]"
+              className="font-dm-mono text-[14px]"
               style={{ color: "var(--amber)", letterSpacing: "0.06em" }}
             >
               This is not occasional.
             </p>
             <p
-              className="font-dm-mono text-[13px] mt-1"
+              className="font-dm-mono text-[14px] mt-1"
               style={{ color: "var(--amber)", letterSpacing: "0.06em" }}
             >
               This is continuous.
@@ -127,7 +127,7 @@ export function CostSection() {
               {/* Visible */}
               <div>
                 <p
-                  className="font-dm-mono text-[10px] uppercase mb-3 text-center"
+                  className="font-dm-mono text-[12px] uppercase mb-3 text-center"
                   style={{ letterSpacing: "0.16em", color: "var(--amber)" }}
                 >
                   Visible:
@@ -137,7 +137,7 @@ export function CostSection() {
                     <li
                       key={i}
                       className="flex items-start gap-2 font-dm-sans"
-                      style={{ fontSize: "14px", lineHeight: "1.55", color: "var(--text-tertiary)" }}
+                      style={{ fontSize: "16px", lineHeight: "1.55", color: "var(--text-tertiary)" }}
                     >
                       <span style={{ color: "var(--red)", opacity: 0.7, flexShrink: 0, fontSize: "10px", marginTop: "4px" }}>▸</span>
                       {line}
@@ -149,7 +149,7 @@ export function CostSection() {
               {/* Invisible */}
               <div>
                 <p
-                  className="font-dm-mono text-[10px] uppercase mb-3 text-center"
+                  className="font-dm-mono text-[12px] uppercase mb-3 text-center"
                   style={{ letterSpacing: "0.16em", color: "var(--amber)" }}
                 >
                   Invisible:
@@ -159,7 +159,7 @@ export function CostSection() {
                     <li
                       key={i}
                       className="flex items-start gap-2 font-dm-sans"
-                      style={{ fontSize: "14px", lineHeight: "1.55", color: "var(--text-tertiary)" }}
+                      style={{ fontSize: "16px", lineHeight: "1.55", color: "var(--text-tertiary)" }}
                     >
                       <span style={{ color: "var(--text-disabled)", opacity: 0.6, flexShrink: 0, fontSize: "10px", marginTop: "4px" }}>▸</span>
                       {line}
@@ -213,13 +213,13 @@ export function CostSection() {
           >
             <div className="h-px w-8 mx-auto mb-6" style={{ background: "var(--divider)" }} />
             <p
-              className="font-dm-mono text-[12px]"
+              className="font-dm-mono text-[14px]"
               style={{ color: "var(--amber)", letterSpacing: "0.06em", lineHeight: "1.8" }}
             >
               The question is not whether you are paying.
             </p>
             <p
-              className="font-dm-mono text-[12px]"
+              className="font-dm-mono text-[14px]"
               style={{ color: "var(--text-secondary)", letterSpacing: "0.06em" }}
             >
               It is how much you are{" "}

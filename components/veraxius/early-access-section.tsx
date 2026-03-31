@@ -111,7 +111,7 @@ export function EarlyAccessSection() {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.24 }}
             className="font-dm-mono text-[11px] mt-5"
-            style={{ letterSpacing: "0.06em", color: "var(--text-disabled)" }}
+            style={{ letterSpacing: "0.06em", color: "var(--text-secondary)" }}
           >
             We are onboarding a small number of high-signal teams.
           </motion.p>
@@ -145,13 +145,13 @@ export function EarlyAccessSection() {
           >
             <span
               className="font-dm-mono text-[10px] uppercase mr-2"
-              style={{ letterSpacing: "0.14em", color: "var(--text-disabled)" }}
+              style={{ letterSpacing: "0.14em", color: "var(--text-secondary)" }}
             >
               Built for:
             </span>
             {targets.map((t, i) => (
               <span key={t} className="flex items-center">
-                <span className="font-dm-mono text-[11px]" style={{ color: "var(--amber)", opacity: 0.55 }}>{t}</span>
+                <span className="font-dm-mono text-[11px]" style={{ color: "var(--amber)", opacity: 1 }}>{t}</span>
                 {i < targets.length - 1 && (
                   <span className="mx-2 font-dm-mono text-[10px]" style={{ color: "var(--divider)" }}>•</span>
                 )}
@@ -256,13 +256,13 @@ export function EarlyAccessSection() {
           >
             <p
               className="font-dm-mono text-[11px]"
-              style={{ color: "var(--text-disabled)", letterSpacing: "0.06em", lineHeight: "1.8" }}
+              style={{ color: "var(--text-secondary)", letterSpacing: "0.06em", lineHeight: "1.8" }}
             >
               We review every request.
             </p>
             <p
               className="font-dm-mono text-[11px]"
-              style={{ color: "var(--text-disabled)", letterSpacing: "0.06em" }}
+              style={{ color: "var(--text-secondary)", letterSpacing: "0.06em" }}
             >
               Access is limited.
             </p>
@@ -279,7 +279,7 @@ export function EarlyAccessSection() {
               <span
                 key={i}
                 className="font-dm-mono text-[10px] uppercase"
-                style={{ letterSpacing: "0.12em", color: "var(--text-disabled)", opacity: 0.6 }}
+                style={{ letterSpacing: "0.12em", color: "var(--text-secondary)", opacity: 0.9 }}
               >
                 {i > 0 && <span className="mr-4" style={{ color: "var(--divider)" }}>·</span>}
                 {label}

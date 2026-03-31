@@ -216,15 +216,15 @@ export function IntegrationSection() {
               <span
                 className="font-dm-mono text-[10px]"
                 style={{
-                  color: label === "Decision Layer" ? "var(--amber)" : "var(--text-disabled)",
+                  color: label === "Decision Layer" ? "var(--amber)" : "var(--text-secondary)",
                   letterSpacing: "0.1em",
-                  opacity: label === "Decision Layer" ? 1 : 0.6,
+                  opacity: label === "Decision Layer" ? 1 : 0.85,
                 }}
               >
                 {label}
               </span>
               {i < 2 && (
-                <span className="font-dm-mono text-[10px]" style={{ color: "var(--text-disabled)", opacity: 0.4 }}>
+                <span className="font-dm-mono text-[10px]" style={{ color: "var(--text-secondary)", opacity: 0.75 }}>
                   →
                 </span>
               )}
@@ -241,7 +241,7 @@ export function IntegrationSection() {
         >
           <span
             className="font-dm-mono text-[11px] mr-2"
-            style={{ color: "var(--text-disabled)", letterSpacing: "0.12em", textTransform: "uppercase" }}
+            style={{ color: "var(--text-secondary)", letterSpacing: "0.12em", textTransform: "uppercase" }}
           >
             Used across:
           </span>
@@ -249,7 +249,7 @@ export function IntegrationSection() {
             <span key={index} className="flex items-center">
               <span
                 className="font-dm-mono text-[12px]"
-                style={{ color: "var(--amber)", opacity: 0.55 }}
+                style={{ color: "var(--amber)", opacity: 1 }}
               >
                 {useCase}
               </span>
