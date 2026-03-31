@@ -128,15 +128,14 @@ export function SystemPreviewSection() {
                   style={{
                     letterSpacing: "0.14em",
                     color: activeTab === tab ? "var(--text-primary)" : "var(--text-disabled)",
+                    borderTop: "none",
+                    borderLeft: "none",
+                    borderRight: "none",
                     borderBottom: activeTab === tab
                       ? `1px solid ${tab === "before" ? "var(--text-secondary)" : "var(--amber)"}`
                       : "1px solid transparent",
                     marginBottom: "-1px",
                     background: "none",
-                    border: "none",
-                    borderBottom: activeTab === tab
-                      ? `1px solid ${tab === "before" ? "var(--text-secondary)" : "var(--amber)"}`
-                      : "1px solid transparent",
                     cursor: "pointer",
                     padding: "0 20px 10px 0",
                   }}
