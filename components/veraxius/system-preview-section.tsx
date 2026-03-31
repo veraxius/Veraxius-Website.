@@ -100,12 +100,11 @@ export function SystemPreviewSection() {
               </span>
               <div className="flex items-center gap-2">
                 <div
-                  className="w-2 h-2 rounded-full"
+                  className={isBefore ? "w-2 h-2 rounded-full" : "w-2 h-2 rounded-full vx-pulse"}
                   style={{
                     backgroundColor: isBefore ? "var(--text-disabled)" : "var(--green)",
                     boxShadow: isBefore ? "none" : undefined,
                   }}
-                  className={isBefore ? "w-2 h-2 rounded-full" : "w-2 h-2 rounded-full vx-pulse"}
                 />
                 <span
                   className="font-dm-mono text-[10px] uppercase"
