@@ -22,7 +22,7 @@ export function EarlyAccessForm() {
     setStatus("loading");
     setFeedback("");
     try {
-      const res = await fetch("/api/early-access", {
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form)
