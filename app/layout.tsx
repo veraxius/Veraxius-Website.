@@ -26,6 +26,10 @@ const dmMono = DM_Mono({
 export const metadata: Metadata = {
   title: "Veraxius | Integrity Infrastructure",
   description: "Veraxius replaces assumption with measurable integrity. Integrity Infrastructure for an AI-saturated world.",
+  icons: {
+    icon: "/Veraxius Favicon FINAL-01.ico",
+    shortcut: "/Veraxius Favicon FINAL-01.ico",
+  },
 };
 
 export default function RootLayout({
