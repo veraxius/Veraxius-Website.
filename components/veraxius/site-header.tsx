@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 export function SiteHeader() {
   return (
@@ -17,18 +18,15 @@ export function SiteHeader() {
     >
       <div className="vx-container flex items-center justify-between py-4">
         {/* Logo */}
-        <a
-          href="#"
-          className="font-syne font-extrabold text-lg tracking-logo uppercase text-[var(--text-primary)]"
-          style={{ letterSpacing: "0.12em" }}
-        >
-          {"VERA".split("").map((char, i) => (
-            <span key={i}>{char}</span>
-          ))}
-          <span className="text-[var(--amber)]">X</span>
-          {"IUS".split("").map((char, i) => (
-            <span key={i}>{char}</span>
-          ))}
+        <a href="#" aria-label="Veraxius home" className="flex items-center">
+          <Image
+            src="/Veraxius Logo Horizontal Version-02.png"
+            alt="Veraxius"
+            width={180}
+            height={36}
+            priority
+            style={{ height: "36px", width: "auto" }}
+          />
         </a>
 
         {/* CTA Button */}

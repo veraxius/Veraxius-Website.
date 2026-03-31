@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useInView } from "framer-motion";
+import Image from "next/image";
 import { useRef } from "react";
 
 export function SiteFooter() {
@@ -64,18 +65,15 @@ export function SiteFooter() {
           style={{ borderTop: "1px solid var(--divider)" }}
         >
           {/* Logo */}
-          <a
-            href="#"
-            className="font-syne font-extrabold text-lg uppercase"
-            style={{ letterSpacing: "0.12em", color: "var(--text-primary)" }}
-          >
-            {"VERA".split("").map((char, i) => (
-              <span key={i}>{char}</span>
-            ))}
-            <span style={{ color: "var(--amber)" }}>X</span>
-            {"IUS".split("").map((char, i) => (
-              <span key={i}>{char}</span>
-            ))}
+          <a href="#" aria-label="Veraxius home" className="flex items-center">
+            <Image
+              src="/Veraxius Logo Horizontal Version-02.png"
+              alt="Veraxius"
+              width={200}
+              height={40}
+              priority
+              style={{ height: "40px", width: "auto" }}
+            />
           </a>
 
           {/* Copyright */}
