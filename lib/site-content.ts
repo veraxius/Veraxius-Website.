@@ -10,19 +10,19 @@ export const siteContent = {
   breakdown: {
     headline: "The system is already failing.",
     points: [
-      "Bad hires are scaling.",
-      "Perception replaces reality.",
-      "Noise is mistaken for signal."
+      "Resumes are optimized, not truthful.",
+      "Reputation is curated, not proven.",
+      "Data is abundant. Validation is missing."
     ],
     closeA: "The loudest wins, not the most accurate. It amplified it to a breaking point.",
     closeB: "High-stakes decisions are now being made on low-integrity inputs. That is no longer sustainable"
   },
   numbers: {
-    headline: "The cost of bad signals is measurable.",
+    headline: "The cost of broken signals is exponential.",
     stats: [
-      { value: "30%", label: "of annual salary lost on a bad hire" },
-      { value: "9.8%", label: "lost to fraud in U.S. businesses" },
-      { value: "60%+", label: "of business leaders lack confidence in hiring decisions" }
+      { value: "70%", label: "more likely to spread than truth" },
+      { value: "6x", label: "Faster spread than verified information" },
+      { value: "70%", label: "of leaders say fraud risk is underestimated" }
     ],
     close: "The problem is not lack of data. It is lack of integrity in that data."
   },

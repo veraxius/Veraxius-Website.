@@ -90,7 +90,8 @@ export function HeroSection() {
               color: "var(--text-primary)",
             }}
           >
-            Every decision today runs on unverified signals. That is now a risk.
+            Every decision today runs on unverified signals.{" "}
+            <span style={{ color: "var(--amber)" }}>That is now a risk.</span>
           </motion.h1>
 
           {/* Subheadline */}
