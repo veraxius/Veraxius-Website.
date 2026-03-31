@@ -3,12 +3,13 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 
-const participantTypes = [
-  "HR Tech Platforms",
-  "Investment Funds",
-  "Enterprise Hiring",
-  "Verification Providers",
+const benefits = [
+  "Direct integration support",
+  "Priority API access",
+  "Influence on system design",
 ];
+
+const targets = ["HR Tech", "Investment Funds", "Enterprise Hiring", "Verification Platforms"];
 
 export function EarlyAccessSection() {
   const sectionRef = useRef(null);
@@ -16,32 +17,27 @@ export function EarlyAccessSection() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
+  const [focused, setFocused] = useState(false);
 
-  const isValidEmail = (email: string) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  };
+  const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!isValidEmail(email)) {
       setStatus("error");
       setMessage("Please enter a valid email address.");
       return;
     }
-
     setStatus("submitting");
-
     try {
       const response = await fetch("/api/early-access", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, name: "" }),
       });
-
       if (response.ok) {
         setStatus("success");
-        setMessage("You're on the list.");
+        setMessage("Application received. We will be in touch.");
       } else {
         throw new Error("Failed to submit");
       }
@@ -56,128 +52,187 @@ export function EarlyAccessSection() {
       ref={sectionRef}
       id="early-access"
       className="vx-section"
-      style={{
-        backgroundColor: "var(--bg-secondary)",
-      }}
+      style={{ backgroundColor: "var(--bg-secondary)" }}
     >
       <div className="vx-container">
-        <div className="max-w-[800px] mx-auto text-center">
+        <div className="max-w-[600px] mx-auto text-center">
+
           {/* Eyebrow */}
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-            className="font-dm-mono text-[11px] tracking-eyebrow uppercase"
-            style={{
-              letterSpacing: "0.18em",
-              color: "var(--amber)",
-            }}
+            transition={{ duration: 0.5 }}
+            className="font-dm-mono text-[11px] uppercase"
+            style={{ letterSpacing: "0.18em", color: "var(--amber)" }}
           >
             LIMITED ACCESS
           </motion.div>
 
           {/* Headline */}
           <motion.h2
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
+            transition={{ duration: 0.6, delay: 0.08, ease: [0.25, 0.1, 0.25, 1] }}
             className="font-syne font-extrabold mt-4"
             style={{
-              fontSize: "clamp(32px, 4vw, 52px)",
+              fontSize: "clamp(28px, 4vw, 48px)",
               lineHeight: "1.1",
               color: "var(--text-primary)",
+              letterSpacing: "-0.02em",
             }}
           >
             Access the layer before it becomes standard.
           </motion.h2>
 
-          {/* Body */}
-          <motion.p
-            initial={{ opacity: 0, y: 24 }}
+          {/* Subline */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
-            className="font-dm-sans mt-6 max-w-xl mx-auto"
-            style={{
-              fontSize: "17px",
-              lineHeight: "1.65",
-              color: "var(--text-secondary)",
-            }}
+            transition={{ duration: 0.5, delay: 0.16 }}
+            className="mt-5"
           >
-            Early access includes direct implementation support, API credits,
-            and influence over product development. We are selective—we
-            prioritize high-signal integrations over volume.
+            <p
+              className="font-syne font-semibold"
+              style={{ fontSize: "clamp(15px, 1.6vw, 18px)", color: "var(--text-secondary)", lineHeight: "1.4" }}
+            >
+              Early partners shape the system.
+            </p>
+            <p
+              className="font-syne font-semibold"
+              style={{ fontSize: "clamp(15px, 1.6vw, 18px)", color: "var(--text-tertiary)", lineHeight: "1.4" }}
+            >
+              Late adopters adapt to it.
+            </p>
+          </motion.div>
+
+          {/* "Small number of high-signal teams" */}
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.24 }}
+            className="font-dm-mono text-[11px] mt-5"
+            style={{ letterSpacing: "0.06em", color: "var(--text-disabled)" }}
+          >
+            We are onboarding a small number of high-signal teams.
           </motion.p>
 
-          {/* Participant Types */}
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
+          {/* Benefits */}
+          <motion.ul
+            initial={{ opacity: 0, y: 12 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
-            className="mt-10 flex flex-wrap justify-center gap-4"
+            transition={{ duration: 0.5, delay: 0.32 }}
+            className="mt-8 space-y-2 inline-block text-left"
+            style={{ listStyle: "none", padding: 0 }}
           >
-            {participantTypes.map((type, index) => (
-              <div key={index} className="flex items-center gap-2">
-                <span
-                  className="font-dm-mono text-lg"
-                  style={{ color: "var(--amber)" }}
-                >
-                  ·
-                </span>
-                <span
-                  className="font-dm-mono text-[13px]"
-                  style={{ color: "var(--text-tertiary)" }}
-                >
-                  {type}
-                </span>
-              </div>
+            {benefits.map((benefit, i) => (
+              <li
+                key={i}
+                className="flex items-center gap-3 font-dm-sans"
+                style={{ fontSize: "14px", lineHeight: "1.55", color: "var(--text-tertiary)" }}
+              >
+                <span style={{ color: "var(--amber)", opacity: 0.7, fontSize: "10px", flexShrink: 0 }}>▸</span>
+                {benefit}
+              </li>
             ))}
+          </motion.ul>
+
+          {/* Target strip */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="mt-8 flex flex-wrap justify-center items-center gap-x-1 gap-y-1"
+          >
+            <span
+              className="font-dm-mono text-[10px] uppercase mr-2"
+              style={{ letterSpacing: "0.14em", color: "var(--text-disabled)" }}
+            >
+              Built for:
+            </span>
+            {targets.map((t, i) => (
+              <span key={t} className="flex items-center">
+                <span className="font-dm-mono text-[11px]" style={{ color: "var(--amber)", opacity: 0.55 }}>{t}</span>
+                {i < targets.length - 1 && (
+                  <span className="mx-2 font-dm-mono text-[10px]" style={{ color: "var(--divider)" }}>•</span>
+                )}
+              </span>
+            ))}
+          </motion.div>
+
+          {/* Urgency cue */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.5, delay: 0.46 }}
+            className="mt-5"
+          >
+            <span
+              className="font-dm-mono text-[10px] px-3 py-1"
+              style={{
+                letterSpacing: "0.12em",
+                color: "var(--amber)",
+                border: "1px solid var(--amber-border)",
+                background: "rgba(255,185,0,0.05)",
+                borderRadius: "2px",
+              }}
+            >
+              Limited rollout — accepting initial partners
+            </span>
           </motion.div>
 
           {/* Form */}
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-            className="mt-12 max-w-[480px] mx-auto"
+            transition={{ duration: 0.6, delay: 0.52, ease: [0.25, 0.1, 0.25, 1] }}
+            className="mt-8 max-w-[480px] mx-auto"
           >
             {status === "success" ? (
               <div
-                className="font-dm-mono text-center py-4"
-                style={{ color: "var(--green)" }}
+                className="font-dm-mono text-center py-6"
+                style={{ color: "var(--green)", fontSize: "13px", letterSpacing: "0.06em" }}
               >
                 {message}
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
+              <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-[2px]">
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email"
+                  onFocus={() => setFocused(true)}
+                  onBlur={() => setFocused(false)}
+                  placeholder="Work email only"
                   className="flex-1 font-dm-sans px-4 py-4 outline-none transition-colors"
                   style={{
                     backgroundColor: "var(--bg-panel)",
                     color: "var(--text-primary)",
-                    border: "1px solid var(--divider)",
-                  }}
-                  onFocus={(e) => {
-                    e.currentTarget.style.borderColor = "var(--amber-border)";
-                  }}
-                  onBlur={(e) => {
-                    e.currentTarget.style.borderColor = "var(--divider)";
+                    border: "1px solid",
+                    borderColor: focused ? "var(--amber-border)" : "var(--divider)",
+                    fontSize: "14px",
                   }}
                 />
                 <button
                   type="submit"
                   disabled={status === "submitting"}
-                  className="font-dm-mono font-medium text-[13px] tracking-cta uppercase px-8 py-4 transition-colors disabled:opacity-50"
+                  className="font-dm-mono font-semibold text-[12px] uppercase px-8 py-4 transition-all disabled:opacity-50"
                   style={{
-                    letterSpacing: "0.08em",
+                    letterSpacing: "0.12em",
                     backgroundColor: "var(--amber)",
                     color: "var(--bg-primary)",
+                    boxShadow: "0 0 24px rgba(255,185,0,0.25)",
+                    whiteSpace: "nowrap",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.boxShadow = "0 0 36px rgba(255,185,0,0.4)";
+                    e.currentTarget.style.filter = "brightness(1.08)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.boxShadow = "0 0 24px rgba(255,185,0,0.25)";
+                    e.currentTarget.style.filter = "brightness(1)";
                   }}
                 >
-                  {status === "submitting" ? "Submitting..." : "Request Access"}
+                  {status === "submitting" ? "Submitting..." : "Apply for Access"}
                 </button>
               </form>
             )}
@@ -185,29 +240,53 @@ export function EarlyAccessSection() {
             {status === "error" && (
               <p
                 className="font-dm-mono text-center mt-3"
-                style={{
-                  fontSize: "12px",
-                  color: "var(--red)",
-                }}
+                style={{ fontSize: "12px", color: "var(--red)" }}
               >
                 {message}
               </p>
             )}
           </motion.div>
 
-          {/* Microcopy */}
-          <motion.p
-            initial={{ opacity: 0, y: 24 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
-            className="font-dm-mono text-center mt-6"
-            style={{
-              fontSize: "11px",
-              color: "var(--text-disabled)",
-            }}
+          {/* Below CTA */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.5, delay: 0.62 }}
+            className="mt-4"
           >
-            High-signal outreach only.
-          </motion.p>
+            <p
+              className="font-dm-mono text-[11px]"
+              style={{ color: "var(--text-disabled)", letterSpacing: "0.06em", lineHeight: "1.8" }}
+            >
+              We review every request.
+            </p>
+            <p
+              className="font-dm-mono text-[11px]"
+              style={{ color: "var(--text-disabled)", letterSpacing: "0.06em" }}
+            >
+              Access is limited.
+            </p>
+          </motion.div>
+
+          {/* Trust micro-signals */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.5, delay: 0.7 }}
+            className="mt-6 flex items-center justify-center gap-4"
+          >
+            {["Enterprise-ready", "Secure by design"].map((label, i) => (
+              <span
+                key={i}
+                className="font-dm-mono text-[10px] uppercase"
+                style={{ letterSpacing: "0.12em", color: "var(--text-disabled)", opacity: 0.6 }}
+              >
+                {i > 0 && <span className="mr-4" style={{ color: "var(--divider)" }}>·</span>}
+                {label}
+              </span>
+            ))}
+          </motion.div>
+
         </div>
       </div>
     </section>

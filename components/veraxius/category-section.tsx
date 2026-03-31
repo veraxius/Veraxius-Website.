@@ -4,9 +4,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
 const negationLines = [
-  "Veraxius is not a scoring tool.",
-  "It is not a reputation platform.",
-  "It is not another layer of surface credibility.",
+  "A system that measures alignment between what is claimed and what is proven.",
 ];
 
 export function CategorySection() {
@@ -49,8 +47,8 @@ export function CategorySection() {
               color: "var(--text-primary)",
             }}
           >
-            Integrity{" "}
-            <span style={{ color: "var(--amber)" }}>Infrastructure.</span>
+            <span style={{ textShadow: "0 0 40px rgba(255,255,255,0.08)" }}>Integrity</span>{" "}
+            <span style={{ color: "var(--amber)", textShadow: "0 0 30px rgba(255,185,0,0.3)" }}>Infrastructure.</span>
           </motion.h2>
 
           {/* Negation Lines */}
@@ -69,7 +67,7 @@ export function CategorySection() {
               >
                 <span
                   className="font-dm-mono text-lg"
-                  style={{ color: "var(--red)" }}
+                  style={{ color: "var(--amber)" }}
                 >
                   —
                 </span>
@@ -101,13 +99,39 @@ export function CategorySection() {
                 color: "var(--text-secondary)",
               }}
             >
-              Veraxius is a system for measuring alignment between what someone claims
-              and how they actually behave. It integrates across sources—resumes, work
-              products, communication patterns, temporal signals—to produce a single
-              integrity metric. This metric adapts over time. It learns. It surfaces
-              inconsistencies that human review would miss.
+              Veraxius analyzes behavior across sources:
             </p>
-
+            <ul
+              className="mt-4 space-y-2 flex flex-col items-center"
+              style={{ listStyle: "none", padding: 0 }}
+            >
+              {[
+                "Work history",
+                "Communication patterns",
+                "Output consistency",
+                "Time-based signals",
+              ].map((item) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-2 font-dm-sans"
+                  style={{ fontSize: "17px", color: "var(--text-secondary)", lineHeight: "1.65" }}
+                >
+                  <span style={{ color: "var(--amber)", fontWeight: 500 }}>•</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+            <p
+              className="font-dm-sans mt-6"
+              style={{
+                fontSize: "17px",
+                lineHeight: "1.65",
+                color: "var(--text-secondary)",
+              }}
+            >
+              It converts these into a single, adaptive integrity signal. The system
+              learns over time. It detects patterns humans miss.
+            </p>
             <p
               className="font-dm-sans mt-4"
               style={{
@@ -116,8 +140,7 @@ export function CategorySection() {
                 color: "var(--text-secondary)",
               }}
             >
-              We are not building a score. We are building the infrastructure that makes
-              scores obsolete.
+              We are building the layer beneath reputation.
             </p>
           </motion.div>
 
@@ -126,7 +149,7 @@ export function CategorySection() {
             initial={{ opacity: 0, y: 24 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-            className="mt-12 pl-5 text-left"
+            className="mt-12 pl-5 text-center"
             style={{
               borderLeft: "3px solid var(--amber)",
             }}
@@ -139,8 +162,8 @@ export function CategorySection() {
                 color: "var(--text-primary)",
               }}
             >
-              "This is the layer beneath reputation. It does not matter what someone
-              says they are. It matters what their behavior proves."
+              "This is the layer beneath reputation. What someone says does not matter.
+              What their behavior proves does."
             </p>
           </motion.blockquote>
         </div>

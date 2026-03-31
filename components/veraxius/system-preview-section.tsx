@@ -1,11 +1,57 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion, useInView, AnimatePresence } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
+
+const METRICS = [
+  {
+    label: "Consistency",
+    withValue: "High alignment over time",
+    beforeValue: "Not established",
+    definition: "How reliably behavior matches stated patterns across time and context.",
+  },
+  {
+    label: "Variance",
+    withValue: "Low deviation across actions",
+    beforeValue: "Unknown",
+    definition: "Degree of deviation across independent data points — lower means more predictable.",
+  },
+  {
+    label: "Confidence",
+    withValue: "Strong multi-source agreement",
+    beforeValue: "Insufficient data",
+    definition: null, // no hover for Confidence
+  },
+];
 
 export function SystemPreviewSection() {
   const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const isInView = useInView(sectionRef, { once: false, margin: "-100px" });
+  const [score, setScore] = useState(78);
+  const [activeTab, setActiveTab] = useState<"before" | "with">("with");
+  const [hoveredMetric, setHoveredMetric] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (activeTab !== "with") return;
+    if (!isInView) {
+      setScore(78);
+      return;
+    }
+    const start = 78;
+    const end = 84;
+    const duration = 900;
+    const steps = end - start;
+    const stepDuration = duration / steps;
+    let current = start;
+    const timer = setInterval(() => {
+      current += 1;
+      setScore(current);
+      if (current >= end) clearInterval(timer);
+    }, stepDuration);
+    return () => clearInterval(timer);
+  }, [isInView, activeTab]);
+
+  const isBefore = activeTab === "before";
 
   return (
     <section
@@ -26,14 +72,18 @@ export function SystemPreviewSection() {
             transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
             className="vx-panel p-8 relative overflow-hidden order-2 lg:order-1"
             style={{
-              borderColor: "var(--amber-border)",
+              borderColor: isBefore ? "var(--divider)" : "var(--amber-border)",
+              transition: "border-color 0.3s ease",
             }}
           >
             {/* Top Accent */}
             <div
               className="absolute top-0 left-0 right-0 h-0.5"
               style={{
-                background: "linear-gradient(90deg, var(--amber) 0%, var(--amber-glow) 50%, transparent 100%)",
+                background: isBefore
+                  ? "linear-gradient(90deg, rgba(255,255,255,0.1) 0%, transparent 100%)"
+                  : "linear-gradient(90deg, var(--amber) 0%, var(--amber-glow) 50%, transparent 100%)",
+                transition: "background 0.3s ease",
               }}
             />
 
@@ -50,154 +100,213 @@ export function SystemPreviewSection() {
               </span>
               <div className="flex items-center gap-2">
                 <div
-                  className="w-2 h-2 rounded-full vx-pulse"
-                  style={{ backgroundColor: "var(--green)" }}
+                  className="w-2 h-2 rounded-full"
+                  style={{
+                    backgroundColor: isBefore ? "var(--text-disabled)" : "var(--green)",
+                    boxShadow: isBefore ? "none" : undefined,
+                  }}
+                  className={isBefore ? "w-2 h-2 rounded-full" : "w-2 h-2 rounded-full vx-pulse"}
                 />
                 <span
                   className="font-dm-mono text-[10px] uppercase"
-                  style={{ color: "var(--green)" }}
+                  style={{ color: isBefore ? "var(--text-disabled)" : "var(--green)" }}
                 >
-                  LIVE
+                  {isBefore ? "UNVERIFIED" : "LIVE"}
                 </span>
               </div>
+            </div>
+
+            {/* Toggle */}
+            <div
+              className="mt-5 flex items-center gap-0 border-b"
+              style={{ borderColor: "var(--divider)" }}
+            >
+              {(["before", "with"] as const).map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  className="font-dm-mono text-[10px] uppercase pb-2.5 pr-5 transition-all"
+                  style={{
+                    letterSpacing: "0.14em",
+                    color: activeTab === tab ? "var(--text-primary)" : "var(--text-disabled)",
+                    borderBottom: activeTab === tab
+                      ? `1px solid ${tab === "before" ? "var(--text-secondary)" : "var(--amber)"}`
+                      : "1px solid transparent",
+                    marginBottom: "-1px",
+                    background: "none",
+                    border: "none",
+                    borderBottom: activeTab === tab
+                      ? `1px solid ${tab === "before" ? "var(--text-secondary)" : "var(--amber)"}`
+                      : "1px solid transparent",
+                    cursor: "pointer",
+                    padding: "0 20px 10px 0",
+                  }}
+                >
+                  {tab === "before" ? "Before Veraxius" : "With Veraxius"}
+                </button>
+              ))}
             </div>
 
             {/* Score */}
-            <div className="mt-8 flex items-baseline gap-4">
-              <span
-                className="font-syne font-extrabold"
-                style={{
-                  fontSize: "72px",
-                  color: "var(--amber)",
-                }}
-              >
-                84
-              </span>
-              <div className="flex flex-col">
+            <div className="mt-8 flex flex-col items-start">
+              <div className="flex items-center gap-4">
                 <span
-                  className="font-dm-mono text-[10px] tracking-label uppercase"
+                  className="font-syne font-extrabold"
                   style={{
-                    letterSpacing: "0.15em",
-                    color: "var(--text-tertiary)",
+                    fontSize: "72px",
+                    color: isBefore ? "var(--text-disabled)" : "var(--amber)",
+                    lineHeight: 1,
+                    transition: "color 0.3s ease",
+                    filter: isBefore ? "blur(3px)" : "none",
+                    userSelect: "none",
                   }}
                 >
-                  INTEGRITY SCORE
+                  {isBefore ? "—" : score}
                 </span>
-                <span
-                  className="font-dm-mono text-[12px] mt-1"
-                  style={{ color: "var(--green)" }}
-                >
-                  +6 / 30 days
-                </span>
+                {!isBefore && (
+                  <span
+                    className="font-dm-mono text-[11px] uppercase"
+                    style={{
+                      letterSpacing: "0.12em",
+                      color: "var(--green)",
+                      padding: "3px 8px",
+                      border: "1px solid var(--green)",
+                      borderRadius: "2px",
+                      opacity: 0.85,
+                    }}
+                  >
+                    High credibility signal
+                  </span>
+                )}
               </div>
+              <span
+                className="font-dm-mono text-[10px] tracking-label uppercase mt-2"
+                style={{
+                  letterSpacing: "0.15em",
+                  color: "var(--text-tertiary)",
+                }}
+              >
+                INTEGRITY SCORE
+              </span>
+              <span
+                className="font-dm-mono text-[12px] mt-1"
+                style={{ color: isBefore ? "var(--text-disabled)" : "var(--green)" }}
+              >
+                0-100
+              </span>
             </div>
 
             {/* Metrics */}
-            <div className="mt-8 space-y-4">
-              <div className="flex justify-between items-center py-3 border-b"
-                style={{ borderColor: "var(--divider)" }}
-              >
-                <span
-                  className="font-dm-mono text-[11px] uppercase tracking-label"
-                  style={{
-                    letterSpacing: "0.15em",
-                    color: "var(--text-tertiary)",
-                  }}
-                >
-                  CONSISTENCY INDEX
-                </span>
-                <span
-                  className="font-dm-mono text-[12px]"
-                  style={{ color: "var(--green)" }}
-                >
-                  High
-                </span>
-              </div>
-              <div className="flex justify-between items-center py-3 border-b"
-                style={{ borderColor: "var(--divider)" }}
-              >
-                <span
-                  className="font-dm-mono text-[11px] uppercase tracking-label"
-                  style={{
-                    letterSpacing: "0.15em",
-                    color: "var(--text-tertiary)",
-                  }}
-                >
-                  BEHAVIORAL VARIANCE
-                </span>
-                <span
-                  className="font-dm-mono text-[12px]"
-                  style={{ color: "var(--green)" }}
-                >
-                  Low
-                </span>
-              </div>
-              <div className="flex justify-between items-center py-3 border-b"
-                style={{ borderColor: "var(--divider)" }}
-              >
-                <span
-                  className="font-dm-mono text-[11px] uppercase tracking-label"
-                  style={{
-                    letterSpacing: "0.15em",
-                    color: "var(--text-tertiary)",
-                  }}
-                >
-                  SIGNAL CONFIDENCE
-                </span>
-                <span
-                  className="font-dm-mono text-[12px]"
-                  style={{ color: "var(--amber)" }}
-                >
-                  87%
-                </span>
-              </div>
+            <div className="mt-8 space-y-0">
+              {METRICS.map((item, i) => {
+                const hasDefinition = !!item.definition;
+                const isHovered = hoveredMetric === item.label;
+                return (
+                  <div
+                    key={i}
+                    className="py-3 border-b font-dm-sans"
+                    style={{ borderColor: "var(--divider)" }}
+                    onMouseEnter={() => hasDefinition && setHoveredMetric(item.label)}
+                    onMouseLeave={() => setHoveredMetric(null)}
+                  >
+                    <div className="flex items-start gap-2" style={{ fontSize: "15px", lineHeight: "1.6" }}>
+                      <span style={{ color: isBefore ? "var(--text-disabled)" : "var(--amber)", fontWeight: 600 }}>•</span>
+                      <span>
+                        <span
+                          style={{
+                            color: "var(--text-primary)",
+                            fontWeight: 500,
+                            cursor: hasDefinition ? "default" : "default",
+                            borderBottom: hasDefinition ? "1px dotted rgba(255,255,255,0.2)" : "none",
+                          }}
+                        >
+                          {item.label}
+                        </span>
+                        <span style={{ color: "var(--text-tertiary)" }}> → </span>
+                        <span style={{ color: isBefore ? "var(--text-disabled)" : "var(--text-secondary)" }}>
+                          {isBefore ? item.beforeValue : item.withValue}
+                        </span>
+                      </span>
+                    </div>
+                    {/* Micro definition on hover */}
+                    <AnimatePresence>
+                      {hasDefinition && isHovered && (
+                        <motion.p
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.15 }}
+                          className="font-dm-sans"
+                          style={{
+                            fontSize: "12px",
+                            color: "var(--text-tertiary)",
+                            fontStyle: "italic",
+                            marginTop: "4px",
+                            paddingLeft: "14px",
+                            lineHeight: "1.5",
+                            overflow: "hidden",
+                          }}
+                        >
+                          {item.definition}
+                        </motion.p>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              })}
             </div>
 
-            {/* Flags */}
-            <div className="mt-6 space-y-2">
-              <div className="flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: "var(--red)" }} />
-                <span
-                  className="font-dm-mono text-[11px]"
-                  style={{ color: "var(--text-tertiary)" }}
-                >
-                  minor inconsistency in timeline
-                </span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: "var(--green)" }} />
-                <span
-                  className="font-dm-mono text-[11px]"
-                  style={{ color: "var(--text-tertiary)" }}
-                >
-                  strong alignment with stated values
-                </span>
-              </div>
+            {/* Signal Confidence Highlight */}
+            <div
+              className="mt-5 flex items-center justify-between px-3 py-2.5"
+              style={{
+                background: isBefore ? "transparent" : "rgba(255,185,0,0.04)",
+                borderLeft: isBefore ? "2px solid rgba(255,255,255,0.08)" : "2px solid rgba(255,185,0,0.35)",
+                transition: "all 0.3s ease",
+              }}
+            >
+              <span
+                className="font-dm-mono text-[10px] uppercase"
+                style={{ letterSpacing: "0.16em", color: "var(--text-primary)", opacity: isBefore ? 0.3 : 0.75 }}
+              >
+                SIGNAL CONFIDENCE
+              </span>
+              <span
+                className="font-syne font-bold"
+                style={{
+                  fontSize: "17px",
+                  color: isBefore ? "var(--text-disabled)" : "var(--amber)",
+                  textShadow: isBefore ? "none" : "0 0 10px rgba(255,185,0,0.4)",
+                }}
+              >
+                {isBefore ? "—" : "87%"}
+              </span>
             </div>
 
-            {/* Insights */}
-            <div className="mt-6 pt-6 border-t" style={{ borderColor: "var(--divider)" }}>
-              <div className="flex items-center gap-2">
-                <span
-                  className="font-dm-mono text-[10px] uppercase tracking-label"
-                  style={{
-                    letterSpacing: "0.15em",
-                    color: "var(--green)",
-                  }}
-                >
-                  reliability improving
-                </span>
-                <span className="text-[var(--divider)]">|</span>
-                <span
-                  className="font-dm-mono text-[10px] uppercase tracking-label"
-                  style={{
-                    letterSpacing: "0.15em",
-                    color: "var(--green)",
-                  }}
-                >
-                  high follow-through
-                </span>
-              </div>
+            {/* Decision Confidence */}
+            <div
+              className="mt-6 pt-6 border-t flex items-center justify-between"
+              style={{ borderColor: "var(--divider)" }}
+            >
+              <span
+                className="font-dm-mono text-[10px] uppercase"
+                style={{ letterSpacing: "0.16em", color: "var(--text-tertiary)" }}
+              >
+                Decision Confidence
+              </span>
+              <span
+                className="font-dm-mono text-[11px] uppercase font-bold px-3 py-1"
+                style={{
+                  letterSpacing: "0.16em",
+                  color: isBefore ? "var(--text-disabled)" : "var(--green)",
+                  border: isBefore ? "1px solid rgba(255,255,255,0.08)" : "1px solid rgba(0,200,100,0.3)",
+                  background: isBefore ? "transparent" : "rgba(0,200,100,0.06)",
+                  borderRadius: "2px",
+                  transition: "all 0.3s ease",
+                }}
+              >
+                {isBefore ? "UNCLEAR" : "HIGH"}
+              </span>
             </div>
           </motion.div>
 
@@ -216,7 +325,7 @@ export function SystemPreviewSection() {
                 color: "var(--amber)",
               }}
             >
-              LIVE SYSTEM PREVIEW
+              EARLY SYSTEM PREVIEW
             </div>
 
             {/* Headline */}
@@ -240,23 +349,39 @@ export function SystemPreviewSection() {
                 color: "var(--text-secondary)",
               }}
             >
-              Every interaction leaves a trace. Not of what someone claims—but of how they
-              actually operate. Veraxius surfaces patterns that correlate with reliability,
-              consistency, and follow-through. This is not sentiment analysis. It is
-              behavioral signal extraction.
+              Every interaction leaves a trace. Not what people say. What they do. Veraxius
+              converts behavior into a measurable signal.
             </p>
 
+            <ul
+              className="mt-4 space-y-2"
+              style={{ listStyle: "none", padding: 0 }}
+            >
+              {[
+                { label: "Consistency", desc: "shows reliability" },
+                { label: "Variance", desc: "reveals instability" },
+                { label: "Confidence", desc: "reflects signal strength" },
+              ].map((item) => (
+                <li key={item.label} className="flex items-start gap-2 font-dm-sans" style={{ fontSize: "16px", color: "var(--text-secondary)", lineHeight: "1.65" }}>
+                  <span style={{ color: "var(--amber)", fontWeight: 500 }}>•</span>
+                  <span>
+                    <span style={{ color: "var(--text-primary)", fontWeight: 500 }}>{item.label}</span>
+                    {" "}{item.desc}
+                  </span>
+                </li>
+              ))}
+            </ul>
+
             <p
-              className="font-dm-sans mt-4"
+              className="font-dm-sans mt-6"
               style={{
-                fontSize: "17px",
+                fontSize: "15px",
                 lineHeight: "1.65",
-                color: "var(--text-secondary)",
+                color: "var(--text-tertiary)",
+                fontStyle: "italic",
               }}
             >
-              The dashboard you see is a live representation of how the system interprets
-              multi-source inputs into a single integrity signal. High confidence means
-              the data converges. Flags indicate where the signal is noisy or contradictory.
+              No opinions. No assumptions. Only patterns backed by data.
             </p>
 
             {/* CTA */}
@@ -279,7 +404,7 @@ export function SystemPreviewSection() {
                 e.currentTarget.style.backgroundColor = "transparent";
               }}
             >
-              See Full Breakdown
+              SEE HOW SCORING WORKS
             </a>
 
             {/* Support */}
@@ -290,7 +415,7 @@ export function SystemPreviewSection() {
                 color: "var(--text-disabled)",
               }}
             >
-              Early system logic in development.
+              Early system model in development.
             </p>
           </motion.div>
         </div>

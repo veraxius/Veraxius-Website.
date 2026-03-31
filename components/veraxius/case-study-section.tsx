@@ -5,197 +5,346 @@ import { useRef } from "react";
 
 export function CaseStudySection() {
   const sectionRef = useRef(null);
-  const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const leftRef = useRef(null);
+  const rightRef = useRef(null);
+
+  const isInView = useInView(sectionRef, { once: true, margin: "-80px" });
+  const leftInView = useInView(leftRef, { once: true, margin: "-60px" });
+  const rightInView = useInView(rightRef, { once: true, margin: "-60px" });
 
   return (
     <section
       ref={sectionRef}
       className="vx-section"
-      style={{
-        backgroundColor: "var(--bg-primary)",
-      }}
+      style={{ backgroundColor: "var(--bg-primary)" }}
     >
       <div className="vx-container">
-        {/* Headline */}
-        <motion.h2
-          initial={{ opacity: 0, y: 24 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-          className="font-syne font-extrabold text-center"
-          style={{
-            fontSize: "clamp(32px, 4vw, 52px)",
-            lineHeight: "1.1",
-            color: "var(--text-primary)",
-          }}
-        >
-          What changes in practice.
-        </motion.h2>
 
         {/* Eyebrow */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
-          className="font-dm-mono text-[11px] tracking-eyebrow uppercase text-center mt-8"
-          style={{
-            letterSpacing: "0.18em",
-            color: "var(--amber)",
-          }}
+          transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+          className="font-dm-mono text-[11px] uppercase text-center"
+          style={{ letterSpacing: "0.18em", color: "var(--amber)" }}
         >
           HIRING DECISION
         </motion.div>
 
-        {/* Comparison */}
-        <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Without Veraxius */}
+        {/* Headline */}
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.08, ease: [0.25, 0.1, 0.25, 1] }}
+          className="font-syne font-extrabold text-center mt-4"
+          style={{ fontSize: "clamp(32px, 4vw, 52px)", lineHeight: "1.1", color: "var(--text-primary)" }}
+        >
+          What changes in practice.
+        </motion.h2>
+
+        {/* Subline */}
+        <motion.p
+          initial={{ opacity: 0, y: 12 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: 0.16, ease: [0.25, 0.1, 0.25, 1] }}
+          className="font-dm-sans text-center mt-4"
+          style={{ fontSize: "18px", color: "var(--text-secondary)", letterSpacing: "-0.01em" }}
+        >
+          Same candidate. Different decision.
+        </motion.p>
+
+        {/* Comparison Grid */}
+        <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+          {/* ── LEFT: WITHOUT VERAXIUS ── */}
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
+            ref={leftRef}
+            initial={{ opacity: 0, x: -32 }}
+            animate={leftInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.65, ease: [0.25, 0.1, 0.25, 1] }}
             className="vx-panel p-8 relative"
             style={{
               borderTop: "2px solid var(--red)",
+              background: "rgba(255,107,87,0.04)",
             }}
           >
-            <h3
-              className="font-syne font-bold"
-              style={{
-                fontSize: "20px",
-                color: "var(--red)",
-              }}
-            >
-              WITHOUT VERAXIUS
-            </h3>
-
-            <div className="mt-8 space-y-4">
-              <p
-                className="font-dm-sans"
-                style={{
-                  fontSize: "15px",
-                  lineHeight: "1.65",
-                  color: "var(--text-secondary)",
-                }}
-              >
-                The hiring manager reviews a polished resume. References are
-                provided—curated, naturally. The candidate interviews well,
-                presenting confidence and competence. A background check confirms
-                no criminal record. The offer is made.
-              </p>
-
-              <p
-                className="font-dm-sans"
-                style={{
-                  fontSize: "15px",
-                  lineHeight: "1.65",
-                  color: "var(--text-secondary)",
-                }}
-              >
-                Six months later: missed deadlines, mismatched skills, cultural
-                friction. The candidate optimized for getting hired, not for
-                doing the job. The cost: six months of salary, team disruption,
-                opportunity cost, and the cost of starting over.
-              </p>
-            </div>
-
-            {/* Cost Block */}
-            <div
-              className="mt-8 p-4"
-              style={{
-                backgroundColor: "rgba(255, 107, 87, 0.1)",
-                borderLeft: "2px solid var(--red)",
-              }}
-            >
+            {/* Column header */}
+            <div className="flex items-center gap-3">
               <span
-                className="font-dm-mono text-[12px]"
-                style={{ color: "var(--red)" }}
+                className="font-dm-mono text-[10px] px-2 py-[2px] uppercase"
+                style={{
+                  color: "var(--red)",
+                  border: "1px solid rgba(255,107,87,0.3)",
+                  letterSpacing: "0.14em",
+                  borderRadius: "2px",
+                }}
               >
-                COST: 6 months salary + team disruption + rehiring cycle
+                ✕ WITHOUT VERAXIUS
               </span>
             </div>
+
+            {/* Narrative: the surface signals */}
+            <div className="mt-6 space-y-1">
+              {["A polished resume.", "Curated references.", "A confident interview."].map((line, i) => (
+                <motion.p
+                  key={i}
+                  initial={{ opacity: 0, x: -16 }}
+                  animate={leftInView ? { opacity: 1, x: 0 } : {}}
+                  transition={{ duration: 0.4, delay: 0.1 + i * 0.08 }}
+                  className="font-dm-sans"
+                  style={{ fontSize: "15px", lineHeight: "1.8", color: "var(--text-secondary)" }}
+                >
+                  {line}
+                </motion.p>
+              ))}
+            </div>
+
+            {/* Bridge */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={leftInView ? { opacity: 1 } : {}}
+              transition={{ duration: 0.4, delay: 0.38 }}
+              className="mt-5 space-y-1"
+            >
+              <p className="font-dm-sans" style={{ fontSize: "15px", color: "var(--text-tertiary)", fontStyle: "italic" }}>
+                The signal looks strong.
+              </p>
+              <p className="font-dm-sans" style={{ fontSize: "15px", color: "var(--text-tertiary)", fontStyle: "italic" }}>
+                The hire is made.
+              </p>
+            </motion.div>
+
+            {/* Six months later */}
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={leftInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.4, delay: 0.5 }}
+              className="mt-6"
+            >
+              <p
+                className="font-dm-mono text-[12px] uppercase mb-3"
+                style={{ letterSpacing: "0.12em", color: "var(--text-disabled)" }}
+              >
+                Six months later:
+              </p>
+              <ul className="space-y-2" style={{ listStyle: "none", padding: 0 }}>
+                {["Deadlines slip", "Output drops", "Team friction grows"].map((item, i) => (
+                  <motion.li
+                    key={i}
+                    initial={{ opacity: 0, x: -12 }}
+                    animate={leftInView ? { opacity: 1, x: 0 } : {}}
+                    transition={{ duration: 0.35, delay: 0.58 + i * 0.08 }}
+                    className="flex items-center gap-2 font-dm-sans"
+                    style={{ fontSize: "14px", color: "var(--red)" }}
+                  >
+                    <span style={{ opacity: 0.7 }}>•</span>
+                    {item}
+                  </motion.li>
+                ))}
+              </ul>
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={leftInView ? { opacity: 1 } : {}}
+                transition={{ duration: 0.4, delay: 0.85 }}
+                className="font-dm-sans mt-4"
+                style={{ fontSize: "15px", color: "var(--red)", fontWeight: 600 }}
+              >
+                The signal was wrong.
+              </motion.p>
+            </motion.div>
+
+            {/* COST BOX */}
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={leftInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.4, delay: 0.95 }}
+              className="mt-6 p-5"
+              style={{
+                backgroundColor: "rgba(255,107,87,0.1)",
+                borderLeft: "3px solid var(--red)",
+              }}
+            >
+              <p
+                className="font-dm-mono text-[11px] uppercase mb-3"
+                style={{ letterSpacing: "0.16em", color: "var(--red)" }}
+              >
+                COST
+              </p>
+              {["6+ months lost.", "Team disruption.", "Rehiring cycle."].map((line, i) => (
+                <p key={i} className="font-syne font-bold" style={{ fontSize: "16px", lineHeight: "1.7", color: "var(--red)" }}>
+                  {line}
+                </p>
+              ))}
+            </motion.div>
           </motion.div>
 
-          {/* With Veraxius */}
+          {/* ── RIGHT: WITH VERAXIUS ── */}
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+            ref={rightRef}
+            initial={{ opacity: 0, x: 32 }}
+            animate={rightInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.65, delay: 0.18, ease: [0.25, 0.1, 0.25, 1] }}
             className="vx-panel p-8 relative"
             style={{
               borderTop: "2px solid var(--green)",
+              background: "rgba(87,209,140,0.03)",
             }}
           >
-            <h3
-              className="font-syne font-bold"
-              style={{
-                fontSize: "20px",
-                color: "var(--green)",
-              }}
-            >
-              WITH VERAXIUS
-            </h3>
-
-            <div className="mt-8 space-y-4">
-              <p
-                className="font-dm-sans"
-                style={{
-                  fontSize: "15px",
-                  lineHeight: "1.65",
-                  color: "var(--text-secondary)",
-                }}
-              >
-                The same candidate enters the system. Veraxius cross-references
-                claims against actual work products. The timeline shows consistent
-                delivery patterns. Communication analysis reveals collaborative
-                behavior. But: a flag surfaces—three projects with similar scope
-                were abandoned before completion.
-              </p>
-
-              <p
-                className="font-dm-sans"
-                style={{
-                  fontSize: "15px",
-                  lineHeight: "1.65",
-                  color: "var(--text-secondary)",
-                }}
-              >
-                The hiring manager sees the full picture: strong skills,
-                questionable follow-through. Interview questions are adjusted
-                to probe for completion patterns. A different role—better suited
-                to the candidate's actual working style—is considered.
-              </p>
-            </div>
-
-            {/* Result Block */}
-            <div
-              className="mt-8 p-4"
-              style={{
-                backgroundColor: "rgba(87, 209, 140, 0.1)",
-                borderLeft: "2px solid var(--green)",
-              }}
-            >
+            {/* Column header */}
+            <div className="flex items-center gap-3">
               <span
-                className="font-dm-mono text-[12px]"
-                style={{ color: "var(--green)" }}
+                className="font-dm-mono text-[10px] px-2 py-[2px] uppercase"
+                style={{
+                  color: "var(--green)",
+                  border: "1px solid rgba(87,209,140,0.3)",
+                  letterSpacing: "0.14em",
+                  borderRadius: "2px",
+                }}
               >
-                RESULT: Informed decision, matched expectations, reduced risk
+                ✓ WITH VERAXIUS
               </span>
             </div>
+
+            {/* Narrative: entry into the system */}
+            <motion.p
+              initial={{ opacity: 0, x: 16 }}
+              animate={rightInView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.4, delay: 0.28 }}
+              className="font-dm-sans mt-6"
+              style={{ fontSize: "15px", lineHeight: "1.8", color: "var(--text-secondary)" }}
+            >
+              The same candidate enters the system.
+            </motion.p>
+            <motion.p
+              initial={{ opacity: 0, x: 16 }}
+              animate={rightInView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.4, delay: 0.36 }}
+              className="font-dm-sans mt-1"
+              style={{ fontSize: "15px", lineHeight: "1.8", color: "var(--text-secondary)" }}
+            >
+              Claims are tested against behavior.
+            </motion.p>
+
+            {/* Patterns */}
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={rightInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.4, delay: 0.46 }}
+              className="mt-6"
+            >
+              <p
+                className="font-dm-mono text-[12px] uppercase mb-3"
+                style={{ letterSpacing: "0.12em", color: "var(--text-disabled)" }}
+              >
+                Patterns emerge:
+              </p>
+              <ul className="space-y-2" style={{ listStyle: "none", padding: 0 }}>
+                {[
+                  { text: "Strong execution in short cycles", positive: true },
+                  { text: "Weak follow-through in long projects", positive: false },
+                ].map((item, i) => (
+                  <motion.li
+                    key={i}
+                    initial={{ opacity: 0, x: 12 }}
+                    animate={rightInView ? { opacity: 1, x: 0 } : {}}
+                    transition={{ duration: 0.35, delay: 0.54 + i * 0.1 }}
+                    className="flex items-center gap-2 font-dm-sans"
+                    style={{ fontSize: "14px", color: item.positive ? "var(--green)" : "var(--text-tertiary)" }}
+                  >
+                    <span style={{ opacity: 0.7 }}>•</span>
+                    {item.text}
+                  </motion.li>
+                ))}
+              </ul>
+            </motion.div>
+
+            {/* Signal conclusion */}
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={rightInView ? { opacity: 1 } : {}}
+              transition={{ duration: 0.4, delay: 0.76 }}
+              className="font-dm-sans mt-5"
+              style={{ fontSize: "15px", color: "var(--green)", fontWeight: 600 }}
+            >
+              The signal is clear.
+            </motion.p>
+
+            {/* Decision block */}
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={rightInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.4, delay: 0.86 }}
+              className="mt-5 space-y-1"
+            >
+              {[
+                "The role is adjusted.",
+                "Expectations are aligned.",
+                "Or the hire is not made.",
+              ].map((line, i) => (
+                <p key={i} className="font-dm-sans" style={{ fontSize: "15px", lineHeight: "1.75", color: "var(--text-secondary)" }}>
+                  {line}
+                </p>
+              ))}
+            </motion.div>
+
+            {/* RESULT BOX */}
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={rightInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.4, delay: 0.98 }}
+              className="mt-6 p-5"
+              style={{
+                backgroundColor: "rgba(87,209,140,0.08)",
+                borderLeft: "3px solid var(--green)",
+              }}
+            >
+              <p
+                className="font-dm-mono text-[11px] uppercase mb-3"
+                style={{ letterSpacing: "0.16em", color: "var(--green)" }}
+              >
+                RESULT
+              </p>
+              {["Fewer bad hires.", "Better role fit.", "Lower risk."].map((line, i) => (
+                <p key={i} className="font-syne font-bold" style={{ fontSize: "16px", lineHeight: "1.7", color: "var(--green)" }}>
+                  {line}
+                </p>
+              ))}
+            </motion.div>
           </motion.div>
         </div>
 
-        {/* Closing */}
-        <motion.p
-          initial={{ opacity: 0, y: 24 }}
+        {/* Final closing line */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-          className="font-dm-mono text-center mt-12"
-          style={{
-            fontSize: "14px",
-            color: "var(--text-tertiary)",
-          }}
+          transition={{ duration: 0.6, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+          className="mt-14 text-center"
         >
-          The difference is not information. It is signal quality.
-        </motion.p>
+          <p
+            className="font-syne font-bold"
+            style={{
+              fontSize: "clamp(20px, 2.5vw, 30px)",
+              lineHeight: "1.3",
+              color: "var(--text-primary)",
+              letterSpacing: "-0.01em",
+            }}
+          >
+            The difference is not more data.
+          </p>
+          <p
+            className="font-syne font-bold mt-1"
+            style={{
+              fontSize: "clamp(20px, 2.5vw, 30px)",
+              lineHeight: "1.3",
+              color: "var(--amber)",
+              letterSpacing: "-0.01em",
+              textShadow: "0 0 28px rgba(255,185,0,0.25)",
+            }}
+          >
+            It is better signal.
+          </p>
+        </motion.div>
+
       </div>
     </section>
   );

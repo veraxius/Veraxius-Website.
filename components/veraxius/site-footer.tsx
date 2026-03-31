@@ -10,59 +10,63 @@ export function SiteFooter() {
   return (
     <footer
       ref={footerRef}
-      className="py-16"
+      className="py-20"
       style={{
         backgroundColor: "var(--bg-primary)",
         borderTop: "1px solid var(--divider)",
       }}
     >
       <div className="vx-container">
-        {/* Closing Statement */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-          className="max-w-2xl"
-        >
-          <p
-            className="font-syne font-semibold"
+
+        {/* Closing statement */}
+        <div className="max-w-[520px]">
+
+          {/* Headline — two lines, each as its own statement */}
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+            className="font-syne font-extrabold"
             style={{
-              fontSize: "24px",
-              lineHeight: "1.5",
+              fontSize: "clamp(22px, 2.8vw, 34px)",
+              lineHeight: "1.2",
               color: "var(--text-primary)",
+              letterSpacing: "-0.02em",
             }}
           >
-            The infrastructure for trustworthy decisions does not exist yet.
-            We are building it.
-          </p>
+            The infrastructure for reliable decisions is being built.
+          </motion.p>
 
-          <p
-            className="font-dm-sans mt-6"
+          <motion.p
+            initial={{ opacity: 0, y: 14 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.14, ease: [0.25, 0.1, 0.25, 1] }}
+            className="font-syne font-extrabold mt-1"
             style={{
-              fontSize: "15px",
-              lineHeight: "1.65",
-              color: "var(--text-tertiary)",
+              fontSize: "clamp(22px, 2.8vw, 34px)",
+              lineHeight: "1.2",
+              color: "var(--amber)",
+              letterSpacing: "-0.02em",
+              textShadow: "0 0 28px rgba(255,185,0,0.22)",
             }}
           >
-            If you understand why this matters, you are already behind.
-            The window for early access is closing.
-          </p>
-        </motion.div>
+            Veraxius is defining it.
+          </motion.p>
 
-        {/* Bottom Bar */}
+        </div>
+
+        {/* Bottom bar */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
-          className="mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-4"
-          style={{
-            borderTop: "1px solid var(--divider)",
-          }}
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.6, delay: 0.66, ease: [0.25, 0.1, 0.25, 1] }}
+          className="mt-20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4"
+          style={{ borderTop: "1px solid var(--divider)" }}
         >
           {/* Logo */}
           <a
             href="#"
-            className="font-syne font-extrabold text-lg tracking-logo uppercase"
+            className="font-syne font-extrabold text-lg uppercase"
             style={{ letterSpacing: "0.12em", color: "var(--text-primary)" }}
           >
             {"VERA".split("").map((char, i) => (
@@ -76,25 +80,32 @@ export function SiteFooter() {
 
           {/* Copyright */}
           <p
-            className="font-dm-mono text-[12px]"
-            style={{ color: "var(--text-disabled)" }}
+            className="font-dm-mono text-[11px]"
+            style={{ color: "var(--text-disabled)", letterSpacing: "0.06em" }}
           >
-            © 2024 Veraxius. All rights reserved.
+            © 2025 Veraxius. All rights reserved.
           </p>
 
-          {/* CTA */}
+          {/* Footer CTA */}
           <a
             href="#early-access"
-            className="font-dm-mono font-medium text-[11px] tracking-cta uppercase px-5 py-3 transition-colors"
+            className="font-dm-mono font-medium text-[11px] uppercase px-5 py-3 transition-all"
             style={{
-              letterSpacing: "0.08em",
+              letterSpacing: "0.1em",
               backgroundColor: "var(--amber)",
               color: "var(--bg-primary)",
             }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLElement).style.filter = "brightness(1.08)";
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLElement).style.filter = "brightness(1)";
+            }}
           >
-            Request Early Access
+            Apply for Early Access
           </a>
         </motion.div>
+
       </div>
     </footer>
   );

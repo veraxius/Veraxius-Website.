@@ -4,9 +4,9 @@ import { motion, useInView } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 
 const stats = [
-  { value: 30, suffix: "%", label: "of annual salary can be lost on a bad hire" },
-  { value: 10, prefix: "$", suffix: "B+", label: "in annual fraud losses in the United States" },
-  { value: 60, suffix: "%+", label: "of leaders report low confidence in digital credibility" },
+  { value: 30, suffix: "%+", label: "of annual salary lost on a bad hire" },
+  { value: 9.8, prefix: "", suffix: "%", label: "lost to fraud in U.S. businesses" },
+  { value: 60, suffix: "%", label: "of business leaders lack confidence in hiring decisions" },
 ];
 
 function CountUpNumber({
@@ -74,6 +74,23 @@ export function NumbersSection() {
       }}
     >
       <div className="vx-container">
+        {/* Eyebrow */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+          className="flex items-center justify-center gap-3 mb-6"
+        >
+          <div className="w-6 h-px bg-[var(--amber)]"></div>
+          <span
+            className="font-dm-mono text-[11px] uppercase text-[var(--amber)]"
+            style={{ letterSpacing: "0.18em" }}
+          >
+            REAL-WORLD IMPACT
+          </span>
+          <div className="w-6 h-px bg-[var(--amber)]"></div>
+        </motion.div>
+
         {/* Section Headline */}
         <motion.h2
           initial={{ opacity: 0, y: 24 }}
@@ -144,6 +161,90 @@ export function NumbersSection() {
               >
                 {stat.label}
               </p>
+              {index === 2 && (
+                <a
+                  href="https://finance.yahoo.com/news/sixty-percent-businesses-worry-ve140000805.html?utm_source=chatgpt.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-fit mx-auto mt-3 font-dm-mono text-[10px] uppercase"
+                  style={{
+                    letterSpacing: "0.1em",
+                    color: "var(--text-tertiary)",
+                    backgroundColor: "var(--bg-secondary)",
+                    border: "1px solid var(--divider)",
+                    padding: "2px 8px",
+                    borderRadius: "2px",
+                    textDecoration: "none",
+                    transition: "color 0.2s, border-color 0.2s",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = "var(--amber)";
+                    e.currentTarget.style.borderColor = "var(--amber-border)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = "var(--text-tertiary)";
+                    e.currentTarget.style.borderColor = "var(--divider)";
+                  }}
+                >
+                  Industry survey data
+                </a>
+              )}
+              {index === 1 && (
+                <a
+                  href="https://newsroom.transunion.com/h2-2025-global-fraudreport/?utm_source=chatgpt.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-fit mx-auto mt-9 font-dm-mono text-[10px] uppercase"
+                  style={{
+                    letterSpacing: "0.1em",
+                    color: "var(--text-tertiary)",
+                    backgroundColor: "var(--bg-secondary)",
+                    border: "1px solid var(--divider)",
+                    padding: "2px 8px",
+                    borderRadius: "2px",
+                    textDecoration: "none",
+                    transition: "color 0.2s, border-color 0.2s",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = "var(--amber)";
+                    e.currentTarget.style.borderColor = "var(--amber-border)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = "var(--text-tertiary)";
+                    e.currentTarget.style.borderColor = "var(--divider)";
+                  }}
+                >
+                  TransUnion Fraud Report 2025
+                </a>
+              )}
+              {index === 0 && (
+                <a
+                  href="https://www.business.com/articles/cost-of-a-bad-hire/?utm_source=chatgpt.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-fit mx-auto mt-9 font-dm-mono text-[10px] uppercase"
+                  style={{
+                    letterSpacing: "0.1em",
+                    color: "var(--text-tertiary)",
+                    backgroundColor: "var(--bg-secondary)",
+                    border: "1px solid var(--divider)",
+                    padding: "2px 8px",
+                    borderRadius: "2px",
+                    textDecoration: "none",
+                    transition: "color 0.2s, border-color 0.2s",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = "var(--amber)";
+                    e.currentTarget.style.borderColor = "var(--amber-border)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = "var(--text-tertiary)";
+                    e.currentTarget.style.borderColor = "var(--divider)";
+                  }}
+                >
+                  U.S. Department of Labor
+                </a>
+              )}
             </motion.div>
           ))}
         </div>

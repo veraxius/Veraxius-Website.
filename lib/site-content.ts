@@ -1,46 +1,46 @@
 export const siteContent = {
   hero: {
     eyebrow: "INTEGRITY INFRASTRUCTURE",
-    headline: "Every decision today runs on unverified signals.",
-    subheadline: "AI made information infinite. It also made deception scalable. Veraxius replaces assumption with measurable integrity.",
+    headline: "Every decision today runs on unverified signals. That is now a risk.",
+    subheadline: "AI made information infinite. It also made deception scalable. Veraxius replaces assumptions with measurable integrity, so you can act with confidence.",
     primaryCta: "Request Early Access",
     secondaryCta: "See How It Works",
-    supportLine: "Built for a world where information can no longer be trusted by default."
+    supportLine: "Built for a world where decisions can no longer rely on unverified information."
   },
   breakdown: {
     headline: "The system is already failing.",
     points: [
-      "Resumes are optimized, not truthful.",
-      "Reputation is curated, not proven.",
-      "Data is abundant, but validation is missing."
+      "Bad hires are scaling.",
+      "Perception replaces reality.",
+      "Noise is mistaken for signal."
     ],
-    closeA: "For years, people mistook visibility for credibility. AI did not create that weakness. It exposed it at scale.",
-    closeB: "Now the gap is clear: we are making high-stakes decisions with low-integrity inputs."
+    closeA: "The loudest wins, not the most accurate. It amplified it to a breaking point.",
+    closeB: "High-stakes decisions are now being made on low-integrity inputs. That is no longer sustainable"
   },
   numbers: {
     headline: "The cost of bad signals is measurable.",
     stats: [
-      { value: "30%", label: "of annual salary can be lost on a bad hire" },
-      { value: "$10B+", label: "in annual fraud losses in the United States" },
-      { value: "60%+", label: "of leaders report low confidence in digital credibility" }
+      { value: "30%", label: "of annual salary lost on a bad hire" },
+      { value: "9.8%", label: "lost to fraud in U.S. businesses" },
+      { value: "60%+", label: "of business leaders lack confidence in hiring decisions" }
     ],
     close: "The problem is not lack of data. It is lack of integrity in that data."
   },
   preview: {
-    eyebrow: "LIVE SYSTEM PREVIEW",
+    eyebrow: "EARLY SYSTEM PREVIEW",
     headline: "This is what integrity looks like.",
     body: "Veraxius turns behavior into a usable signal. Not a claim. Not a profile. Not a polished narrative.",
     support: "It produces a live integrity view built from consistency, variance, confidence, and behavioral alignment over time.",
     entity: "Founder / Candidate / Organization",
     score: 84,
-    trend: "+6",
+    trend: "0-100",
     consistency: "High",
     variance: "Low",
     confidence: "87%",
     flags: ["Minor inconsistency detected in timeline claims", "Strong alignment between stated and observed behavior"],
     insights: ["Reliability improving over time", "High follow-through on commitments"],
-    cta: "See Full Breakdown",
-    footer: "Early system logic in development."
+    cta: "SEE HOW SCORING WORKS",
+    footer: "Early system model in development."
   },
   lineInSand: {
     headline: "Trust is no longer enough.",

@@ -9,15 +9,15 @@ export function DiagramSVG() {
       </defs>
       <rect x="20" y="30" width="220" height="120" rx="24" fill="#101114" stroke="rgba(255,255,255,0.12)" />
       <text x="50" y="72" fill="#FFB84D" fontSize="14" letterSpacing="2">LAYER 01</text>
-      <text x="50" y="106" fill="#F5F7FA" fontSize="24" fontWeight="600">Data Inputs</text>
+      <text x="50" y="106" fill="#F5F7FA" fontSize="24" fontWeight="600">Raw Signals</text>
       <text x="50" y="132" fill="rgba(245,247,250,0.7)" fontSize="15">Declared, observed, temporal</text>
       <rect x="280" y="30" width="220" height="120" rx="24" fill="#101114" stroke="rgba(255,255,255,0.12)" />
       <text x="310" y="72" fill="#FFB84D" fontSize="14" letterSpacing="2">LAYER 02</text>
-      <text x="310" y="106" fill="#F5F7FA" fontSize="24" fontWeight="600">Normalization</text>
+      <text x="310" y="106" fill="#F5F7FA" fontSize="24" fontWeight="600">Signal Alignment</text>
       <text x="310" y="132" fill="rgba(245,247,250,0.7)" fontSize="15">Clean, structure, standardize</text>
       <rect x="540" y="30" width="220" height="120" rx="24" fill="#101114" stroke="rgba(255,255,255,0.12)" />
       <text x="570" y="72" fill="#FFB84D" fontSize="14" letterSpacing="2">LAYER 03</text>
-      <text x="570" y="106" fill="#F5F7FA" fontSize="24" fontWeight="600">Feature Extraction</text>
+      <text x="570" y="106" fill="#F5F7FA" fontSize="24" fontWeight="600">Pattern Extraction</text>
       <text x="570" y="132" fill="rgba(245,247,250,0.7)" fontSize="15">Pattern, context, variance</text>
       <rect x="800" y="30" width="220" height="120" rx="24" fill="#101114" stroke="rgba(255,255,255,0.12)" />
       <text x="830" y="72" fill="#FFB84D" fontSize="14" letterSpacing="2">LAYER 04</text>

@@ -90,7 +90,7 @@ export function HeroSection() {
               color: "var(--text-primary)",
             }}
           >
-            Every decision today runs on unverified signals.
+            Every decision today runs on unverified signals. That is now a risk.
           </motion.h1>
 
           {/* Subheadline */}
@@ -104,12 +104,8 @@ export function HeroSection() {
               color: "var(--text-secondary)",
             }}
           >
-            AI made information infinite. It also made deception scalable.
-            <br className="hidden sm:block" />
-            Veraxius replaces assumption with{" "}
-            <span style={{ color: "var(--text-primary)", fontWeight: 500 }}>
-              measurable integrity
-            </span>.
+            AI made information infinite. It also made deception scalable. Veraxius
+            replaces assumptions with measurable integrity, so you can act with confidence.
           </motion.p>
 
           {/* Support Line */}
@@ -123,7 +119,7 @@ export function HeroSection() {
               color: "var(--text-tertiary)",
             }}
           >
-            Built for a world where information can no longer be trusted by default.
+            Built for a world where decisions can no longer rely on unverified information.
           </motion.p>
 
           {/* CTA Row */}
