@@ -55,8 +55,9 @@ export function ArchitectureDiagramSection() {
           className="font-dm-sans text-center mt-6 max-w-2xl mx-auto"
           style={{ fontSize: "17px", lineHeight: "1.65", color: "var(--text-secondary)" }}
         >
-          Data enters. Patterns emerge. A signal crystallizes. This is not magic—this
-          is computation.
+          From raw behavior to verified signal.
+          <br />
+          Every step reduces noise. Every Step increases truth.
         </motion.p>
 
         {/* Diagram Panel */}

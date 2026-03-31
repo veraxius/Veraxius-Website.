@@ -209,7 +209,15 @@ export function ImpactSection() {
               letterSpacing: "-0.01em",
             }}
           >
-            Veraxius does not replace judgment.
+            <span
+              style={{
+                color: "var(--amber)",
+                textShadow: "0 0 22px rgba(255,185,0,0.22)",
+              }}
+            >
+              Veraxius
+            </span>{" "}
+            does not replace judgment.
           </p>
           <p
             className="font-syne font-bold mt-1"

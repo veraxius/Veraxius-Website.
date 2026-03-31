@@ -116,7 +116,7 @@ export function CostSection() {
             className="mt-12 text-left"
           >
             <p
-              className="font-dm-sans"
+              className="font-dm-sans text-center"
               style={{ fontSize: "16px", lineHeight: "1.7", color: "var(--text-secondary)" }}
             >
               Every decision made on weak signals carries a{" "}
@@ -127,12 +127,12 @@ export function CostSection() {
               {/* Visible */}
               <div>
                 <p
-                  className="font-dm-mono text-[10px] uppercase mb-3"
+                  className="font-dm-mono text-[10px] uppercase mb-3 text-center"
                   style={{ letterSpacing: "0.16em", color: "var(--amber)" }}
                 >
                   Visible:
                 </p>
-                <ul className="space-y-2" style={{ listStyle: "none", padding: 0 }}>
+                <ul className="space-y-2 w-fit mx-auto" style={{ listStyle: "none", padding: 0 }}>
                   {visibleCosts.map((line, i) => (
                     <li
                       key={i}
@@ -149,12 +149,12 @@ export function CostSection() {
               {/* Invisible */}
               <div>
                 <p
-                  className="font-dm-mono text-[10px] uppercase mb-3"
+                  className="font-dm-mono text-[10px] uppercase mb-3 text-center"
                   style={{ letterSpacing: "0.16em", color: "var(--amber)" }}
                 >
                   Invisible:
                 </p>
-                <ul className="space-y-2" style={{ listStyle: "none", padding: 0 }}>
+                <ul className="space-y-2 w-fit mx-auto" style={{ listStyle: "none", padding: 0 }}>
                   {invisibleCosts.map((line, i) => (
                     <li
                       key={i}

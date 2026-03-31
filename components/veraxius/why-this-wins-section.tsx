@@ -211,7 +211,17 @@ export function WhyThisWinsSection() {
                 letterSpacing: "-0.01em",
               }}
             >
-              The winner in integrity infrastructure will not be the loudest.
+              The winner in{" "}
+              <span
+                className="font-semibold"
+                style={{
+                  color: "var(--amber)",
+                  textShadow: "0 0 16px rgba(255,185,0,0.18)",
+                }}
+              >
+                integrity
+              </span>{" "}
+              infrastructure will not be the loudest.
             </p>
             <p
               className="font-syne font-semibold mt-1"

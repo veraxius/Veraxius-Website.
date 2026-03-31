@@ -204,7 +204,7 @@ export function HowItWorksSection() {
           style={{ fontSize: "15px", lineHeight: "1.7", color: "var(--text-tertiary)" }}
         >
           No guesswork. No assumptions. Only verified behavioral signal.{" "}
-          <span style={{ color: "var(--text-secondary)" }}>
+          <span style={{ color: "var(--amber)" }}>
             Integrity is no longer a subjective impression. It becomes a system output.
           </span>
         </motion.p>
