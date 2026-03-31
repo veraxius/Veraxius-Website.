@@ -28,7 +28,7 @@ export function CaseStudySection() {
           className="font-dm-mono text-[11px] uppercase text-center"
           style={{ letterSpacing: "0.18em", color: "var(--amber)" }}
         >
-          HIRING DECISION
+          DECISION INTEGRITY
         </motion.div>
 
         {/* Headline */}
@@ -50,7 +50,7 @@ export function CaseStudySection() {
           className="font-dm-sans text-center mt-4"
           style={{ fontSize: "18px", color: "var(--text-secondary)", letterSpacing: "-0.01em" }}
         >
-          Same candidate. Different decision.
+          This is one example. The same signal failure appears everywhere decisions rely on trust.
         </motion.p>
 
         {/* Comparison Grid */}
@@ -313,6 +313,71 @@ export function CaseStudySection() {
           </motion.div>
         </div>
 
+        {/* Where this breaks today / What Veraxius changes */}
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.36, ease: [0.25, 0.1, 0.25, 1] }}
+          className="mt-14"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            {/* Column A */}
+            <div>
+              <p
+                className="font-dm-mono text-[14px] uppercase mb-4 text-center"
+                style={{ letterSpacing: "0.18em", color: "var(--red)", textShadow: "0 0 10px rgba(255,107,87,0.2)" }}
+              >
+                Where this breaks today
+              </p>
+              <ul className="space-y-2 max-w-[620px] mx-auto" style={{ listStyle: "none", padding: 0 }}>
+                {[
+                  "Hiring decisions → resume vs real execution",
+                  "Subject matter experts → claims vs proven outcomes",
+                  "Advisors and consultants → confidence vs consistency",
+                  "Vendors and partners → promises vs delivery",
+                  "Online identities → profiles vs behavior",
+                ].map((line, i) => (
+                  <li
+                    key={i}
+                    className="font-dm-sans flex items-start gap-2"
+                    style={{ fontSize: "16px", lineHeight: "1.75", color: "var(--text-secondary)" }}
+                  >
+                    <span style={{ color: "var(--red)", width: "12px", textAlign: "center", flexShrink: 0 }}>•</span>
+                    <span>{line}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            {/* Column B */}
+            <div>
+              <p
+                className="font-dm-mono text-[14px] uppercase mb-4 text-center"
+                style={{ letterSpacing: "0.18em", color: "var(--amber)", textShadow: "0 0 10px rgba(255,185,0,0.2)" }}
+              >
+                What Veraxius changes
+              </p>
+              <ul className="space-y-2 max-w-[560px] mx-auto" style={{ listStyle: "none", padding: 0 }}>
+                {[
+                  "Claims are not trusted",
+                  "Claims are tested",
+                  "Behavior is tracked",
+                  "Patterns are scored",
+                  "Decisions become evidence-based",
+                ].map((line, i) => (
+                  <li
+                    key={i}
+                    className="font-dm-sans flex items-start gap-2"
+                    style={{ fontSize: "16px", lineHeight: "1.75", color: "var(--text-primary)" }}
+                  >
+                    <span style={{ color: "var(--amber)", width: "12px", textAlign: "center", flexShrink: 0 }}>•</span>
+                    <span>{line}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </motion.div>
+
         {/* Final closing line */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -330,6 +395,17 @@ export function CaseStudySection() {
             }}
           >
             The difference is not more data.
+          </p>
+          <p
+            className="font-syne font-bold mt-1"
+            style={{
+              fontSize: "clamp(20px, 2.5vw, 30px)",
+              lineHeight: "1.3",
+              color: "var(--text-primary)",
+              letterSpacing: "-0.01em",
+            }}
+          >
+            It is validated behavior.
           </p>
           <p
             className="font-syne font-bold mt-1"
