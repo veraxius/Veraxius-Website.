@@ -114,7 +114,7 @@ export function CategorySection() {
                 <li
                   key={item}
                   className="flex items-start gap-2 font-dm-sans"
-                  style={{ fontSize: "17px", color: "var(--text-secondary)", lineHeight: "1.65" }}
+                  style={{ fontSize: "17px", color: "var(--amber)", lineHeight: "1.65" }}
                 >
                   <span style={{ color: "var(--amber)", fontWeight: 500 }}>•</span>
                   <span>{item}</span>
@@ -137,10 +137,10 @@ export function CategorySection() {
               style={{
                 fontSize: "17px",
                 lineHeight: "1.65",
-                color: "var(--text-secondary)",
+                color: "var(--amber)",
               }}
             >
-              We are building the layer beneath reputation.
+              Scores describe perception. Integrity measures reality.
             </p>
           </motion.div>
 

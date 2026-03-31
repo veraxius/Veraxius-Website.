@@ -397,7 +397,7 @@ export function NumbersSection() {
                   href="https://mitsloan.mit.edu/ideas-made-to-matter/study-false-news-spreads-faster-truth"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-fit mx-auto mt-14 font-dm-mono text-[11px] uppercase"
+                  className="block w-fit mx-auto mt-[3.685rem] font-dm-mono text-[11px] uppercase"
                   style={{
                     letterSpacing: "0.1em",
                     color: "var(--text-tertiary)",

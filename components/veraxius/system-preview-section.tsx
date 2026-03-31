@@ -30,6 +30,7 @@ export function SystemPreviewSection() {
   const [score, setScore] = useState(78);
   const [activeTab, setActiveTab] = useState<"before" | "with">("with");
   const [hoveredMetric, setHoveredMetric] = useState<string | null>(null);
+  const [expandedConfidence, setExpandedConfidence] = useState(false);
 
   useEffect(() => {
     if (activeTab !== "with") return;
@@ -96,7 +97,7 @@ export function SystemPreviewSection() {
                   color: "var(--text-tertiary)",
                 }}
               >
-                CANDIDATE_ENTITY_VX_2847
+                USER_IDENTITY_VX_2847
               </span>
               <div className="flex items-center gap-2">
                 <div
@@ -199,6 +200,7 @@ export function SystemPreviewSection() {
               {METRICS.map((item, i) => {
                 const hasDefinition = !!item.definition;
                 const isHovered = hoveredMetric === item.label;
+                const isConfidence = item.label === "Confidence";
                 return (
                   <div
                     key={i}
@@ -206,6 +208,9 @@ export function SystemPreviewSection() {
                     style={{ borderColor: "var(--divider)" }}
                     onMouseEnter={() => hasDefinition && setHoveredMetric(item.label)}
                     onMouseLeave={() => setHoveredMetric(null)}
+                    onClick={() => {
+                      if (isConfidence) setExpandedConfidence((prev) => !prev);
+                    }}
                   >
                     <div className="flex items-start gap-2" style={{ fontSize: "15px", lineHeight: "1.6" }}>
                       <span style={{ color: isBefore ? "var(--text-disabled)" : "var(--amber)", fontWeight: 600 }}>•</span>
@@ -214,8 +219,8 @@ export function SystemPreviewSection() {
                           style={{
                             color: "var(--text-primary)",
                             fontWeight: 500,
-                            cursor: hasDefinition ? "default" : "default",
-                            borderBottom: hasDefinition ? "1px dotted rgba(255,255,255,0.2)" : "none",
+                            cursor: isConfidence ? "pointer" : "default",
+                            borderBottom: hasDefinition || isConfidence ? "1px dotted var(--amber)" : "none",
                           }}
                         >
                           {item.label}
@@ -246,6 +251,28 @@ export function SystemPreviewSection() {
                           }}
                         >
                           {item.definition}
+                        </motion.p>
+                      )}
+                    </AnimatePresence>
+                    <AnimatePresence>
+                      {isConfidence && expandedConfidence && (
+                        <motion.p
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="font-dm-sans"
+                          style={{
+                            fontSize: "12px",
+                            color: "var(--text-tertiary)",
+                            fontStyle: "italic",
+                            marginTop: "4px",
+                            paddingLeft: "14px",
+                            lineHeight: "1.5",
+                            overflow: "hidden",
+                          }}
+                        >
+                          How consistently outcomes remain stable across different inputs, scenarios and independent observations.
                         </motion.p>
                       )}
                     </AnimatePresence>

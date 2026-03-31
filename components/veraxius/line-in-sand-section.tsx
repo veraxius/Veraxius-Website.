@@ -197,7 +197,7 @@ export function LineInSandSection() {
                   <li
                     key={item}
                     className="flex items-start gap-2 font-dm-sans"
-                    style={{ fontSize: "17px", color: "var(--text-secondary)", lineHeight: "1.65" }}
+                    style={{ fontSize: "17px", color: "var(--amber)", lineHeight: "1.65" }}
                   >
                     <span style={{ color: "var(--amber)", fontWeight: 500 }}>•</span>
                     <span>{item}</span>
