@@ -96,6 +96,12 @@ export function SiteFooter() {
             >
               +1 (561) 376-8886
             </a>
+            <p
+              className="font-dm-mono text-[13px]"
+              style={{ color: "var(--text-secondary)" }}
+            >
+              Boca Raton, FL. USA
+            </p>
           </div>
         </motion.div>
 
