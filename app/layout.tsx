@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Syne, DM_Sans, DM_Mono } from "next/font/google";
 import Script from "next/script";
 
+
 const syne = Syne({
   subsets: ["latin"],
   weight: ["700", "800"],
