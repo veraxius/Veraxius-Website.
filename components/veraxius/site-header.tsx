@@ -29,14 +29,24 @@ export function SiteHeader() {
           />
         </a>
 
-        {/* CTA Button */}
-        <a
-          href="#early-access"
-          className="font-dm-mono font-medium text-[11px] tracking-cta uppercase bg-[var(--amber)] text-[var(--bg-primary)] px-5 py-3 transition-colors hover:bg-[var(--amber-glow)]"
-          style={{ letterSpacing: "0.08em" }}
-        >
-          Request Early Access
-        </a>
+        <div className="flex items-center gap-5">
+          {/* CTA Button */}
+          <a
+            href="#early-access"
+            className="font-dm-mono font-medium text-[11px] tracking-cta uppercase bg-[var(--amber)] text-[var(--bg-primary)] px-5 py-3 transition-colors hover:bg-[var(--amber-glow)]"
+            style={{ letterSpacing: "0.08em" }}
+          >
+            Request Early Access
+          </a>
+
+          <a
+            href="#contact-us"
+            className="font-dm-mono font-medium text-[10px] uppercase transition-opacity hover:opacity-80"
+            style={{ color: "var(--amber)", letterSpacing: "0.08em" }}
+          >
+            Contact Us
+          </a>
+        </div>
       </div>
     </motion.header>
   );

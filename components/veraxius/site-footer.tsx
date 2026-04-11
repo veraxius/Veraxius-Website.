@@ -20,7 +20,7 @@ export function SiteFooter() {
       <div className="vx-container">
 
         {/* Closing statement */}
-        <div className="max-w-[520px]">
+        <div className="max-w-[520px] mx-auto text-center">
 
           {/* Headline — two lines, each as its own statement */}
           <motion.p
@@ -55,6 +55,49 @@ export function SiteFooter() {
           </motion.p>
 
         </div>
+
+        <div
+          className="mt-20"
+          style={{ borderTop: "1px solid var(--divider)" }}
+        />
+
+        {/* Contact Us */}
+        <motion.div
+          id="contact-us"
+          initial={{ opacity: 0, y: 14 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.36, ease: [0.25, 0.1, 0.25, 1] }}
+          className="mt-20 text-center scroll-mt-24"
+        >
+          <p
+            className="font-syne font-extrabold mb-5"
+            style={{
+              fontSize: "clamp(16px, 2vw, 22px)",
+              lineHeight: "1.2",
+              color: "var(--amber)",
+              letterSpacing: "-0.02em",
+              textShadow: "0 0 28px rgba(255,185,0,0.22)",
+            }}
+          >
+            Contact Us
+          </p>
+          <div className="flex flex-col items-center gap-3">
+            <a
+              href="mailto:signal@veraxius.com"
+              className="font-dm-mono text-[13px] transition-colors hover:underline"
+              style={{ color: "var(--text-secondary)" }}
+            >
+              signal@veraxius.com
+            </a>
+            <a
+              href="tel:+15613768886"
+              className="font-dm-mono text-[13px] transition-colors hover:underline"
+              style={{ color: "var(--text-secondary)" }}
+            >
+              +1 (561) 376-8886
+            </a>
+          </div>
+        </motion.div>
 
         {/* Bottom bar */}
         <motion.div
