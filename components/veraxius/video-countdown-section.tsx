@@ -134,7 +134,7 @@ export function VideoCountdownSection() {
           transition={{ duration: 0.65, ease: [0.25, 0.1, 0.25, 1] }}
           className="mx-auto flex max-w-[960px] flex-col items-center text-center"
         >
-          <div className="mb-12 w-full">
+          <div className="-mt-4 mb-12 w-full sm:-mt-6">
             <p
               className="font-dm-mono mb-6 text-[11px] uppercase"
               style={{
