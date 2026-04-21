@@ -1,6 +1,7 @@
 import {
   SiteHeader,
   HeroSection,
+  VideoCountdownSection,
   BreakdownSection,
   NumbersSection,
   SystemPreviewSection,
@@ -31,6 +32,7 @@ export default function HomePage() {
       <ScrollProgress />
       <SiteHeader />
       <HeroSection />
+      <VideoCountdownSection />
       <BreakdownSection />
       <NumbersSection />
       <SystemPreviewSection />

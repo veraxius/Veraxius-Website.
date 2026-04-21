@@ -1,5 +1,6 @@
 export { SiteHeader } from "./site-header";
 export { HeroSection } from "./hero-section";
+export { VideoCountdownSection } from "./video-countdown-section";
 export { BreakdownSection } from "./breakdown-section";
 export { NumbersSection } from "./numbers-section";
 export { SystemPreviewSection } from "./system-preview-section";
