@@ -134,7 +134,29 @@ export function VideoCountdownSection() {
           transition={{ duration: 0.65, ease: [0.25, 0.1, 0.25, 1] }}
           className="mx-auto flex max-w-[960px] flex-col items-center text-center"
         >
-          <div className="-mt-4 mb-12 w-full sm:-mt-6">
+          <div
+            ref={videoWrapRef}
+            className="relative w-full overflow-hidden rounded-xl border shadow-lg"
+            style={{
+              borderColor: "var(--divider-strong)",
+              boxShadow: "0 24px 80px rgba(0, 0, 0, 0.45)",
+            }}
+          >
+            <video
+              ref={videoRef}
+              className="mx-auto block aspect-video w-full bg-black object-contain object-center"
+              controls
+              playsInline
+              preload="metadata"
+              aria-label="Veraxius promotional video"
+              onPause={handleVideoPause}
+              onPlay={handleVideoPlay}
+            >
+              <source src="/video.mp4" type="video/mp4" />
+            </video>
+          </div>
+
+          <div className="mt-12 w-full">
             <p
               className="font-dm-mono mb-6 text-[11px] uppercase"
               style={{
@@ -160,28 +182,6 @@ export function VideoCountdownSection() {
                 Countdown complete.
               </p>
             ) : null}
-          </div>
-
-          <div
-            ref={videoWrapRef}
-            className="relative w-full overflow-hidden rounded-xl border shadow-lg"
-            style={{
-              borderColor: "var(--divider-strong)",
-              boxShadow: "0 24px 80px rgba(0, 0, 0, 0.45)",
-            }}
-          >
-            <video
-              ref={videoRef}
-              className="mx-auto block aspect-video w-full bg-black object-contain object-center"
-              controls
-              playsInline
-              preload="metadata"
-              aria-label="Veraxius promotional video"
-              onPause={handleVideoPause}
-              onPlay={handleVideoPlay}
-            >
-              <source src="/video.mp4" type="video/mp4" />
-            </video>
           </div>
         </motion.div>
       </div>
