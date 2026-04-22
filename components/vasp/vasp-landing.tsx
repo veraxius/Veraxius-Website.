@@ -115,16 +115,29 @@ function StepTrackerVisual() {
 function DashList({
   items,
   className,
+  centered = false,
 }: {
   items: string[];
   className?: string;
+  centered?: boolean;
 }) {
   return (
-    <ul className={cn("mx-auto max-w-2xl space-y-4 text-left", className)}>
+    <ul
+      className={cn(
+        "mx-auto max-w-2xl space-y-4",
+        centered ? "text-center" : "text-left",
+        className
+      )}
+    >
       {items.map((t) => (
         <li
           key={t}
-          className="flex gap-3 font-dm-sans text-[max(0.95rem,14px)] leading-relaxed md:text-[1.05rem]"
+          className={cn(
+            "font-dm-sans text-[max(0.95rem,14px)] leading-relaxed md:text-[1.05rem]",
+            centered
+              ? "flex items-start justify-center gap-3"
+              : "flex gap-3"
+          )}
           style={{ color: TEXT }}
         >
           <span className="shrink-0 font-dm-mono" style={{ color: ACCENT }}>
@@ -275,16 +288,20 @@ export function VaspLanding() {
 
       {/* SECTION 3 */}
       <RevealSection>
-        <div className="mx-auto max-w-3xl text-center md:text-left">
-          <h2 className="vx-h2 mb-10 text-center md:text-left">The Problem</h2>
-          <div className="flex justify-center md:justify-start">
+        <div className="mx-auto max-w-3xl text-center">
+          <h2 className="vx-h2 mb-10">The Problem</h2>
+          <div className="flex justify-center">
             <SvgBrokenShield />
           </div>
-          <p className="mx-auto mt-10 max-w-2xl font-dm-sans text-[max(1.15rem,18px)] leading-relaxed md:text-2xl" style={{ color: TEXT }}>
+          <p
+            className="mx-auto mt-10 max-w-2xl text-center font-dm-sans text-[max(1.15rem,18px)] leading-relaxed md:text-2xl"
+            style={{ color: TEXT }}
+          >
             Every system claims trust. None can measure it.
           </p>
           <DashList
-            className="mt-10 !mx-0 !max-w-none text-left"
+            centered
+            className="mt-10 !mx-auto !max-w-2xl"
             items={[
               "AI scales faster than credibility",
               "Platforms reward noise over truth",
@@ -325,7 +342,8 @@ export function VaspLanding() {
           <h2 className="vx-h2 mb-10 text-center">What You Actually Do</h2>
           <SvgHubNetwork />
           <DashList
-            className="mt-12"
+            centered
+            className="mt-12 !mx-auto !max-w-2xl"
             items={[
               "Deconstruct how systems get manipulated",
               "Work inside a live trust-scoring engine",
@@ -369,7 +387,8 @@ export function VaspLanding() {
             You don&apos;t need a perfect resume.
           </p>
           <DashList
-            className="mt-10"
+            centered
+            className="mt-10 !mx-auto !max-w-2xl"
             items={[
               "Clear thinking under pressure",
               "Willingness to challenge assumptions",
@@ -467,7 +486,8 @@ export function VaspLanding() {
           <h2 className="vx-h2 mb-10 text-center">Cohort Access</h2>
           <SvgCalendarCheck />
           <DashList
-            className="mt-10"
+            centered
+            className="mt-10 !mx-auto !max-w-2xl"
             items={["Monthly intake", "Limited seats per cycle", "Selection based on signal, not background"]}
           />
           <div
@@ -485,7 +505,8 @@ export function VaspLanding() {
           <h2 className="vx-h2 mb-10 text-center">The Commitment</h2>
           <SvgMountainFlag />
           <DashList
-            className="mt-10"
+            centered
+            className="mt-10 !mx-auto !max-w-2xl"
             items={["Duration: 6 months", "Weekly intensity: high", "Output: real"]}
           />
           <p className="mt-12 text-center font-syne text-xl font-bold md:text-2xl">
