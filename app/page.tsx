@@ -15,6 +15,7 @@ import {
   WhyThisWinsSection,
   IntegrationSection,
   CostSection,
+  VaspHomeTeaseSection,
   EarlyAccessSection,
   SiteFooter,
   ScrollProgress,
@@ -46,6 +47,7 @@ export default function HomePage() {
       <WhyThisWinsSection />
       <IntegrationSection />
       <CostSection />
+      <VaspHomeTeaseSection />
       <EarlyAccessSection />
       <SiteFooter />
     </main>
