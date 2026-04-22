@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 
 export function SiteHeader() {
   return (
@@ -17,8 +18,8 @@ export function SiteHeader() {
       }}
     >
       <div className="vx-container flex items-center justify-between py-4">
-        <a
-          href="#"
+        <Link
+          href="/"
           aria-label="Veraxius home"
           className="flex shrink-0 items-center -ml-2 sm:-ml-3 md:-ml-4"
         >
@@ -30,7 +31,7 @@ export function SiteHeader() {
             priority
             style={{ height: "36px", width: "auto" }}
           />
-        </a>
+        </Link>
 
         <div className="flex shrink-0 items-center gap-6 sm:gap-7 -mr-2 sm:-mr-3 md:-mr-4">
           <a
@@ -46,12 +47,12 @@ export function SiteHeader() {
             style={{ color: "var(--amber)" }}
           >
             <a
-              href="/#vasp"
+              href="/#aimprogram"
               className="font-dm-mono font-medium text-[10px] uppercase transition-opacity hover:opacity-80"
               style={{ letterSpacing: "0.08em", color: "var(--amber)" }}
-              aria-label="VASOP program section on the home page"
+              aria-label="AIM Program section on the home page"
             >
-              VASOP
+              aim program
             </a>
             <span
               className="font-dm-mono text-[10px] select-none leading-none"

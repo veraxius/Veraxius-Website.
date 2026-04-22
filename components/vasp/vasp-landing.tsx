@@ -525,8 +525,8 @@ export function VaspLanding() {
               aria-hidden
             />
             <Image
-              src="/vasp.png"
-              alt="Veraxius AIM Signal Operators Program (VASOP)"
+              src="/aimprogram.png"
+              alt="Veraxius AIM Signal Operators Program (AIM Program)"
               width={240}
               height={240}
               sizes="120px"
@@ -545,7 +545,7 @@ export function VaspLanding() {
             rel="noopener noreferrer"
             className="mt-10 inline-flex w-full items-center justify-center rounded-full px-10 py-4 font-dm-mono text-[11px] font-medium uppercase tracking-cta transition-[filter] hover:brightness-110 md:w-auto md:text-[13px]"
             style={{ backgroundColor: ACCENT, color: BG }}
-            aria-label="Apply now to the VASOP operator program (opens in a new tab)"
+            aria-label="Apply now to the Veraxius AIM Signal Operators Program (opens in a new tab)"
           >
             Apply Now
           </a>
@@ -563,8 +563,8 @@ export function VaspLanding() {
         <footer className="mx-auto max-w-3xl text-center md:text-left">
           <div className="flex justify-center md:justify-start">
             <Image
-              src="/vasp.png"
-              alt="Veraxius AIM Signal Operators Program (VASOP)"
+              src="/aimprogram.png"
+              alt="Veraxius AIM Signal Operators Program (AIM Program)"
               width={320}
               height={320}
               sizes="80px"

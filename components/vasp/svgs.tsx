@@ -292,17 +292,14 @@ export function SvgRadialNetwork() {
         strokeWidth={2}
         strokeDasharray="6 5"
       />
-      <text
-        x={100}
-        y={112}
-        textAnchor="middle"
-        fill={ACCENT}
-        fontSize={36}
-        fontFamily="var(--font-syne), sans-serif"
-        fontWeight={800}
-      >
-        V
-      </text>
+      <image
+        href="/Veraxius%20AIM%20model%20Logo%20%26%20Icon.png"
+        x={72}
+        y={72}
+        width={56}
+        height={56}
+        preserveAspectRatio="xMidYMid meet"
+      />
       <line x1={100} y1={36} x2={100} y2={64} stroke={TEXT} strokeWidth={1.5} />
       <line x1={164} y1={100} x2={136} y2={100} stroke={TEXT} strokeWidth={1.5} />
       <line x1={100} y1={164} x2={100} y2={136} stroke={TEXT} strokeWidth={1.5} />
