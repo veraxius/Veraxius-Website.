@@ -4,6 +4,8 @@
 
 :root {
   /* Color System - Exact from prompt */
+  --aim-accent: #f5a623;
+  --aim-accent-hover: #dc9415;
   --bg-primary: #0A0A0B;
   --bg-secondary: #131417;
   --bg-panel: #101114;

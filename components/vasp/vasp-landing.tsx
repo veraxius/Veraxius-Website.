@@ -613,12 +613,12 @@ export function VaspLanding() {
               <li>
                 Website:{" "}
                 <a
-                  href="https://veraxius.com/aimprogram"
+                  href="https://veraxius.com/aimsignalprogram"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="transition-colors hover:text-[#F5A623]"
                 >
-                  https://veraxius.com/aimprogram
+                  https://veraxius.com/aimsignalprogram
                 </a>
               </li>
               <li>Location: Boca Raton, FL, USA</li>
