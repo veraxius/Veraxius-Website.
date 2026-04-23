@@ -46,14 +46,14 @@ export function SiteHeader() {
             className="flex items-center gap-4 sm:gap-5 md:gap-6"
             style={{ color: "var(--amber)" }}
           >
-            <a
-              href="/#aimprogram"
+            <Link
+              href="/aimprogram"
               className="font-dm-mono font-medium text-[10px] uppercase transition-opacity hover:opacity-80"
               style={{ letterSpacing: "0.08em", color: "var(--amber)" }}
-              aria-label="AIM Program section on the home page"
+              aria-label="Veraxius AIM Signal Operators Program (go to the AIM Program page)"
             >
               aim program
-            </a>
+            </Link>
             <span
               className="font-dm-mono text-[10px] select-none leading-none"
               style={{ color: "var(--amber)" }}

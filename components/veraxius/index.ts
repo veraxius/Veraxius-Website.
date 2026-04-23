@@ -14,7 +14,6 @@ export { ImpactSection } from "./impact-section";
 export { WhyThisWinsSection } from "./why-this-wins-section";
 export { IntegrationSection } from "./integration-section";
 export { CostSection } from "./cost-section";
-export { VaspHomeTeaseSection } from "./vasp-home-tease-section";
 export { EarlyAccessSection } from "./early-access-section";
 export { SiteFooter } from "./site-footer";
 export { ScrollProgress } from "./scroll-progress";

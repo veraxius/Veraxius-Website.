@@ -192,6 +192,10 @@ const STEP_CARDS = [
   },
 ];
 
+const HERO_INTRO =
+  "A 6-month operator program where you don't study integrity. You generate it, break it, and prove it inside a live system.";
+const HERO_SUPPORT = "Monthly selection. Limited seats per cohort.";
+
 function HeroReveal() {
   const { ref, visible } = useReveal<HTMLDivElement>();
   return (
@@ -204,51 +208,64 @@ function HeroReveal() {
       style={{ backgroundColor: BG }}
     >
       <div className="mx-auto flex w-full max-w-[680px] flex-col items-center text-center">
-            <SvgHeroCrosshair />
-            <h1
-              className="font-syne font-extrabold tracking-tight"
-              style={{
-                color: TEXT,
-                fontSize: "clamp(1.75rem, 5vw, 3.5rem)",
-                lineHeight: 1.08,
-                marginTop: "2rem",
-              }}
-            >
-              Build trust systems. Or expose why they fail.
-            </h1>
-            <p
-              className="mx-auto mt-6 max-w-[600px] font-dm-sans leading-relaxed"
-              style={{
-                color: MUTED,
-                fontSize: "clamp(1rem, 2.8vw, 1.25rem)",
-              }}
-            >
-              A 6-month operator program where you don&apos;t study integrity. You generate it, break
-              it, and prove it inside a live system.
-            </p>
-            <p
-              className="mt-6 font-dm-mono text-[max(0.65rem,10px)] uppercase tracking-[0.14em]"
-              style={{ color: MUTED }}
-            >
-              Monthly selection. Limited seats per cohort.
-            </p>
-            <a
-              href={APPLY_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-10 inline-flex w-full items-center justify-center rounded-full px-10 py-4 font-dm-mono text-[11px] font-medium uppercase tracking-cta transition-[filter] hover:brightness-110 md:mt-12 md:w-auto md:text-[13px]"
-              style={{ backgroundColor: ACCENT, color: BG }}
-              aria-label="Apply now to the Veraxius AIM Signal Operators Program (opens in a new tab)"
-            >
-              Apply Now
-            </a>
-            <a
-              href="#how-it-works"
-              className="mt-5 font-dm-mono text-[10px] uppercase tracking-cta text-white/80 transition-colors hover:text-white md:text-[11px]"
-            >
-              See How It Works
-            </a>
-          </div>
+        <div className="flex w-full max-w-[600px] flex-col items-center">
+          <Image
+            src="/aimprogram.png"
+            alt="Veraxius AIM Signal Operators Program (AIM Program)"
+            width={3334}
+            height={1250}
+            sizes="(max-width: 600px) 100vw, 480px"
+            className="h-auto w-full max-w-[min(100%,480px)] object-contain"
+            priority
+            quality={90}
+          />
+          <p
+            className="mx-auto mt-5 max-w-[600px] font-dm-sans leading-relaxed"
+            style={{
+              color: MUTED,
+              fontSize: "clamp(16px, 1.6vw, 19px)",
+            }}
+          >
+            {HERO_INTRO}
+          </p>
+          <p
+            className="mt-4 max-w-[600px] font-dm-mono text-[11px]"
+            style={{ letterSpacing: "0.06em", color: MUTED }}
+          >
+            {HERO_SUPPORT}
+          </p>
+          <a
+            href={APPLY_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-8 inline-flex w-full max-w-sm items-center justify-center rounded-full px-10 py-4 font-dm-mono text-[12px] font-medium uppercase tracking-cta transition-[filter] hover:brightness-110 sm:w-auto md:text-[13px]"
+            style={{ backgroundColor: ACCENT, color: BG }}
+            aria-label="Apply now to the Veraxius AIM Signal Operators Program (opens in a new tab)"
+          >
+            Apply Now
+          </a>
+        </div>
+
+        <div className="mt-24 w-full sm:mt-32">
+          <SvgHeroCrosshair />
+          <h1
+            className="mt-8 font-syne font-extrabold tracking-tight"
+            style={{
+              color: TEXT,
+              fontSize: "clamp(1.75rem, 5vw, 3.5rem)",
+              lineHeight: 1.08,
+            }}
+          >
+            Build trust systems. Or expose why they fail.
+          </h1>
+          <a
+            href="#how-it-works"
+            className="mt-8 inline-block font-dm-mono text-[10px] uppercase tracking-cta text-white/80 transition-colors hover:text-white md:mt-10 md:text-[11px]"
+          >
+            See How It Works
+          </a>
+        </div>
+      </div>
     </div>
   );
 }
