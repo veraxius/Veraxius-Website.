@@ -279,11 +279,11 @@ export function VaspLanding() {
       {/* SECTION 2 */}
       <RevealSection id="how-it-works" className="scroll-mt-28">
         <div className="text-center">
+          <StepTrackerVisual />
           <p className="vx-eyebrow mb-4 !text-[11px]" style={{ color: ACCENT }}>
             How It Works
           </p>
           <h2 className="vx-h2 mb-12 md:mb-14">How It Works</h2>
-          <StepTrackerVisual />
           <div className="mx-auto mt-8 grid max-w-[1100px] grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-5 lg:gap-6">
             {STEP_CARDS.map((s, i) => (
               <div key={s.title} className="text-left lg:text-center">
@@ -306,10 +306,10 @@ export function VaspLanding() {
       {/* SECTION 3 */}
       <RevealSection>
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="vx-h2 mb-10">The Problem</h2>
           <div className="flex justify-center">
             <SvgBrokenShield />
           </div>
+          <h2 className="vx-h2 mb-10 mt-10">The Problem</h2>
           <p
             className="mx-auto mt-10 max-w-2xl text-center font-dm-sans text-[max(1.15rem,18px)] leading-relaxed md:text-2xl"
             style={{ color: TEXT }}
@@ -334,8 +334,8 @@ export function VaspLanding() {
       {/* SECTION 4 */}
       <RevealSection>
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="vx-h2 mb-10">The Shift</h2>
           <SvgIsometricLayers />
+          <h2 className="vx-h2 mb-10 mt-10">The Shift</h2>
           <div className="mx-auto mt-10 max-w-xl space-y-5 text-left md:text-center">
             <p className="font-dm-sans text-[max(1rem,18px)] leading-relaxed md:text-xl" style={{ color: TEXT }}>
               Veraxius is building the Trust Layer for AI systems.
@@ -356,8 +356,8 @@ export function VaspLanding() {
       {/* SECTION 5 */}
       <RevealSection>
         <div className="mx-auto max-w-3xl">
-          <h2 className="vx-h2 mb-10 text-center">What You Actually Do</h2>
           <SvgHubNetwork />
+          <h2 className="vx-h2 mb-10 mt-10 text-center">What You Actually Do</h2>
           <DashList
             centered
             className="mt-12 !mx-auto !max-w-2xl"
@@ -378,8 +378,8 @@ export function VaspLanding() {
       {/* SECTION 6 */}
       <RevealSection>
         <div className="mx-auto max-w-3xl">
-          <h2 className="vx-h2 mb-10 text-center">What You Get</h2>
           <SvgOpenBoxRays />
+          <h2 className="vx-h2 mb-10 mt-10 text-center">What You Get</h2>
           <div className="mt-12">
             <CheckGrid
               items={[
@@ -398,8 +398,8 @@ export function VaspLanding() {
       {/* SECTION 7 */}
       <RevealSection>
         <div className="mx-auto max-w-3xl">
-          <h2 className="vx-h2 mb-10 text-center">Who This Is For</h2>
           <SvgPersonCrosshair />
+          <h2 className="vx-h2 mb-10 mt-10 text-center">Who This Is For</h2>
           <p className="mt-10 text-center font-dm-sans text-[max(1.15rem,20px)] font-normal md:text-2xl">
             You don&apos;t need a perfect resume.
           </p>
@@ -468,8 +468,8 @@ export function VaspLanding() {
       {/* SECTION 9 */}
       <RevealSection>
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="vx-h2 mb-10">Why This Exists</h2>
           <SvgRadialNetwork />
+          <h2 className="vx-h2 mb-10 mt-10">Why This Exists</h2>
           <p className="mt-10 font-dm-sans text-[max(1rem,18px)] md:text-xl" style={{ color: TEXT }}>
             Built by operators working across:
           </p>
@@ -500,8 +500,8 @@ export function VaspLanding() {
       {/* SECTION 10 */}
       <RevealSection>
         <div className="mx-auto max-w-2xl">
-          <h2 className="vx-h2 mb-10 text-center">Cohort Access</h2>
           <SvgCalendarCheck />
+          <h2 className="vx-h2 mb-10 mt-10 text-center">Cohort Access</h2>
           <DashList
             centered
             className="mt-10 !mx-auto !max-w-2xl"
@@ -519,8 +519,8 @@ export function VaspLanding() {
       {/* SECTION 11 */}
       <RevealSection>
         <div className="mx-auto max-w-2xl">
-          <h2 className="vx-h2 mb-10 text-center">The Commitment</h2>
           <SvgMountainFlag />
+          <h2 className="vx-h2 mb-10 mt-10 text-center">The Commitment</h2>
           <DashList
             centered
             className="mt-10 !mx-auto !max-w-2xl"
