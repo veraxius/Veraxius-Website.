@@ -280,9 +280,6 @@ export function VaspLanding() {
       <RevealSection id="how-it-works" className="scroll-mt-28">
         <div className="text-center">
           <StepTrackerVisual />
-          <p className="vx-eyebrow mb-4 !text-[11px]" style={{ color: ACCENT }}>
-            How It Works
-          </p>
           <h2 className="vx-h2 mb-12 md:mb-14">How It Works</h2>
           <div className="mx-auto mt-8 grid max-w-[1100px] grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-5 lg:gap-6">
             {STEP_CARDS.map((s, i) => (
