@@ -4,17 +4,46 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState, type MouseEvent } from "react";
+
+type HomeSectionId = "early-access" | "contact-us";
+
+function scrollToHomeSection(id: HomeSectionId) {
+  if (typeof window === "undefined") return;
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.scrollIntoView({ behavior: "smooth", block: "start" });
+  const url = `${window.location.pathname}${window.location.search}#${id}`;
+  window.history.replaceState(null, "", url);
+}
 
 export function SiteHeader() {
   const pathname = usePathname();
   const isStore = pathname?.startsWith("/aimsignalstore") ?? false;
+  const isHome = pathname === "/";
   const contactHref =
     pathname?.startsWith("/aimsignalstore") || pathname?.startsWith("/aimsignalprogram")
-      ? "/#nav-early-access"
-      : "#nav-early-access";
-  const isHome = pathname === "/";
+      ? "/#contact-us"
+      : "#contact-us";
   const [storeScrolled, setStoreScrolled] = useState(false);
+
+  const onHomeInPageNav = useCallback(
+    (id: HomeSectionId) => (e: MouseEvent<HTMLAnchorElement>) => {
+      if (!isHome) return;
+      e.preventDefault();
+      if (window.location.hash === `#${id}`) {
+        window.history.replaceState(
+          null,
+          "",
+          window.location.pathname + window.location.search,
+        );
+        requestAnimationFrame(() => scrollToHomeSection(id));
+        return;
+      }
+      scrollToHomeSection(id);
+    },
+    [isHome],
+  );
 
   useEffect(() => {
     if (!isStore) return;
@@ -55,18 +84,6 @@ export function SiteHeader() {
           href="/"
           aria-label="Veraxius home"
           className="flex shrink-0 items-center"
-          onClick={(e) => {
-            if (!isHome) return;
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: "smooth" });
-            if (window.location.hash) {
-              window.history.replaceState(
-                null,
-                "",
-                window.location.pathname + window.location.search,
-              );
-            }
-          }}
         >
           <Image
             src="/Veraxius Logo FINAL FINAL 2 Horizontal Version-02.png"
@@ -80,9 +97,10 @@ export function SiteHeader() {
 
         <div className="flex shrink-0 items-center gap-4 sm:gap-5 md:gap-6">
           <a
-            href="#early-access"
+            href={isHome ? "#early-access" : "/#early-access"}
             className="font-dm-mono font-medium text-[11px] tracking-cta uppercase bg-[var(--amber)] text-[var(--bg-primary)] px-5 py-3 transition-colors hover:bg-[var(--amber-glow)]"
             style={{ letterSpacing: "0.08em" }}
+            onClick={onHomeInPageNav("early-access")}
           >
             Request Early Access
           </a>
@@ -121,14 +139,15 @@ export function SiteHeader() {
             >
               |
             </span>
-            <Link
+            <a
               href={contactHref}
               className="font-dm-mono font-medium text-[10px] uppercase transition-opacity hover:opacity-80"
               style={{ color: "var(--amber)", letterSpacing: "0.08em" }}
-              aria-label="Contact Veraxius (go to Limited Access section on the home page)"
+              aria-label="Contact Veraxius (go to contact section on the home page)"
+              onClick={onHomeInPageNav("contact-us")}
             >
               Contact Us
-            </Link>
+            </a>
           </div>
         </div>
       </div>

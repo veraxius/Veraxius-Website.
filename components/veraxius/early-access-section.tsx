@@ -59,11 +59,10 @@ export function EarlyAccessSection() {
 
           {/* Eyebrow */}
           <motion.div
-            id="nav-early-access"
             initial={{ opacity: 0, y: 12 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5 }}
-            className="font-dm-mono text-[11px] uppercase scroll-mt-[80px]"
+            className="font-dm-mono text-[11px] uppercase"
             style={{ letterSpacing: "0.18em", color: "var(--amber)" }}
           >
             LIMITED ACCESS

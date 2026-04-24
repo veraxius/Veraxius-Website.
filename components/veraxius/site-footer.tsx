@@ -67,7 +67,7 @@ export function SiteFooter() {
           initial={{ opacity: 0, y: 14 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.36, ease: [0.25, 0.1, 0.25, 1] }}
-          className="mt-20 text-center"
+          className="mt-20 text-center scroll-mt-24"
         >
           <p
             className="font-syne font-extrabold mb-5"
@@ -81,10 +81,7 @@ export function SiteFooter() {
           >
             Contact Us
           </p>
-          <div
-            id="contact-email"
-            className="flex flex-col items-center gap-3 scroll-mt-[72px]"
-          >
+          <div className="flex flex-col items-center gap-3">
             <a
               href="mailto:signal@veraxius.com"
               className="font-dm-mono text-[13px] transition-colors hover:underline"
