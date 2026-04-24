@@ -11,8 +11,9 @@ export function SiteHeader() {
   const isStore = pathname?.startsWith("/aimsignalstore") ?? false;
   const contactHref =
     pathname?.startsWith("/aimsignalstore") || pathname?.startsWith("/aimsignalprogram")
-      ? "/#contact-us"
-      : "#contact-us";
+      ? "/#nav-early-access"
+      : "#nav-early-access";
+  const isHome = pathname === "/";
   const [storeScrolled, setStoreScrolled] = useState(false);
 
   useEffect(() => {
@@ -54,6 +55,18 @@ export function SiteHeader() {
           href="/"
           aria-label="Veraxius home"
           className="flex shrink-0 items-center"
+          onClick={(e) => {
+            if (!isHome) return;
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            if (window.location.hash) {
+              window.history.replaceState(
+                null,
+                "",
+                window.location.pathname + window.location.search,
+              );
+            }
+          }}
         >
           <Image
             src="/Veraxius Logo FINAL FINAL 2 Horizontal Version-02.png"
@@ -112,7 +125,7 @@ export function SiteHeader() {
               href={contactHref}
               className="font-dm-mono font-medium text-[10px] uppercase transition-opacity hover:opacity-80"
               style={{ color: "var(--amber)", letterSpacing: "0.08em" }}
-              aria-label="Contact Veraxius (go to contact section on the home page)"
+              aria-label="Contact Veraxius (go to Limited Access section on the home page)"
             >
               Contact Us
             </Link>
