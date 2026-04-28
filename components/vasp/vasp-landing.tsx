@@ -606,8 +606,8 @@ export function VaspLanding() {
               </li>
               <li>
                 Phone:{" "}
-                <a href="tel:+15613768886" className="transition-colors hover:text-[#F5A623]">
-                  +1 (561) 376-8886
+                <a href="tel:5612008845" className="transition-colors hover:text-[#F5A623]">
+                  (561) 200-8845
                 </a>
               </li>
               <li>

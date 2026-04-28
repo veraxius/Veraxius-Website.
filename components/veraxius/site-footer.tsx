@@ -90,11 +90,11 @@ export function SiteFooter() {
               signal@veraxius.com
             </a>
             <a
-              href="tel:+15613768886"
+              href="tel:5612008845"
               className="font-dm-mono text-[13px] transition-colors hover:underline"
               style={{ color: "var(--text-secondary)" }}
             >
-              +1 (561) 376-8886
+              (561) 200-8845
             </a>
             <p
               className="font-dm-mono text-[13px]"
