@@ -3,9 +3,9 @@
 import { motion, useInView } from "framer-motion";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-/** Countdown reaches zero at local midnight after May 10 (end of May 10). */
+/** Countdown reaches zero at local midnight after Jun 16 (end of Jun 16). */
 function getTargetDate(): Date {
-  return new Date(2026, 4, 11, 0, 0, 0, 0);
+  return new Date(2026, 5, 17, 0, 0, 0, 0);
 }
 
 function useCountdown(target: Date) {
@@ -164,7 +164,7 @@ export function VideoCountdownSection() {
                 color: "var(--amber)",
               }}
             >
-              Launch countdown · May 10
+              Launch countdown · Jun 16
             </p>
 
             <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
