@@ -175,7 +175,7 @@ function HeroSection() {
 
   return (
     <section
-      className="relative flex min-h-[100svh] w-full min-w-0 flex-col"
+      className="relative flex min-h-[100svh] w-full min-w-0 flex-col overflow-x-clip"
       style={{ backgroundColor: "var(--bg-primary)" }}
     >
       {/* Signal visual — decorative overlay on the right; section bg stays uniform */}

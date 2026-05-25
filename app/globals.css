@@ -62,12 +62,11 @@ body::before {
   }
 
   html {
-    overflow-x: hidden;
     max-width: 100%;
+    overflow-x: clip;
   }
 
   body {
-    overflow-x: hidden;
     max-width: 100%;
   }
 
@@ -442,10 +441,11 @@ body::before {
     pointer-events: auto;
   }
 
-  /* Trust World Cup — single document scroll (no overflow on main; avoids double scrollbar) */
+  /* Trust World Cup — single document scroll */
   .twc-page {
     width: 100%;
     max-width: 100%;
+    overflow-x: clip;
   }
 
   .twc-section-inner {
