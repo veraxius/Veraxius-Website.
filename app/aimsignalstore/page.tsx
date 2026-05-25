@@ -55,7 +55,7 @@ function StoreCta({
     <a
       href={href}
       className={cn(
-        "inline-flex items-center justify-center rounded-[4px] px-8 py-4 font-dm-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-[#0A0A0A] transition-[filter,transform] duration-200 ease-out hover:brightness-[0.92] active:scale-[0.99]",
+        "inline-flex min-h-[44px] w-full max-w-full items-center justify-center rounded-[4px] px-8 py-4 font-dm-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-[#0A0A0A] transition-[filter,transform] duration-200 ease-out hover:brightness-[0.92] active:scale-[0.99] sm:w-auto",
         className
       )}
       style={{ backgroundColor: "var(--aim-accent)" }}
@@ -343,21 +343,21 @@ export default function AimSignalStorePage() {
                 Integrity is measured.
               </p>
             </div>
-            <nav className="flex flex-wrap gap-x-6 gap-y-2 font-dm-mono text-[10px] uppercase tracking-[0.16em]">
-              <Link href="/aimsignalstore" className="transition-opacity hover:opacity-80" style={{ color: "var(--aim-accent)" }}>
+            <nav className="flex flex-wrap justify-center gap-x-6 gap-y-3 font-dm-mono text-[10px] uppercase tracking-[0.16em] md:justify-start">
+              <Link href="/aimsignalstore" className="inline-flex min-h-[44px] items-center transition-opacity hover:opacity-80" style={{ color: "var(--aim-accent)" }}>
                 Store
               </Link>
-              <a href="#product-grid" className="transition-opacity hover:opacity-80" style={{ color: "var(--aim-accent)" }}>
+              <a href="#product-grid" className="inline-flex min-h-[44px] items-center transition-opacity hover:opacity-80" style={{ color: "var(--aim-accent)" }}>
                 Activate
               </a>
-              <Link href="/aimsignalprogram" className="transition-opacity hover:opacity-80" style={{ color: "var(--aim-accent)" }}>
+              <Link href="/aimsignalprogram" className="inline-flex min-h-[44px] items-center transition-opacity hover:opacity-80" style={{ color: "var(--aim-accent)" }}>
                 System
               </Link>
               <a
                 href="https://veraxius.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="transition-opacity hover:opacity-80"
+                className="inline-flex min-h-[44px] items-center transition-opacity hover:opacity-80"
                 style={{ color: "var(--aim-accent)" }}
               >
                 veraxius.com

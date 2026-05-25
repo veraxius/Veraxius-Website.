@@ -55,7 +55,7 @@ export function BreakdownSection() {
       }}
     >
       <div className="vx-container">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+        <div className="grid grid-cols-1 gap-12 items-center lg:grid-cols-2 lg:gap-20">
           {/* Left Column */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -393,8 +393,10 @@ export function BreakdownSection() {
                 }}
               />
 
+              <div className="overflow-x-auto">
+              <div className="min-w-[min(100%,320px)]">
               {/* Header */}
-              <div className="grid grid-cols-3 gap-4 items-end">
+              <div className="grid grid-cols-3 gap-2 items-end sm:gap-4">
                 <div></div>
                 <div
                   className="text-center font-dm-mono text-[11px] uppercase pb-2"
@@ -435,6 +437,8 @@ export function BreakdownSection() {
                   <div className="text-center font-dm-sans" style={{ color: "var(--red)", fontSize: "16px" }}>High</div>
                   <div className="text-center font-dm-sans" style={{ color: "var(--amber)", fontSize: "16px" }}>Reduced</div>
                 </div>
+              </div>
+              </div>
               </div>
             </motion.div>
           </div>

@@ -55,6 +55,29 @@ body::before {
 }
 
 @layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+
+  body {
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+
+  img,
+  picture,
+  video {
+    max-width: 100%;
+    height: auto;
+  }
+
   * {
     border-color: var(--divider);
   }
@@ -353,6 +376,187 @@ body::before {
   .vasp-reveal.visible {
     opacity: 1;
     transform: translateY(0);
+  }
+
+  /* Trust World Cup landing — scroll reveal, CTA glow, signal drift */
+  .twc-reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.6s ease,
+      transform 0.6s ease;
+  }
+
+  .twc-reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @keyframes twc-cta-glow {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 rgba(255, 184, 77, 0);
+    }
+    50% {
+      box-shadow: 0 0 28px 4px rgba(255, 184, 77, 0.22);
+    }
+  }
+
+  .twc-cta-glow {
+    animation: twc-cta-glow 3s ease-in-out infinite;
+  }
+
+  @keyframes twc-signal-drift {
+    0%,
+    100% {
+      transform: translate(0, 0) scale(1);
+      opacity: 0.4;
+    }
+    33% {
+      transform: translate(2%, -1%) scale(1.02);
+      opacity: 0.55;
+    }
+    66% {
+      transform: translate(-1%, 2%) scale(0.98);
+      opacity: 0.45;
+    }
+  }
+
+  .twc-signal-drift {
+    animation: twc-signal-drift 18s ease-in-out infinite;
+  }
+
+  .twc-sticky-bar {
+    height: 52px;
+    opacity: 0;
+    transform: translateY(-100%);
+    pointer-events: none;
+    transition:
+      opacity 0.35s ease,
+      transform 0.35s ease;
+  }
+
+  .twc-sticky-bar.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  /* Trust World Cup — single document scroll (no overflow on main; avoids double scrollbar) */
+  .twc-page {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .twc-section-inner {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .twc-headline-hero {
+    font-family: var(--font-syne), sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.5rem, 5vw, 4.5rem);
+    line-height: 1.08;
+    letter-spacing: 0.03em;
+    text-wrap: balance;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  @media (min-width: 1024px) {
+    .twc-headline-hero {
+      letter-spacing: 0.05em;
+    }
+  }
+
+  .twc-headline-xl {
+    font-family: var(--font-syne), sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.5rem, 7vw, 7.5rem);
+    line-height: 1.05;
+    letter-spacing: 0.03em;
+    text-wrap: balance;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  @media (min-width: 768px) {
+    .twc-headline-xl {
+      letter-spacing: 0.05em;
+    }
+  }
+
+  .twc-headline-cinematic {
+    font-family: var(--font-syne), sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.375rem, 6.25vw, 6.5rem);
+    line-height: 1.05;
+    letter-spacing: 0.03em;
+    text-wrap: balance;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  @media (min-width: 768px) {
+    .twc-headline-cinematic {
+      letter-spacing: 0.05em;
+    }
+  }
+
+  .twc-headline-lg {
+    font-family: var(--font-syne), sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.375rem, 4.5vw, 3.25rem);
+    line-height: 1.1;
+    letter-spacing: 0.03em;
+    text-wrap: balance;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  @media (min-width: 768px) {
+    .twc-headline-lg {
+      letter-spacing: 0.05em;
+    }
+  }
+
+  .twc-headline-md {
+    font-family: var(--font-syne), sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.25rem, 4vw, 2.75rem);
+    line-height: 1.12;
+    letter-spacing: 0.03em;
+    text-wrap: balance;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  @media (min-width: 768px) {
+    .twc-headline-md {
+      letter-spacing: 0.05em;
+    }
+  }
+
+  .twc-headline-accent {
+    font-family: var(--font-syne), sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.75rem, 5vw, 4rem);
+    line-height: 1.1;
+    letter-spacing: 0.03em;
+    color: var(--amber);
+    text-wrap: balance;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  @media (min-width: 768px) {
+    .twc-headline-accent {
+      letter-spacing: 0.05em;
+    }
   }
 }
 

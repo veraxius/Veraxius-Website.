@@ -50,13 +50,8 @@ export function HeroSection() {
 
       {/* Radial Amber Glow */}
       <div
-        className="absolute pointer-events-none"
+        className="pointer-events-none absolute left-1/2 top-[10%] h-[min(600px,80vw)] w-[min(600px,100vw)] max-w-full -translate-x-1/2"
         style={{
-          top: "10%",
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: "600px",
-          height: "600px",
           background: "radial-gradient(circle, var(--amber-glow-subtle) 0%, transparent 70%)",
         }}
       />

@@ -195,7 +195,7 @@ export function EarlyAccessSection() {
                 {message}
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-[2px]">
+              <form onSubmit={handleSubmit} className="flex w-full flex-col gap-[2px] sm:flex-row">
                 <input
                   type="email"
                   value={email}
@@ -203,19 +203,19 @@ export function EarlyAccessSection() {
                   onFocus={() => setFocused(true)}
                   onBlur={() => setFocused(false)}
                   placeholder="Work email only"
-                  className="flex-1 font-dm-sans px-4 py-4 outline-none transition-colors"
+                  className="min-h-[44px] w-full flex-1 font-dm-sans px-4 py-4 outline-none transition-colors"
                   style={{
                     backgroundColor: "var(--bg-panel)",
                     color: "var(--text-primary)",
                     border: "1px solid",
                     borderColor: focused ? "var(--amber-border)" : "var(--divider)",
-                    fontSize: "14px",
+                    fontSize: "16px",
                   }}
                 />
                 <button
                   type="submit"
                   disabled={status === "submitting"}
-                  className="font-dm-mono font-semibold text-[12px] uppercase px-8 py-4 transition-all disabled:opacity-50"
+                  className="inline-flex min-h-[44px] w-full items-center justify-center font-dm-mono font-semibold text-[12px] uppercase px-8 py-4 transition-all disabled:opacity-50 sm:w-auto"
                   style={{
                     letterSpacing: "0.12em",
                     backgroundColor: "var(--amber)",

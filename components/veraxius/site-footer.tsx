@@ -130,7 +130,7 @@ export function SiteFooter() {
               Those Who Support Us
             </p>
             <div
-              className="flex w-full min-h-[96px] flex-wrap items-center justify-start gap-x-6 gap-y-3 px-0 pb-0"
+              className="flex w-full min-h-[96px] flex-wrap items-center justify-center gap-x-6 gap-y-3 px-0 pb-0 md:justify-start"
               aria-label="Supporters and partners"
             >
               <a
@@ -158,7 +158,7 @@ export function SiteFooter() {
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.6, delay: 0.72, ease: [0.25, 0.1, 0.25, 1] }}
-          className="mt-4 pt-4 flex flex-col md:flex-row justify-between items-center gap-4"
+          className="mt-4 flex flex-col items-center justify-between gap-4 pt-4 text-center md:flex-row md:items-center md:text-left"
           style={{ borderTop: "1px solid var(--divider)" }}
         >
           {/* Logo */}
@@ -184,7 +184,7 @@ export function SiteFooter() {
           {/* Footer CTA */}
           <a
             href="#early-access"
-            className="font-dm-mono font-medium text-[11px] uppercase px-5 py-3 transition-all"
+            className="inline-flex min-h-[44px] items-center justify-center font-dm-mono font-medium text-[11px] uppercase px-5 py-3 transition-all"
             style={{
               letterSpacing: "0.1em",
               backgroundColor: "var(--amber)",

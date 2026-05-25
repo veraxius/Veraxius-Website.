@@ -202,7 +202,7 @@ function HeroReveal() {
     <div
       ref={ref}
       className={cn(
-        "vasp-reveal flex min-h-[100svh] flex-col items-center justify-center px-5 pb-24 pt-[7.5rem] md:px-12",
+        "vasp-reveal flex min-h-[100svh] flex-col items-center justify-center px-5 pb-24 pt-28 md:px-12 md:pt-[7.5rem]",
         visible && "visible"
       )}
       style={{ backgroundColor: BG }}
@@ -281,7 +281,7 @@ export function VaspLanding() {
         <div className="text-center">
           <StepTrackerVisual />
           <h2 className="vx-h2 mb-12 md:mb-14">How It Works</h2>
-          <div className="mx-auto mt-8 grid max-w-[1100px] grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-5 lg:gap-6">
+          <div className="mx-auto mt-8 grid w-full max-w-[1100px] grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 lg:gap-6">
             {STEP_CARDS.map((s, i) => (
               <div key={s.title} className="text-left lg:text-center">
                 <p className="font-dm-mono text-[11px] font-medium uppercase tracking-[0.12em]" style={{ color: ACCENT }}>

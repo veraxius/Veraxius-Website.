@@ -108,7 +108,7 @@ export function NumbersSection() {
         </motion.h2>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-6 gap-[2px] mt-16">
+        <div className="mt-16 grid grid-cols-1 gap-[2px] sm:grid-cols-2 lg:grid-cols-6">
           {stats.map((stat, index) => (
             <motion.div
               key={index}
@@ -119,9 +119,9 @@ export function NumbersSection() {
                 delay: 0.1 * index,
                 ease: [0.25, 0.1, 0.25, 1],
               }}
-              className={`vx-panel p-12 relative group cursor-default md:col-span-2 min-h-[420px] ${
-                index === 3 ? "md:col-start-2" : ""
-              } ${index === 4 ? "md:col-start-4" : ""}`}
+              className={`vx-panel relative group min-h-[280px] cursor-default p-8 sm:min-h-[320px] sm:p-10 lg:col-span-2 lg:min-h-[420px] lg:p-12 ${
+                index === 3 ? "lg:col-start-2" : ""
+              } ${index === 4 ? "lg:col-start-4" : ""}`}
               style={{
                 transition: "border-color 0.25s ease",
               }}

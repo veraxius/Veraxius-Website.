@@ -65,7 +65,7 @@ export function SystemPreviewSection() {
       }}
     >
       <div className="vx-container">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-20">
           {/* Left Column - Dashboard Card */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
