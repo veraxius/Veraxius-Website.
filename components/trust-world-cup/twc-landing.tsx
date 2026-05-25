@@ -18,6 +18,7 @@ import {
 } from "@/components/trust-world-cup/twc-svgs";
 
 const APPLY_URL = "#apply";
+const APPLY_FORM_URL = "https://zfrmz.com/oKZlIcsJRcHQ28CXIPDo";
 const STICKY_BAR_HEIGHT = 52;
 
 function scrollToApplySection(e: React.MouseEvent<HTMLAnchorElement>) {
@@ -78,6 +79,7 @@ function TwcCta({
   outline = false,
   className,
   onClick,
+  external = false,
 }: {
   href?: string;
   children: React.ReactNode;
@@ -85,6 +87,7 @@ function TwcCta({
   outline?: boolean;
   className?: string;
   onClick?: React.MouseEventHandler<HTMLAnchorElement>;
+  external?: boolean;
 }) {
   const isApplyLink = href === APPLY_URL || href?.endsWith("#apply");
   const sizeClasses = {
@@ -99,7 +102,14 @@ function TwcCta({
   return (
     <a
       href={href}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noopener noreferrer" : undefined}
       onClick={onClick ?? (isApplyLink ? scrollToApplySection : undefined)}
+      aria-label={
+        external
+          ? "Join the experiment — open application form in a new tab"
+          : undefined
+      }
       className={cn(
         "inline-flex max-w-full items-center justify-center text-center font-dm-mono font-medium uppercase tracking-cta transition-[filter,background-color,border-color] hover:brightness-110",
         sizeClasses[size],
@@ -727,6 +737,8 @@ export function TwcLanding() {
           </p>
           <div className="mt-12 flex w-full flex-col items-center md:mt-16">
             <TwcCta
+              href={APPLY_FORM_URL}
+              external
               size="large"
               className="w-full max-w-sm !text-[13px] sm:w-auto md:!px-14 md:!py-6 md:!text-[15px]"
             >
