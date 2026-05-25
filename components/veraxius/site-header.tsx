@@ -24,7 +24,9 @@ const navLinkClass =
 export function SiteHeader() {
   const pathname = usePathname();
   const isStore = pathname?.startsWith("/aimsignalstore") ?? false;
+  const isProgram = pathname?.startsWith("/aimsignalprogram") ?? false;
   const isHome = pathname === "/";
+  const showTrustWorldCup = isHome || isStore || isProgram;
   const contactHref =
     pathname?.startsWith("/aimsignalstore") || pathname?.startsWith("/aimsignalprogram")
       ? "/#contact-us"
@@ -74,7 +76,7 @@ export function SiteHeader() {
 
   const navLinks = (
     <>
-      {isHome && (
+      {showTrustWorldCup && (
         <Link
           href="/trustworldcup"
           className={navLinkClass}
@@ -171,7 +173,7 @@ export function SiteHeader() {
             style={{ color: "var(--amber)" }}
             aria-label="Main navigation"
           >
-            {isHome && (
+            {showTrustWorldCup && (
               <>
                 <Link
                   href="/trustworldcup"

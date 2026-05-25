@@ -34,7 +34,9 @@ function StoreReveal({
       style={style}
     >
       {padded ? (
-        <div className="relative mx-auto w-full max-w-[1200px] px-5 py-20 md:px-10 md:py-28 lg:px-12">{children}</div>
+        <div className="relative mx-auto w-full min-w-0 max-w-[1200px] px-5 py-16 sm:py-20 md:px-10 md:py-28 lg:px-12">
+          {children}
+        </div>
       ) : (
         children
       )}
@@ -76,21 +78,39 @@ export default function AimSignalStorePage() {
   return (
     <>
       <SiteHeader />
-      <main className="min-h-screen" style={{ backgroundColor: "var(--bg-primary)", color: "var(--text-primary)" }}>
-        {/* HERO */}
-        <section className="snap-start snap-always">
-          <div className="relative h-[min(68vh,820px)] min-h-[22rem] w-full">
-            <Image
-              src={IMG.header}
-              alt="AIM Signal Store — system access"
-              fill
-              priority
-              className="object-cover"
-              sizes="100vw"
-            />
+      <main
+        className="min-h-screen min-w-0 w-full overflow-x-clip"
+        style={{ backgroundColor: "var(--bg-primary)", color: "var(--text-primary)" }}
+      >
+        {/* HERO — pt clears fixed SiteHeader; mobile shows full banner width without crop */}
+        <section className="snap-start snap-always w-full min-w-0 overflow-x-clip">
+          <div
+            className="relative w-full bg-[var(--bg-primary)] pt-[calc(3.25rem+env(safe-area-inset-top,0px))] sm:pt-[calc(4rem+env(safe-area-inset-top,0px))]"
+          >
+            <div className="relative w-full lg:hidden">
+              <Image
+                src={IMG.header}
+                alt="AIM Signal Store — system access"
+                width={1200}
+                height={720}
+                priority
+                className="h-auto w-full max-w-full"
+                sizes="100vw"
+              />
+            </div>
+            <div className="relative hidden h-[min(62vh,820px)] min-h-[20rem] w-full lg:block">
+              <Image
+                src={IMG.header}
+                alt="AIM Signal Store — system access"
+                fill
+                priority
+                className="object-cover object-[center_20%]"
+                sizes="100vw"
+              />
+            </div>
           </div>
           <div
-            className="mx-auto flex w-full max-w-[1200px] flex-col items-center px-5 py-12 text-center md:py-16"
+            className="mx-auto flex w-full min-w-0 max-w-[1200px] flex-col items-center px-5 py-10 text-center sm:py-12 md:py-16"
             style={{ backgroundColor: "var(--bg-primary)", color: "var(--text-primary)" }}
           >
             <StoreCta href="#product-grid">
@@ -309,7 +329,7 @@ export default function AimSignalStorePage() {
         <StoreReveal
           padded={false}
           style={{ backgroundColor: "#000000", color: "#fff" }}
-          className="flex min-h-[85vh] flex-col justify-center"
+          className="flex min-h-[70vh] flex-col justify-center md:min-h-[85vh]"
         >
           <div className="mx-auto w-full max-w-[1200px] px-5 py-24 text-center md:px-12 md:py-32">
             <p className="font-syne font-extrabold uppercase tracking-[-0.03em]" style={{ fontSize: "clamp(2rem, 7vw, 4.5rem)", lineHeight: 1.05 }}>

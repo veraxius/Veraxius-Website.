@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { useReveal } from "@/components/vasp/use-reveal";
@@ -21,9 +22,9 @@ const APPLY_URL = "#apply";
 const APPLY_FORM_URL = "https://zfrmz.com/oKZlIcsJRcHQ28CXIPDo";
 const STICKY_BAR_HEIGHT = 52;
 
-/** Syne titles — same scale as homepage (vx-h1 hero, vx-h2 sections, vx-title-* cards) */
-const TWC_TITLE_HERO = "vx-h1 font-syne font-extrabold text-balance break-words";
-const TWC_TITLE_SECTION = cn(TWC_TITLE_HERO, "text-center");
+/** Syne titles — responsive clamps aligned with homepage */
+const TWC_TITLE_DISPLAY = "twc-headline-display font-syne font-extrabold";
+const TWC_TITLE_SECTION = "twc-headline-section font-syne font-extrabold text-center";
 const TWC_TITLE_CARD = "vx-title-card font-syne text-balance break-words";
 const TWC_TITLE_STATEMENT = "vx-title-statement font-syne text-balance break-words text-center";
 
@@ -131,16 +132,11 @@ function TwcCta({
   );
 }
 
-function scrollToPageTop(e: React.MouseEvent<HTMLAnchorElement>) {
-  e.preventDefault();
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
 function StickyBar({ visible }: { visible: boolean }) {
   return (
     <motion.div
       className={cn(
-        "twc-sticky-bar fixed left-0 right-0 top-0 z-50 flex min-w-0 items-center justify-between gap-3 px-4 sm:px-5 md:px-8",
+        "twc-sticky-bar fixed left-0 right-0 top-0 z-50 flex min-w-0 items-center justify-between gap-2 px-3 sm:gap-3 sm:px-5 md:px-8",
         visible && "visible",
       )}
       style={{
@@ -151,24 +147,21 @@ function StickyBar({ visible }: { visible: boolean }) {
       }}
       aria-hidden={!visible}
     >
-      <a
-        href="#"
-        onClick={scrollToPageTop}
-        aria-label="Trust World Cup — volver arriba"
-        className="vx-mono-label group flex min-w-0 max-w-[calc(100%-7rem)] shrink items-center gap-2 rounded-sm leading-none text-[var(--text-secondary)] transition-colors duration-200 hover:text-[var(--amber)] sm:max-w-none sm:gap-2.5"
+      <Link
+        href="/"
+        aria-label="Veraxius home"
+        className="flex min-w-0 shrink items-center transition-opacity hover:opacity-80"
       >
         <Image
-          src="/logo-simple.png"
-          alt=""
-          width={40}
-          height={40}
-          className="h-8 w-8 shrink-0 object-contain transition-[filter] duration-200 group-hover:brightness-125 sm:h-[40px] sm:w-[40px]"
-          aria-hidden
+          src="/Veraxius Logo FINAL FINAL 2 Horizontal Version-02.png"
+          alt="Veraxius"
+          width={180}
+          height={36}
+          priority
+          className="h-7 w-auto max-w-[min(140px,42vw)] sm:h-8 md:h-9"
+          style={{ width: "auto" }}
         />
-        <span className="truncate transition-colors duration-200 group-hover:text-[var(--amber)]">
-          TRUST WORLD CUP™
-        </span>
-      </a>
+      </Link>
       <TwcCta size="small" outline className="ml-auto shrink-0 sm:ml-0">
         <span className="sm:hidden">JOIN</span>
         <span className="hidden sm:inline">JOIN THE EXPERIMENT</span>
@@ -191,7 +184,7 @@ function HeroSection() {
 
   return (
     <section
-      className="relative flex min-h-[100svh] w-full min-w-0 flex-col overflow-x-clip pb-6 lg:pb-8"
+      className="relative flex min-h-[100dvh] min-h-[100svh] w-full min-w-0 flex-col overflow-x-clip pb-6 lg:min-h-[100svh] lg:pb-8"
       style={{ backgroundColor: "var(--bg-primary)" }}
     >
       {/* Signal visual — decorative overlay on the right; section bg stays uniform */}
@@ -205,21 +198,13 @@ function HeroSection() {
       <motion.div
         ref={revealRef}
         className={cn(
-          "twc-reveal relative z-10 flex min-w-0 flex-1 flex-col justify-center pb-16 pt-[4.5rem] lg:pb-6 lg:pt-[3.25rem]",
+          "twc-reveal relative z-10 flex min-w-0 flex-1 flex-col justify-start pb-12 pt-[calc(3.5rem+env(safe-area-inset-top,0px))] sm:justify-center sm:pb-16 sm:pt-[4.5rem] lg:pb-6 lg:pt-[3.25rem]",
           "w-full",
           visible && "visible",
         )}
       >
-        <div className="vx-container w-full max-w-full text-center lg:text-left">
-          <h1
-            className="font-syne font-extrabold text-balance break-words"
-            style={{
-              fontSize: "clamp(44px, 6vw, 80px)",
-              lineHeight: "1.05",
-              letterSpacing: "-0.02em",
-              color: "var(--text-primary)",
-            }}
-          >
+        <div className="vx-container w-full min-w-0 max-w-full text-center lg:text-left">
+          <h1 className={TWC_TITLE_DISPLAY}>
             {lines.map((line, i) => (
               <span
                 key={line}
@@ -252,7 +237,7 @@ function StaggeredStatement({ line, index }: { line: string; index: number }) {
     <p
       ref={ref}
       className={cn(
-        "twc-reveal py-6 md:py-8",
+        "twc-reveal min-w-0 px-1 py-5 sm:px-0 sm:py-8",
         TWC_TITLE_STATEMENT,
         visible && "visible",
       )}
@@ -287,8 +272,8 @@ function AnimatedCounter({ target }: { target: number }) {
   }, [visible, target]);
 
   return (
-    <div ref={ref} className="w-full text-center">
-      <p className={cn(TWC_TITLE_HERO, "tabular-nums text-[var(--amber)]")}>
+    <div ref={ref} className="w-full min-w-0 text-center">
+      <p className={cn(TWC_TITLE_DISPLAY, "tabular-nums text-[var(--amber)]")}>
         {count}
         <span style={{ color: "var(--text-tertiary)" }}> / 500</span>
       </p>
@@ -334,7 +319,7 @@ function FaqAccordion() {
   ];
 
   return (
-    <div className="mx-auto max-w-2xl">
+    <div className="w-full min-w-0">
       {faqs.map((item, i) => {
         const isOpen = openIndex === i;
         return (
@@ -374,7 +359,7 @@ function FaqAccordion() {
                   transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
                   className="overflow-hidden"
                 >
-                  <p className="vx-body-sm pb-5">
+                  <p className="vx-body-sm break-words pb-5">
                     {item.a}
                   </p>
                 </motion.div>
@@ -426,13 +411,13 @@ const MISSIONS_BOTTOM = [
 function MissionCard({ name, desc }: { name: string; desc: string }) {
   return (
     <div
-      className="h-full rounded-sm border p-6 transition-shadow duration-250 hover:shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
+      className="h-full min-w-0 rounded-sm border p-5 transition-shadow duration-250 hover:shadow-[0_8px_24px_rgba(0,0,0,0.35)] sm:p-6"
       style={{
         backgroundColor: "var(--bg-panel)",
         borderColor: "var(--divider)",
       }}
     >
-      <p className={cn(TWC_TITLE_CARD, "text-[var(--amber)]")}>{name}</p>
+      <p className={cn(TWC_TITLE_CARD, "break-words text-[var(--amber)]")}>{name}</p>
       <p className="vx-body-sm mt-3">
         {desc}
       </p>
@@ -501,7 +486,7 @@ const COUNTRIES = [
 export function TwcLanding() {
   return (
     <main
-      className="twc-page min-h-screen"
+      className="twc-page min-h-screen min-w-0 w-full"
       style={{ backgroundColor: "var(--bg-primary)", color: "var(--text-primary)" }}
     >
       <StickyBar visible />
@@ -511,7 +496,7 @@ export function TwcLanding() {
 
       {/* 2. WORLD CUP WILL TEST TRUST */}
       <RevealSection dark className="!pt-[6.25rem] !pb-24 md:!pt-[8.25rem] md:!pb-32">
-        <div className="mx-auto w-full max-w-5xl text-center">
+        <div className="mx-auto w-full min-w-0 max-w-5xl text-center">
           <h2 className={TWC_TITLE_SECTION}>
             <span className="block">The next World Cup</span>
             <span className="mt-[0.12em] block">Will test</span>
@@ -523,12 +508,12 @@ export function TwcLanding() {
 
       {/* 3. THIS IS NOT A FAN CLUB */}
       <RevealSection>
-        <div className="mx-auto w-full max-w-[960px]">
+        <div className="mx-auto w-full min-w-0 max-w-[960px]">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
             {NOT_FAN_CLUB_CARDS.map((card) => (
               <div
                 key={card.title}
-                className="vx-panel p-8 text-center transition-shadow duration-250 hover:shadow-[0_8px_32px_rgba(0,0,0,0.4)]"
+                className="vx-panel min-w-0 p-6 text-center transition-shadow duration-250 hover:shadow-[0_8px_32px_rgba(0,0,0,0.4)] sm:p-8"
               >
                 <h3 className={cn(TWC_TITLE_CARD, "text-center")}>{card.title}</h3>
                 <p className="vx-body-sm mt-4 text-center">
@@ -542,7 +527,7 @@ export function TwcLanding() {
 
       {/* 4. WHY PEOPLE ARE JOINING */}
       <RevealSection dark>
-        <div className="mx-auto w-full max-w-xl text-center">
+        <div className="mx-auto w-full min-w-0 max-w-xl px-1 text-center sm:px-0">
           {WHY_JOINING.map((line, i) => (
             <StaggeredStatement key={line} line={line} index={i} />
           ))}
@@ -551,7 +536,7 @@ export function TwcLanding() {
 
       {/* 5. WHO BELONGS HERE */}
       <RevealSection>
-        <div className="mx-auto w-full max-w-2xl px-0 text-center">
+        <div className="mx-auto w-full min-w-0 max-w-2xl px-0 text-center">
           <p className="vx-body">If you&apos;ve ever questioned what you&apos;re being told.</p>
           <p className="vx-body mt-6">
             If you believe the next World Cup will be about more than scores.
@@ -559,7 +544,7 @@ export function TwcLanding() {
           <p className="vx-body mt-6">
             If you want to be in the room when something new begins.
           </p>
-          <p className={cn(TWC_TITLE_HERO, "mt-14 text-center text-[var(--amber)]")}>
+          <p className={cn(TWC_TITLE_DISPLAY, "mt-14 text-center text-[var(--amber)]")}>
             You belong here.
           </p>
         </div>
@@ -567,21 +552,16 @@ export function TwcLanding() {
 
       {/* 6. CHOOSE YOUR MISSION */}
       <RevealSection dark>
-        <div className="mx-auto w-full max-w-5xl">
+        <div className="mx-auto w-full min-w-0 max-w-5xl">
           <h2 className={cn(TWC_TITLE_SECTION, "mb-12 md:mb-16")}>Choose Your Mission</h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {MISSIONS_TOP.map((m) => (
               <MissionCard key={m.name} name={m.name} desc={m.desc} />
             ))}
           </div>
-          <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:justify-center">
+          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {MISSIONS_BOTTOM.map((m) => (
-              <div
-                key={m.name}
-                className="w-full sm:w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)]"
-              >
-                <MissionCard name={m.name} desc={m.desc} />
-              </div>
+              <MissionCard key={m.name} name={m.name} desc={m.desc} />
             ))}
           </div>
         </div>
@@ -589,7 +569,7 @@ export function TwcLanding() {
 
       {/* 7. NOT EVERYONE WILL GET IN */}
       <RevealSection dark className="!py-28 md:!py-40">
-        <div className="mx-auto w-full max-w-5xl text-center">
+        <div className="mx-auto w-full min-w-0 max-w-5xl text-center">
           <div
             className="mx-auto mb-10 h-px w-24"
             style={{ backgroundColor: "var(--amber)" }}
@@ -609,7 +589,7 @@ export function TwcLanding() {
 
       {/* 8. FOUNDING MEMBER BENEFITS */}
       <RevealSection>
-        <div className="mx-auto w-full max-w-4xl">
+        <div className="mx-auto w-full min-w-0 max-w-4xl">
           <h2 className={cn(TWC_TITLE_SECTION, "mb-12 md:mb-16")}>
             Founding Member Benefits
           </h2>
@@ -634,13 +614,13 @@ export function TwcLanding() {
 
       {/* 9. GLOBAL SIGNAL */}
       <RevealSection dark>
-        <div className="mx-auto max-w-3xl">
+        <div className="mx-auto w-full min-w-0 max-w-3xl">
           <AnimatedCounter target={247} />
           <div className="mt-16 border-t pt-12" style={{ borderColor: "var(--divider)" }}>
             <p className="vx-eyebrow mb-8 text-center !text-[var(--text-tertiary)]">
               Countries joining
             </p>
-            <div className="flex flex-wrap justify-center gap-x-8 gap-y-3">
+            <div className="flex flex-wrap justify-center gap-x-4 gap-y-3 sm:gap-x-8">
               {COUNTRIES.map((c) => (
                 <span
                   key={c}
@@ -656,10 +636,10 @@ export function TwcLanding() {
 
       {/* 10. BEFORE THE FIRST WHISTLE */}
       <RevealSection dark className="!py-28 md:!py-36">
-        <div className="mx-auto w-full max-w-3xl text-center">
-          <p className={TWC_TITLE_HERO}>The tournament begins.</p>
-          <p className={cn(TWC_TITLE_HERO, "mt-[0.12em]")}>The window closes.</p>
-          <p className={cn(TWC_TITLE_HERO, "mt-[0.12em] text-[var(--amber)]")}>
+        <div className="mx-auto w-full min-w-0 max-w-3xl text-center">
+          <p className={TWC_TITLE_DISPLAY}>The tournament begins.</p>
+          <p className={cn(TWC_TITLE_DISPLAY, "mt-[0.12em]")}>The window closes.</p>
+          <p className={cn(TWC_TITLE_DISPLAY, "mt-[0.12em] text-[var(--amber)]")}>
             Apply before the first whistle.
           </p>
         </div>
@@ -667,13 +647,13 @@ export function TwcLanding() {
 
       {/* 11. HISTORY IS STARTING */}
       <RevealSection>
-        <div className="mx-auto w-full max-w-2xl px-0 text-center">
+        <div className="mx-auto w-full min-w-0 max-w-2xl px-0 text-center">
           <p className="vx-body">Every movement has a beginning.</p>
           <p className="vx-body mt-6">This is ours.</p>
-          <p className={cn(TWC_TITLE_HERO, "mt-10")}>
+          <p className={cn(TWC_TITLE_DISPLAY, "mt-10")}>
             500 people will be there when it starts.
           </p>
-          <p className={cn(TWC_TITLE_HERO, "mt-6 text-[var(--amber)]")}>Will you?</p>
+          <p className={cn(TWC_TITLE_DISPLAY, "mt-6 text-[var(--amber)]")}>Will you?</p>
         </div>
       </RevealSection>
 
@@ -683,11 +663,11 @@ export function TwcLanding() {
         dark
         className="scroll-mt-[52px] !py-28 md:!py-36"
       >
-        <div className="mx-auto flex w-full max-w-3xl flex-col items-center px-0 text-center">
-          <h2 className={cn(TWC_TITLE_HERO, "w-full")}>Will you help shape trust?</h2>
+        <div className="mx-auto flex w-full min-w-0 max-w-3xl flex-col items-center px-2 text-center sm:px-0">
+          <h2 className={cn(TWC_TITLE_DISPLAY, "w-full")}>Will you help shape trust?</h2>
           <p
             className={cn(
-              TWC_TITLE_HERO,
+              TWC_TITLE_DISPLAY,
               "mt-[0.12em] w-full text-[var(--text-tertiary)]",
             )}
           >
@@ -698,7 +678,7 @@ export function TwcLanding() {
               href={APPLY_FORM_URL}
               external
               size="large"
-              className="w-full max-w-sm !text-[13px] sm:w-auto md:!px-14 md:!py-6 md:!text-[15px]"
+              className="w-full max-w-sm !text-[12px] sm:w-auto sm:!text-[13px] md:!px-14 md:!py-6 md:!text-[15px]"
             >
               JOIN THE EXPERIMENT
             </TwcCta>
@@ -711,14 +691,23 @@ export function TwcLanding() {
 
       {/* 13. FAQ */}
       <RevealSection>
-        <h2 className={cn(TWC_TITLE_SECTION, "mb-10 md:mb-14")}>Faq</h2>
-        <FaqAccordion />
+        <div className="mx-auto w-full min-w-0 max-w-2xl">
+          <h2 className={cn(TWC_TITLE_SECTION, "mb-10 md:mb-14")}>Faq</h2>
+          <FaqAccordion />
+        </div>
       </RevealSection>
 
       {/* 14. FOOTER */}
       <RevealSection dark className="!pb-16 !pt-16">
-        <footer className="mx-auto w-full max-w-3xl text-center">
-          <p className={cn(TWC_TITLE_HERO, "text-[clamp(22px,2.8vw,34px)] leading-[1.2]")}>
+        <footer className="mx-auto w-full min-w-0 max-w-3xl px-2 text-center sm:px-0">
+          <p
+            className="font-syne font-extrabold text-balance break-words"
+            style={{
+              fontSize: "clamp(22px, 2.8vw, 34px)",
+              lineHeight: "1.2",
+              letterSpacing: "-0.02em",
+            }}
+          >
             VERAXIUS
           </p>
           <p className="vx-body-sm mt-4">
@@ -742,7 +731,7 @@ export function TwcLanding() {
               veraxius.com
             </a>
           </nav>
-          <p className="vx-mono-sm mt-10 leading-relaxed text-[var(--text-tertiary)]">
+          <p className="vx-mono-sm mt-10 break-words px-2 leading-relaxed text-[var(--text-tertiary)] sm:px-0">
             © 2026 Veraxius, Inc. All rights reserved. AIM™ is a trademark of Veraxius IP
             Holdings LLC.
           </p>
