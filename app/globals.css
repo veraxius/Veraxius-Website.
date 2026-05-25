@@ -176,6 +176,27 @@ body::before {
     font-weight: 600;
     font-size: clamp(18px, 2.5vw, 28px);
     line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+  }
+
+  /* Card / item titles — matches homepage step cards (Syne bold ~19px) */
+  .vx-title-card {
+    font-family: var(--font-syne), sans-serif;
+    font-weight: 700;
+    font-size: 19px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+  }
+
+  /* Pull-quote / staggered lines — Syne semibold, responsive */
+  .vx-title-statement {
+    font-family: var(--font-syne), sans-serif;
+    font-weight: 600;
+    font-size: clamp(18px, 2.5vw, 28px);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
     color: var(--text-primary);
   }
 
@@ -456,108 +477,6 @@ body::before {
     margin-right: auto;
   }
 
-  .twc-headline-hero {
-    font-family: var(--font-syne), sans-serif;
-    font-weight: 800;
-    font-size: clamp(1.5rem, 5vw, 4.5rem);
-    line-height: 1.08;
-    letter-spacing: 0.03em;
-    text-wrap: balance;
-    overflow-wrap: break-word;
-    word-break: break-word;
-  }
-
-  @media (min-width: 1024px) {
-    .twc-headline-hero {
-      letter-spacing: 0.05em;
-    }
-  }
-
-  .twc-headline-xl {
-    font-family: var(--font-syne), sans-serif;
-    font-weight: 800;
-    font-size: clamp(1.5rem, 7vw, 7.5rem);
-    line-height: 1.05;
-    letter-spacing: 0.03em;
-    text-wrap: balance;
-    overflow-wrap: break-word;
-    word-break: break-word;
-  }
-
-  @media (min-width: 768px) {
-    .twc-headline-xl {
-      letter-spacing: 0.05em;
-    }
-  }
-
-  .twc-headline-cinematic {
-    font-family: var(--font-syne), sans-serif;
-    font-weight: 800;
-    font-size: clamp(1.375rem, 6.25vw, 6.5rem);
-    line-height: 1.05;
-    letter-spacing: 0.03em;
-    text-wrap: balance;
-    overflow-wrap: break-word;
-    word-break: break-word;
-  }
-
-  @media (min-width: 768px) {
-    .twc-headline-cinematic {
-      letter-spacing: 0.05em;
-    }
-  }
-
-  .twc-headline-lg {
-    font-family: var(--font-syne), sans-serif;
-    font-weight: 800;
-    font-size: clamp(1.375rem, 4.5vw, 3.25rem);
-    line-height: 1.1;
-    letter-spacing: 0.03em;
-    text-wrap: balance;
-    overflow-wrap: break-word;
-    word-break: break-word;
-  }
-
-  @media (min-width: 768px) {
-    .twc-headline-lg {
-      letter-spacing: 0.05em;
-    }
-  }
-
-  .twc-headline-md {
-    font-family: var(--font-syne), sans-serif;
-    font-weight: 800;
-    font-size: clamp(1.25rem, 4vw, 2.75rem);
-    line-height: 1.12;
-    letter-spacing: 0.03em;
-    text-wrap: balance;
-    overflow-wrap: break-word;
-    word-break: break-word;
-  }
-
-  @media (min-width: 768px) {
-    .twc-headline-md {
-      letter-spacing: 0.05em;
-    }
-  }
-
-  .twc-headline-accent {
-    font-family: var(--font-syne), sans-serif;
-    font-weight: 800;
-    font-size: clamp(1.75rem, 5vw, 4rem);
-    line-height: 1.1;
-    letter-spacing: 0.03em;
-    color: var(--amber);
-    text-wrap: balance;
-    overflow-wrap: break-word;
-    word-break: break-word;
-  }
-
-  @media (min-width: 768px) {
-    .twc-headline-accent {
-      letter-spacing: 0.05em;
-    }
-  }
 }
 
 @layer utilities {

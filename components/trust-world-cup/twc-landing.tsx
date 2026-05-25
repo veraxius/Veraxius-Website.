@@ -21,6 +21,12 @@ const APPLY_URL = "#apply";
 const APPLY_FORM_URL = "https://zfrmz.com/oKZlIcsJRcHQ28CXIPDo";
 const STICKY_BAR_HEIGHT = 52;
 
+/** Syne titles — same scale as homepage (vx-h1 hero, vx-h2 sections, vx-title-* cards) */
+const TWC_TITLE_HERO = "vx-h1 font-syne font-extrabold text-balance break-words";
+const TWC_TITLE_SECTION = cn(TWC_TITLE_HERO, "text-center");
+const TWC_TITLE_CARD = "vx-title-card font-syne text-balance break-words";
+const TWC_TITLE_STATEMENT = "vx-title-statement font-syne text-balance break-words text-center";
+
 function scrollToApplySection(e: React.MouseEvent<HTMLAnchorElement>) {
   e.preventDefault();
   const target = document.getElementById("apply");
@@ -149,7 +155,7 @@ function StickyBar({ visible }: { visible: boolean }) {
         href="#"
         onClick={scrollToPageTop}
         aria-label="Trust World Cup — volver arriba"
-        className="group flex min-w-0 max-w-[calc(100%-7rem)] shrink items-center gap-2 rounded-sm font-dm-mono text-[10px] uppercase leading-none tracking-[0.12em] text-[var(--text-secondary)] transition-colors duration-200 hover:text-[var(--amber)] sm:max-w-none sm:gap-2.5 sm:text-[12px]"
+        className="vx-mono-label group flex min-w-0 max-w-[calc(100%-7rem)] shrink items-center gap-2 rounded-sm leading-none text-[var(--text-secondary)] transition-colors duration-200 hover:text-[var(--amber)] sm:max-w-none sm:gap-2.5"
       >
         <Image
           src="/logo-simple.png"
@@ -175,17 +181,17 @@ function HeroSection() {
   const { ref: revealRef, visible } = useReveal<HTMLDivElement>();
 
   const lines = [
-    "TRUST WORLD CUP™",
-    "THE WORLD WILL ARGUE.",
-    "WE WILL OBSERVE.",
-    "500 PEOPLE.",
-    "ONE WORLD CUP.",
-    "MILLIONS OF SIGNALS.",
+    "Trust World Cup™",
+    "The world will argue.",
+    "We will observe.",
+    "500 people.",
+    "One World Cup.",
+    "Millions of signals.",
   ];
 
   return (
     <section
-      className="relative flex min-h-[100svh] w-full min-w-0 flex-col overflow-x-clip"
+      className="relative flex min-h-[100svh] w-full min-w-0 flex-col overflow-x-clip pb-6 lg:pb-8"
       style={{ backgroundColor: "var(--bg-primary)" }}
     >
       {/* Signal visual — decorative overlay on the right; section bg stays uniform */}
@@ -199,20 +205,27 @@ function HeroSection() {
       <motion.div
         ref={revealRef}
         className={cn(
-          "twc-reveal relative z-10 flex min-w-0 flex-1 flex-col justify-center pb-16 pt-[4.5rem] lg:pb-0 lg:pt-[3.25rem]",
+          "twc-reveal relative z-10 flex min-w-0 flex-1 flex-col justify-center pb-16 pt-[4.5rem] lg:pb-6 lg:pt-[3.25rem]",
           "w-full",
           visible && "visible",
         )}
       >
         <div className="vx-container w-full max-w-full text-center lg:text-left">
-          <h1 className="twc-headline-hero uppercase">
+          <h1
+            className="font-syne font-extrabold text-balance break-words"
+            style={{
+              fontSize: "clamp(44px, 6vw, 80px)",
+              lineHeight: "1.05",
+              letterSpacing: "-0.02em",
+              color: "var(--text-primary)",
+            }}
+          >
             {lines.map((line, i) => (
               <span
                 key={line}
-                className="block"
+                className={cn("block", i > 0 && "mt-[0.12em]")}
                 style={{
                   color: i === 0 ? "var(--amber)" : "var(--text-primary)",
-                  marginTop: i > 0 ? "0.12em" : 0,
                 }}
               >
                 {line}
@@ -223,10 +236,7 @@ function HeroSection() {
             <TwcCta size="large" className="w-full max-w-xs sm:w-auto">
               JOIN THE EXPERIMENT
             </TwcCta>
-            <p
-              className="mt-4 font-dm-mono text-[11px] uppercase tracking-[0.1em]"
-              style={{ color: "var(--text-tertiary)" }}
-            >
+            <p className="vx-mono-sm mt-4 text-[var(--text-tertiary)]">
               2–4 minute application
             </p>
           </div>
@@ -242,11 +252,11 @@ function StaggeredStatement({ line, index }: { line: string; index: number }) {
     <p
       ref={ref}
       className={cn(
-        "twc-reveal py-6 text-center font-dm-sans text-[clamp(17px,4vw,24px)] leading-snug md:py-8",
+        "twc-reveal py-6 md:py-8",
+        TWC_TITLE_STATEMENT,
         visible && "visible",
       )}
       style={{
-        color: "var(--text-primary)",
         transitionDelay: `${index * 0.08}s`,
       }}
     >
@@ -278,14 +288,11 @@ function AnimatedCounter({ target }: { target: number }) {
 
   return (
     <div ref={ref} className="w-full text-center">
-      <p className="twc-headline-xl tabular-nums text-amber">
+      <p className={cn(TWC_TITLE_HERO, "tabular-nums text-[var(--amber)]")}>
         {count}
         <span style={{ color: "var(--text-tertiary)" }}> / 500</span>
       </p>
-      <p
-        className="mt-4 font-dm-mono text-[11px] uppercase tracking-[0.14em]"
-        style={{ color: "var(--text-secondary)" }}
-      >
+      <p className="vx-eyebrow mt-4 !text-[var(--text-secondary)]">
         Founding Operatives Applied
       </p>
     </div>
@@ -343,8 +350,7 @@ function FaqAccordion() {
               aria-expanded={isOpen}
             >
               <span
-                className="min-w-0 flex-1 break-words pr-2 font-dm-sans text-[15px] leading-snug sm:text-[17px]"
-                style={{ color: "var(--text-primary)" }}
+                className={cn(TWC_TITLE_CARD, "min-w-0 flex-1 pr-2")}
               >
                 {item.q}
               </span>
@@ -368,10 +374,7 @@ function FaqAccordion() {
                   transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
                   className="overflow-hidden"
                 >
-                  <p
-                    className="pb-5 font-dm-sans text-[15px] leading-relaxed"
-                    style={{ color: "var(--text-secondary)" }}
-                  >
+                  <p className="vx-body-sm pb-5">
                     {item.a}
                   </p>
                 </motion.div>
@@ -395,12 +398,12 @@ const NOT_FAN_CLUB_CARDS = [
   },
   {
     title: "Not sports content",
-    body: "Football is the test environment. Trust is the subject.",
+    body: "Soccer is the test environment. Trust is the subject.",
   },
 ];
 
 const WHY_JOINING = [
-  "Because they love football.",
+  "Because they love soccer.",
   "Because they question narratives.",
   "Because they want to be early.",
   "Because they believe trust is infrastructure.",
@@ -429,16 +432,8 @@ function MissionCard({ name, desc }: { name: string; desc: string }) {
         borderColor: "var(--divider)",
       }}
     >
-      <p
-        className="break-words font-dm-mono text-[11px] font-medium uppercase tracking-[0.08em]"
-        style={{ color: "var(--amber)" }}
-      >
-        {name}
-      </p>
-      <p
-        className="mt-3 font-dm-sans text-[14px] leading-snug"
-        style={{ color: "var(--text-secondary)" }}
-      >
+      <p className={cn(TWC_TITLE_CARD, "text-[var(--amber)]")}>{name}</p>
+      <p className="vx-body-sm mt-3">
         {desc}
       </p>
     </div>
@@ -515,16 +510,13 @@ export function TwcLanding() {
       <HeroSection />
 
       {/* 2. WORLD CUP WILL TEST TRUST */}
-      <RevealSection dark className="!py-24 md:!py-32">
+      <RevealSection dark className="!pt-[6.25rem] !pb-24 md:!pt-[8.25rem] md:!pb-32">
         <div className="mx-auto w-full max-w-5xl text-center">
-          <h2 className="twc-headline-cinematic uppercase text-primary">
-            THE NEXT WORLD CUP
-            <br />
-            WILL TEST
-            <br />
-            MORE THAN TEAMS.
-            <br />
-            <span className="text-amber">IT WILL TEST TRUST.</span>
+          <h2 className={TWC_TITLE_SECTION}>
+            <span className="block">The next World Cup</span>
+            <span className="mt-[0.12em] block">Will test</span>
+            <span className="mt-[0.12em] block">More than teams.</span>
+            <span className="mt-[0.12em] block text-[var(--amber)]">It will test trust.</span>
           </h2>
         </div>
       </RevealSection>
@@ -538,16 +530,8 @@ export function TwcLanding() {
                 key={card.title}
                 className="vx-panel p-8 text-center transition-shadow duration-250 hover:shadow-[0_8px_32px_rgba(0,0,0,0.4)]"
               >
-                <h3
-                  className="font-syne text-lg font-bold uppercase md:text-xl"
-                  style={{ letterSpacing: "0.04em", color: "var(--text-primary)" }}
-                >
-                  {card.title}
-                </h3>
-                <p
-                  className="mt-4 font-dm-sans text-[15px] leading-relaxed md:text-[16px]"
-                  style={{ color: "var(--text-secondary)" }}
-                >
+                <h3 className={cn(TWC_TITLE_CARD, "text-center")}>{card.title}</h3>
+                <p className="vx-body-sm mt-4 text-center">
                   {card.body}
                 </p>
               </div>
@@ -568,34 +552,23 @@ export function TwcLanding() {
       {/* 5. WHO BELONGS HERE */}
       <RevealSection>
         <div className="mx-auto w-full max-w-2xl px-0 text-center">
-          <p
-            className="font-dm-sans text-[clamp(17px,4vw,22px)] leading-relaxed"
-            style={{ color: "var(--text-secondary)" }}
-          >
-            If you&apos;ve ever questioned what you&apos;re being told.
-          </p>
-          <p
-            className="mt-6 font-dm-sans text-[clamp(17px,4vw,22px)] leading-relaxed"
-            style={{ color: "var(--text-secondary)" }}
-          >
+          <p className="vx-body">If you&apos;ve ever questioned what you&apos;re being told.</p>
+          <p className="vx-body mt-6">
             If you believe the next World Cup will be about more than scores.
           </p>
-          <p
-            className="mt-6 font-dm-sans text-[clamp(17px,4vw,22px)] leading-relaxed"
-            style={{ color: "var(--text-secondary)" }}
-          >
+          <p className="vx-body mt-6">
             If you want to be in the room when something new begins.
           </p>
-          <p className="twc-headline-accent mt-14">You belong here.</p>
+          <p className={cn(TWC_TITLE_HERO, "mt-14 text-center text-[var(--amber)]")}>
+            You belong here.
+          </p>
         </div>
       </RevealSection>
 
       {/* 6. CHOOSE YOUR MISSION */}
       <RevealSection dark>
         <div className="mx-auto w-full max-w-5xl">
-          <h2 className="twc-headline-lg mb-12 text-center uppercase md:mb-16">
-            Choose Your Mission
-          </h2>
+          <h2 className={cn(TWC_TITLE_SECTION, "mb-12 md:mb-16")}>Choose Your Mission</h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {MISSIONS_TOP.map((m) => (
               <MissionCard key={m.name} name={m.name} desc={m.desc} />
@@ -622,10 +595,9 @@ export function TwcLanding() {
             style={{ backgroundColor: "var(--amber)" }}
             aria-hidden
           />
-          <h2 className="twc-headline-cinematic uppercase">
-            NOT EVERYONE
-            <br />
-            WILL GET IN.
+          <h2 className={TWC_TITLE_SECTION}>
+            <span className="block">Not everyone</span>
+            <span className="mt-[0.12em] block">Will get in.</span>
           </h2>
           <div
             className="mx-auto mt-10 h-px w-24"
@@ -638,7 +610,7 @@ export function TwcLanding() {
       {/* 8. FOUNDING MEMBER BENEFITS */}
       <RevealSection>
         <div className="mx-auto w-full max-w-4xl">
-          <h2 className="twc-headline-lg mb-12 text-center uppercase md:mb-16">
+          <h2 className={cn(TWC_TITLE_SECTION, "mb-12 md:mb-16")}>
             Founding Member Benefits
           </h2>
           <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
@@ -649,11 +621,8 @@ export function TwcLanding() {
                   <div className="mb-4 flex justify-center">
                     <Icon />
                   </div>
-                  <p className="break-words font-syne text-base font-bold">{b.label}</p>
-                  <p
-                    className="mt-2 font-dm-sans text-[14px] leading-snug"
-                    style={{ color: "var(--text-secondary)" }}
-                  >
+                  <p className={cn(TWC_TITLE_CARD, "text-center")}>{b.label}</p>
+                  <p className="vx-body-sm mt-2">
                     {b.desc}
                   </p>
                 </div>
@@ -668,18 +637,14 @@ export function TwcLanding() {
         <div className="mx-auto max-w-3xl">
           <AnimatedCounter target={247} />
           <div className="mt-16 border-t pt-12" style={{ borderColor: "var(--divider)" }}>
-            <p
-              className="mb-8 text-center font-dm-mono text-[10px] uppercase tracking-[0.14em]"
-              style={{ color: "var(--text-tertiary)" }}
-            >
+            <p className="vx-eyebrow mb-8 text-center !text-[var(--text-tertiary)]">
               Countries joining
             </p>
             <div className="flex flex-wrap justify-center gap-x-8 gap-y-3">
               {COUNTRIES.map((c) => (
                 <span
                   key={c}
-                  className="font-dm-mono text-[12px] tracking-[0.06em]"
-                  style={{ color: "var(--text-secondary)" }}
+                  className="vx-mono-sm text-[var(--text-secondary)]"
                 >
                   {c}
                 </span>
@@ -692,9 +657,9 @@ export function TwcLanding() {
       {/* 10. BEFORE THE FIRST WHISTLE */}
       <RevealSection dark className="!py-28 md:!py-36">
         <div className="mx-auto w-full max-w-3xl text-center">
-          <p className="twc-headline-md uppercase">The tournament begins.</p>
-          <p className="twc-headline-md mt-8 uppercase">The window closes.</p>
-          <p className="twc-headline-md mt-8 uppercase text-amber">
+          <p className={TWC_TITLE_HERO}>The tournament begins.</p>
+          <p className={cn(TWC_TITLE_HERO, "mt-[0.12em]")}>The window closes.</p>
+          <p className={cn(TWC_TITLE_HERO, "mt-[0.12em] text-[var(--amber)]")}>
             Apply before the first whistle.
           </p>
         </div>
@@ -703,22 +668,12 @@ export function TwcLanding() {
       {/* 11. HISTORY IS STARTING */}
       <RevealSection>
         <div className="mx-auto w-full max-w-2xl px-0 text-center">
-          <p
-            className="font-dm-sans text-[clamp(17px,4vw,22px)] leading-relaxed"
-            style={{ color: "var(--text-secondary)" }}
-          >
-            Every movement has a beginning.
-          </p>
-          <p
-            className="mt-6 font-dm-sans text-[clamp(17px,4vw,22px)] leading-relaxed"
-            style={{ color: "var(--text-secondary)" }}
-          >
-            This is ours.
-          </p>
-          <p className="twc-headline-lg mt-10 font-bold normal-case">
+          <p className="vx-body">Every movement has a beginning.</p>
+          <p className="vx-body mt-6">This is ours.</p>
+          <p className={cn(TWC_TITLE_HERO, "mt-10")}>
             500 people will be there when it starts.
           </p>
-          <p className="twc-headline-accent mt-6 normal-case">Will you?</p>
+          <p className={cn(TWC_TITLE_HERO, "mt-6 text-[var(--amber)]")}>Will you?</p>
         </div>
       </RevealSection>
 
@@ -729,10 +684,13 @@ export function TwcLanding() {
         className="scroll-mt-[52px] !py-28 md:!py-36"
       >
         <div className="mx-auto flex w-full max-w-3xl flex-col items-center px-0 text-center">
-          <h2 className="twc-headline-lg w-full uppercase">
-            Will you help shape trust?
-          </h2>
-          <p className="twc-headline-lg mt-6 w-full uppercase text-tertiary">
+          <h2 className={cn(TWC_TITLE_HERO, "w-full")}>Will you help shape trust?</h2>
+          <p
+            className={cn(
+              TWC_TITLE_HERO,
+              "mt-[0.12em] w-full text-[var(--text-tertiary)]",
+            )}
+          >
             Or watch history happen?
           </p>
           <div className="mt-12 flex w-full flex-col items-center md:mt-16">
@@ -744,10 +702,7 @@ export function TwcLanding() {
             >
               JOIN THE EXPERIMENT
             </TwcCta>
-            <p
-              className="mt-5 max-w-xs px-2 font-dm-mono text-[10px] uppercase leading-relaxed tracking-[0.08em] sm:max-w-none sm:text-[11px] sm:tracking-[0.1em]"
-              style={{ color: "var(--text-tertiary)" }}
-            >
+            <p className="vx-mono-sm mt-5 max-w-xs px-2 leading-relaxed text-[var(--text-tertiary)] sm:max-w-none">
               2–4 minute application · 500 spots only
             </p>
           </div>
@@ -756,29 +711,20 @@ export function TwcLanding() {
 
       {/* 13. FAQ */}
       <RevealSection>
-        <h2 className="twc-headline-lg mb-10 text-center uppercase md:mb-14">FAQ</h2>
+        <h2 className={cn(TWC_TITLE_SECTION, "mb-10 md:mb-14")}>Faq</h2>
         <FaqAccordion />
       </RevealSection>
 
       {/* 14. FOOTER */}
       <RevealSection dark className="!pb-16 !pt-16">
         <footer className="mx-auto w-full max-w-3xl text-center">
-          <p
-            className="font-syne text-xl font-extrabold uppercase tracking-[0.08em]"
-            style={{ color: "var(--text-primary)" }}
-          >
+          <p className={cn(TWC_TITLE_HERO, "text-[clamp(22px,2.8vw,34px)] leading-[1.2]")}>
             VERAXIUS
           </p>
-          <p
-            className="mt-4 font-dm-sans text-[14px] leading-relaxed md:text-[15px]"
-            style={{ color: "var(--text-secondary)" }}
-          >
+          <p className="vx-body-sm mt-4">
             A Public Benefit Corporation. Integrity Infrastructure for the AI Era.
           </p>
-          <nav
-            className="mt-8 flex flex-wrap items-center justify-center gap-x-2 gap-y-2 font-dm-mono text-[11px] uppercase tracking-[0.08em]"
-            style={{ color: "var(--text-tertiary)" }}
-          >
+          <nav className="vx-mono-sm mt-8 flex flex-wrap items-center justify-center gap-x-2 gap-y-2 uppercase text-[var(--text-tertiary)]">
             <a href="/privacy" className="transition-colors hover:text-[var(--amber)]">
               Privacy Policy
             </a>
@@ -796,10 +742,7 @@ export function TwcLanding() {
               veraxius.com
             </a>
           </nav>
-          <p
-            className="mt-10 font-dm-sans text-[12px] leading-relaxed md:text-[13px]"
-            style={{ color: "var(--text-tertiary)" }}
-          >
+          <p className="vx-mono-sm mt-10 leading-relaxed text-[var(--text-tertiary)]">
             © 2026 Veraxius, Inc. All rights reserved. AIM™ is a trademark of Veraxius IP
             Holdings LLC.
           </p>
