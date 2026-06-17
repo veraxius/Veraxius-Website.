@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { JOIN_NOW_LOGIN_URL, joinNowButtonClassName } from "./mvp4-launch-section";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -123,16 +124,8 @@ export function HeroSection() {
             variants={itemVariants}
             className="flex flex-wrap gap-4 mt-10"
           >
-            <a
-              href="#early-access"
-              className="font-dm-mono font-medium text-[13px] tracking-cta uppercase px-8 py-4 transition-colors"
-              style={{
-                letterSpacing: "0.08em",
-                backgroundColor: "var(--amber)",
-                color: "var(--bg-primary)",
-              }}
-            >
-              Request Early Access
+            <a href={JOIN_NOW_LOGIN_URL} className={joinNowButtonClassName}>
+              Join Now
             </a>
             <a
               href="#how-it-works"

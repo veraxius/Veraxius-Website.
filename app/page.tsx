@@ -1,7 +1,7 @@
 import {
   SiteHeader,
   HeroSection,
-  VideoCountdownSection,
+  Mvp4LaunchSection,
   BreakdownSection,
   NumbersSection,
   SystemPreviewSection,
@@ -32,7 +32,7 @@ export default function HomePage() {
       <ScrollProgress />
       <SiteHeader />
       <HeroSection />
-      <VideoCountdownSection />
+      <Mvp4LaunchSection />
       <BreakdownSection />
       <NumbersSection />
       <SystemPreviewSection />

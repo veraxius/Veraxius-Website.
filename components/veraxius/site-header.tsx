@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useState, type MouseEvent } from "react";
 import { cn } from "@/lib/utils";
+import { JOIN_NOW_LOGIN_URL } from "./mvp4-launch-section";
 
 type HomeSectionId = "early-access" | "contact-us";
 
@@ -159,12 +160,11 @@ export function SiteHeader() {
 
         <div className="flex shrink-0 items-center gap-2 sm:gap-3 md:gap-4 lg:gap-6">
           <a
-            href={isHome ? "#early-access" : "/#early-access"}
+            href={JOIN_NOW_LOGIN_URL}
             className="hidden min-h-[44px] items-center justify-center font-dm-mono font-medium text-[11px] uppercase tracking-cta bg-[var(--amber)] px-4 py-3 text-[var(--bg-primary)] transition-colors hover:bg-[var(--amber-glow)] sm:inline-flex md:px-5"
             style={{ letterSpacing: "0.08em" }}
-            onClick={onHomeInPageNav("early-access")}
           >
-            Request Early Access
+            Join Now
           </a>
 
           {/* Desktop nav */}
@@ -281,12 +281,11 @@ export function SiteHeader() {
             >
               {navLinks}
               <a
-                href={isHome ? "#early-access" : "/#early-access"}
+                href={JOIN_NOW_LOGIN_URL}
                 className="mt-4 inline-flex min-h-[44px] w-full items-center justify-center font-dm-mono font-medium text-[11px] uppercase tracking-cta bg-[var(--amber)] px-5 py-3 text-[var(--bg-primary)] transition-colors hover:bg-[var(--amber-glow)]"
                 style={{ letterSpacing: "0.08em" }}
-                onClick={onHomeInPageNav("early-access")}
               >
-                Request Early Access
+                Join Now
               </a>
             </nav>
           </motion.div>
