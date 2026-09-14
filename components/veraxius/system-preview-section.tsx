@@ -421,7 +421,7 @@ export function SystemPreviewSection() {
               onMouseEnter={(e) => {
                 e.currentTarget.style.borderColor = "var(--amber-border)";
                 e.currentTarget.style.color = "var(--text-primary)";
-                e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.03)";
+                e.currentTarget.style.backgroundColor = "var(--surface-input)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.borderColor = "var(--divider)";

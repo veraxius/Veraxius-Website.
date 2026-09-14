@@ -3,6 +3,7 @@
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 import { useRef } from "react";
+import { JOIN_NOW_LOGIN_URL } from "./mvp4-launch-section";
 
 export function SiteFooter() {
   const footerRef = useRef(null);
@@ -134,18 +135,18 @@ export function SiteFooter() {
               aria-label="Supporters and partners"
             >
               <a
-                href="https://lexora.up.railway.app/login"
+                href="https://fleetguard.up.railway.app/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex max-w-full shrink-0 rounded-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400/50"
-                aria-label="Lexora — open sign in in a new tab"
+                aria-label="Fleetguard — open sign in in a new tab"
               >
                 <Image
-                  src="/icono-lexora.png"
-                  alt="Lexora"
+                  src="/icono-fleetguard.png"
+                  alt="Fleetguard"
                   width={900}
                   height={180}
-                  className="-translate-y-1 h-16 w-auto max-w-[min(500px,100%)] object-contain object-left opacity-90 transition-opacity hover:opacity-100 sm:h-24 sm:max-w-[min(620px,100%)] md:h-28 md:max-w-[min(700px,100%)] lg:h-36 lg:max-w-[min(780px,100%)] xl:h-40 2xl:h-44 2xl:max-w-[min(860px,100%)]"
+                  className="-translate-y-1 h-10 w-auto max-w-[min(300px,100%)] object-contain object-left opacity-90 transition-opacity hover:opacity-100 sm:h-14 sm:max-w-[min(370px,100%)] md:h-16 md:max-w-[min(410px,100%)] lg:h-20 lg:max-w-[min(460px,100%)] xl:h-24 2xl:h-28 2xl:max-w-[min(500px,100%)]"
                   sizes="(min-width: 1536px) 860px, (min-width: 1280px) 780px, (min-width: 1024px) 700px, (min-width: 768px) 620px, (min-width: 640px) 500px, 95vw"
                 />
               </a>
@@ -183,12 +184,12 @@ export function SiteFooter() {
 
           {/* Footer CTA */}
           <a
-            href="#early-access"
+            href={JOIN_NOW_LOGIN_URL}
             className="inline-flex min-h-[44px] items-center justify-center font-dm-mono font-medium text-[11px] uppercase px-5 py-3 transition-all"
             style={{
               letterSpacing: "0.1em",
               backgroundColor: "var(--amber)",
-              color: "var(--bg-primary)",
+              color: "var(--text-on-amber)",
             }}
             onMouseEnter={(e) => {
               (e.currentTarget as HTMLElement).style.filter = "brightness(1.08)";
@@ -197,7 +198,7 @@ export function SiteFooter() {
               (e.currentTarget as HTMLElement).style.filter = "brightness(1)";
             }}
           >
-            Apply for Early Access
+            Join Now
           </a>
         </motion.div>
 

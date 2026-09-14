@@ -16,7 +16,7 @@ import {
   SvgPersonCrosshair,
   SvgRadialNetwork,
 } from "@/components/vasp/svgs";
-import { ACCENT, BG, MUTED, TEXT } from "@/components/vasp/tokens";
+import { ACCENT, BG, MESH_BG, MUTED, TEXT } from "@/components/vasp/tokens";
 import { useReveal } from "@/components/vasp/use-reveal";
 
 const APPLY_URL = "https://zfrmz.com/ygXQEHswQtHrFGtcWzwg";
@@ -38,7 +38,7 @@ function RevealSection({
       ref={ref}
       id={id}
       className={cn(padded && "vx-section", "vasp-reveal", visible && "visible", className)}
-      style={{ backgroundColor: BG, color: TEXT }}
+      style={{ background: MESH_BG, color: TEXT }}
     >
       <div className={cn(padded && "vx-container")}>{children}</div>
     </section>
@@ -50,12 +50,12 @@ function StepCircle({ n, active }: { n: number; active: boolean }) {
     <div
       className={cn(
         "flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 font-dm-mono text-sm font-semibold md:h-14 md:w-14 md:text-base",
-        active ? "text-[#0A0A0A]" : "border-white bg-transparent text-white"
+        "bg-transparent"
       )}
       style={
         active
-          ? { backgroundColor: ACCENT, borderColor: ACCENT }
-          : { borderColor: TEXT, backgroundColor: BG }
+          ? { backgroundColor: ACCENT, borderColor: ACCENT, color: BG }
+          : { borderColor: TEXT, backgroundColor: BG, color: TEXT }
       }
     >
       {n}
@@ -205,7 +205,7 @@ function HeroReveal() {
         "vasp-reveal flex min-h-[100svh] flex-col items-center justify-center px-5 pb-24 pt-28 md:px-12 md:pt-[7.5rem]",
         visible && "visible"
       )}
-      style={{ backgroundColor: BG }}
+      style={{ background: MESH_BG }}
     >
       <div className="mx-auto flex w-full max-w-[680px] flex-col items-center text-center">
         <div className="flex w-full max-w-[600px] flex-col items-center">
@@ -272,7 +272,7 @@ function HeroReveal() {
 
 export function VaspLanding() {
   return (
-    <main className="min-h-screen" style={{ backgroundColor: BG, color: TEXT }}>
+    <main className="min-h-screen" style={{ background: MESH_BG, color: TEXT }}>
       <SiteHeader />
       <HeroReveal />
 
@@ -600,13 +600,13 @@ export function VaspLanding() {
             <ul className="space-y-2 font-dm-sans text-[max(0.85rem,13px)] md:text-[0.95rem]" style={{ color: MUTED }}>
               <li>
                 Email:{" "}
-                <a href="mailto:aimprogram@veraxius.com" className="transition-colors hover:text-[#F5A623]">
+                <a href="mailto:aimprogram@veraxius.com" className="transition-colors hover:text-[#FFB84D]">
                   aimprogram@veraxius.com
                 </a>
               </li>
               <li>
                 Phone:{" "}
-                <a href="tel:5612008845" className="transition-colors hover:text-[#F5A623]">
+                <a href="tel:5612008845" className="transition-colors hover:text-[#FFB84D]">
                   (561) 200-8845
                 </a>
               </li>
@@ -616,7 +616,7 @@ export function VaspLanding() {
                   href="https://veraxius.com/aimsignalprogram"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="transition-colors hover:text-[#F5A623]"
+                  className="transition-colors hover:text-[#FFB84D]"
                 >
                   https://veraxius.com/aimsignalprogram
                 </a>

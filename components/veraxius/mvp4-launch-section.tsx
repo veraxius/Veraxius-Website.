@@ -6,10 +6,10 @@ import { useRef } from "react";
 export const JOIN_NOW_LOGIN_URL = "https://app.veraxius.com/login";
 
 export const joinNowButtonClassName =
-  "inline-flex items-center justify-center rounded-full bg-[var(--amber)] px-7 py-3 font-semibold text-[var(--bg-primary)] transition hover:opacity-90";
+  "inline-flex items-center justify-center rounded-full bg-[var(--amber)] px-7 py-3 font-semibold text-[var(--text-on-amber)] transition hover:opacity-90";
 
 const mvp4CtaButtonClassName =
-  "inline-flex min-h-[64px] items-center justify-center font-dm-mono font-semibold text-[14px] uppercase px-14 py-5 text-[var(--bg-primary)] transition-all";
+  "inline-flex min-h-[64px] items-center justify-center font-dm-mono font-semibold text-[14px] uppercase px-14 py-5 text-[var(--text-on-amber)] transition-all";
 
 const mvp4Features = [
   {

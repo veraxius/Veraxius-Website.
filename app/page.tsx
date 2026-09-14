@@ -15,7 +15,6 @@ import {
   WhyThisWinsSection,
   IntegrationSection,
   CostSection,
-  EarlyAccessSection,
   SiteFooter,
   ScrollProgress,
 } from "@/components/veraxius";
@@ -23,9 +22,8 @@ import {
 export default function HomePage() {
   return (
     <main
-      className="min-h-screen"
+      className="vx-home-surface min-h-screen"
       style={{
-        backgroundColor: "var(--bg-primary)",
         color: "var(--text-primary)",
       }}
     >
@@ -46,7 +44,6 @@ export default function HomePage() {
       <WhyThisWinsSection />
       <IntegrationSection />
       <CostSection />
-      <EarlyAccessSection />
       <SiteFooter />
     </main>
   );

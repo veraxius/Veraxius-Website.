@@ -79,8 +79,8 @@ export default function AimSignalStorePage() {
     <>
       <SiteHeader />
       <main
-        className="min-h-screen min-w-0 w-full overflow-x-clip"
-        style={{ backgroundColor: "var(--bg-primary)", color: "var(--text-primary)" }}
+        className="vx-home-surface min-h-screen min-w-0 w-full overflow-x-clip"
+        style={{ color: "var(--text-primary)" }}
       >
         {/* HERO — pt clears fixed SiteHeader; mobile shows full banner width without crop */}
         <section className="snap-start snap-always w-full min-w-0 overflow-x-clip">
@@ -111,7 +111,7 @@ export default function AimSignalStorePage() {
           </div>
           <div
             className="mx-auto flex w-full min-w-0 max-w-[1200px] flex-col items-center px-5 py-10 text-center sm:py-12 md:py-16"
-            style={{ backgroundColor: "var(--bg-primary)", color: "var(--text-primary)" }}
+            style={{ background: "radial-gradient(ellipse 70% 55% at 12% -15%, rgba(255, 184, 77, 0.055) 0%, transparent 60%), radial-gradient(ellipse 60% 45% at 92% 105%, rgba(77, 163, 255, 0.045) 0%, transparent 60%), var(--bg-primary)", color: "var(--text-primary)" }}
           >
             <StoreCta href="#product-grid">
               DEFINE YOUR SIGNAL →
@@ -126,7 +126,7 @@ export default function AimSignalStorePage() {
         </section>
 
         {/* MOMENT OF TRUTH */}
-        <StoreReveal style={{ backgroundColor: "#000000", color: "#fff" }}>
+        <StoreReveal style={{ background: "radial-gradient(ellipse 70% 55% at 12% -15%, rgba(255, 184, 77, 0.05) 0%, transparent 60%), radial-gradient(ellipse 60% 45% at 92% 105%, rgba(77, 163, 255, 0.04) 0%, transparent 60%), #000000", color: "#fff" }}>
           <h2 className="text-center font-syne text-[clamp(1.5rem,4vw,2.75rem)] font-extrabold uppercase tracking-tight">
             THIS IS WHERE YOU STOP OBSERVING
           </h2>
@@ -140,7 +140,7 @@ export default function AimSignalStorePage() {
         </StoreReveal>
 
         {/* WHAT THIS IS */}
-        <StoreReveal style={{ backgroundColor: "var(--bg-primary)", color: "var(--text-primary)" }}>
+        <StoreReveal style={{ background: "radial-gradient(ellipse 70% 55% at 12% -15%, rgba(255, 184, 77, 0.055) 0%, transparent 60%), radial-gradient(ellipse 60% 45% at 92% 105%, rgba(77, 163, 255, 0.045) 0%, transparent 60%), var(--bg-primary)", color: "var(--text-primary)" }}>
           <h2 className="text-center font-syne text-[clamp(1.65rem,4vw,2.85rem)] font-extrabold uppercase tracking-tight">
             THIS IS NOT MERCH
           </h2>
@@ -173,7 +173,7 @@ export default function AimSignalStorePage() {
         </StoreReveal>
 
         {/* HOW IT WORKS */}
-        <StoreReveal style={{ backgroundColor: "var(--bg-secondary)", color: "var(--text-primary)" }}>
+        <StoreReveal style={{ background: "radial-gradient(ellipse 70% 55% at 12% -15%, rgba(255, 184, 77, 0.055) 0%, transparent 60%), radial-gradient(ellipse 60% 45% at 92% 105%, rgba(77, 163, 255, 0.045) 0%, transparent 60%), var(--bg-secondary)", color: "var(--text-primary)" }}>
           <p className="text-center font-dm-mono text-[10px] font-medium uppercase tracking-[0.2em]" style={{ color: "var(--aim-accent)" }}>
             HOW IT WORKS
           </p>
@@ -187,7 +187,7 @@ export default function AimSignalStorePage() {
               { n: "03", t: "ACTIVATE", d: "Enter the system" },
               { n: "04", t: "PROVE", d: "Your behavior defines you" },
             ].map((step) => (
-              <div key={step.n} className="border border-white/[0.08] bg-[#0A0A0B]/40 p-6 md:p-7">
+              <div key={step.n} className="vx-panel rounded-2xl p-6 md:p-7">
                 <p className="font-syne text-4xl font-extrabold md:text-5xl" style={{ color: "var(--aim-accent)" }}>
                   {step.n}
                 </p>
@@ -208,7 +208,7 @@ export default function AimSignalStorePage() {
           id="product-grid"
           className="scroll-mt-[88px]"
           style={{
-            backgroundColor: "var(--bg-primary)",
+            background: "radial-gradient(ellipse 70% 55% at 12% -15%, rgba(255, 184, 77, 0.055) 0%, transparent 60%), radial-gradient(ellipse 60% 45% at 92% 105%, rgba(77, 163, 255, 0.045) 0%, transparent 60%), var(--bg-primary)",
             color: "var(--text-primary)",
           }}
         >
@@ -219,7 +219,7 @@ export default function AimSignalStorePage() {
             Each signal carries weight.
           </p>
           <div
-            className="relative z-10 mt-10 w-full overflow-hidden border border-white/[0.1] bg-[#0A0A0A] md:mt-14"
+            className="relative z-10 mt-10 w-full overflow-hidden border border-[var(--divider)] bg-[var(--bg-panel)] md:mt-14"
             style={{ borderRadius: "4px" }}
           >
             {/* Native img: avoids next/image optimizer edge cases with spaces in public filenames */}
@@ -235,7 +235,7 @@ export default function AimSignalStorePage() {
         </StoreReveal>
 
         {/* WHY THIS EXISTS */}
-        <StoreReveal style={{ backgroundColor: "#000000", color: "#fff" }}>
+        <StoreReveal style={{ background: "radial-gradient(ellipse 70% 55% at 12% -15%, rgba(255, 184, 77, 0.05) 0%, transparent 60%), radial-gradient(ellipse 60% 45% at 92% 105%, rgba(77, 163, 255, 0.04) 0%, transparent 60%), #000000", color: "#fff" }}>
           <h2 className="text-center font-syne text-[clamp(1.5rem,4vw,2.75rem)] font-extrabold uppercase tracking-tight">
             AI IS SCALING. TRUST IS NOT.
           </h2>
@@ -267,7 +267,7 @@ export default function AimSignalStorePage() {
         </StoreReveal>
 
         {/* WHO THIS IS FOR */}
-        <StoreReveal style={{ backgroundColor: "var(--bg-primary)", color: "var(--text-primary)" }}>
+        <StoreReveal style={{ background: "radial-gradient(ellipse 70% 55% at 12% -15%, rgba(255, 184, 77, 0.055) 0%, transparent 60%), radial-gradient(ellipse 60% 45% at 92% 105%, rgba(77, 163, 255, 0.045) 0%, transparent 60%), var(--bg-primary)", color: "var(--text-primary)" }}>
           <h2 className="text-center font-syne text-[clamp(1.65rem,4vw,2.85rem)] font-extrabold uppercase tracking-tight">
             NOT FOR EVERYONE
           </h2>
@@ -283,7 +283,7 @@ export default function AimSignalStorePage() {
         <StoreReveal
           className="relative overflow-hidden"
           style={{
-            backgroundColor: "var(--bg-secondary)",
+            background: "radial-gradient(ellipse 70% 55% at 12% -15%, rgba(255, 184, 77, 0.055) 0%, transparent 60%), radial-gradient(ellipse 60% 45% at 92% 105%, rgba(77, 163, 255, 0.045) 0%, transparent 60%), var(--bg-secondary)",
             color: "var(--text-primary)",
           }}
         >
@@ -328,7 +328,7 @@ export default function AimSignalStorePage() {
         {/* FINAL CTA */}
         <StoreReveal
           padded={false}
-          style={{ backgroundColor: "#000000", color: "#fff" }}
+          style={{ background: "radial-gradient(ellipse 70% 55% at 12% -15%, rgba(255, 184, 77, 0.05) 0%, transparent 60%), radial-gradient(ellipse 60% 45% at 92% 105%, rgba(77, 163, 255, 0.04) 0%, transparent 60%), #000000", color: "#fff" }}
           className="flex min-h-[70vh] flex-col justify-center md:min-h-[85vh]"
         >
           <div className="mx-auto w-full max-w-[1200px] px-5 py-24 text-center md:px-12 md:py-32">
@@ -352,8 +352,8 @@ export default function AimSignalStorePage() {
 
         {/* FOOTER */}
         <footer
-          className="snap-start border-t border-white/[0.08] px-5 py-16 md:px-12"
-          style={{ backgroundColor: "var(--bg-primary)", color: "var(--text-secondary)" }}
+          className="snap-start border-t border-[var(--divider)] px-5 py-16 md:px-12"
+          style={{ background: "radial-gradient(ellipse 70% 55% at 12% -15%, rgba(255, 184, 77, 0.055) 0%, transparent 60%), radial-gradient(ellipse 60% 45% at 92% 105%, rgba(77, 163, 255, 0.045) 0%, transparent 60%), var(--bg-primary)", color: "var(--text-secondary)" }}
         >
           <div className="mx-auto flex w-full max-w-[1200px] flex-col gap-8 md:flex-row md:items-start md:justify-between">
             <div className="space-y-3 font-dm-sans text-sm leading-relaxed">

@@ -3,18 +3,22 @@
 @tailwind utilities;
 
 :root {
-  /* Color System - Exact from prompt */
-  --aim-accent: #f5a623;
-  --aim-accent-hover: #dc9415;
-  --bg-primary: #0A0A0B;
-  --bg-secondary: #131417;
-  --bg-panel: #101114;
-  --bg-header: rgba(10, 10, 11, 0.88);
-  --text-primary: #F5F7FA;
-  --text-secondary: rgba(245, 247, 250, 0.72);
-  --text-tertiary: rgba(245, 247, 250, 0.48);
-  --text-disabled: rgba(245, 247, 250, 0.28);
-  --steel: #6C727F;
+  /* Color System — the Veraxius app's DARK theme, used as this site's only
+     theme (no light mode, no toggle — matches the app's dark palette exactly). */
+  --aim-accent: #FFB84D;
+  --aim-accent-hover: #FFC978;
+  --bg-primary: #131316;
+  --bg-secondary: #1c1c1e;
+  --bg-panel: #202024;
+  --bg-panel-glass: rgba(255, 255, 255, 0.06);
+  --bg-header: rgba(19, 19, 22, 0.72);
+  --text-primary: #f5f5f7;
+  --text-secondary: #98989d;
+  --text-secondary-strong: #c7c7cc;
+  --text-tertiary: rgba(245, 245, 247, 0.52);
+  --text-disabled: rgba(245, 245, 247, 0.28);
+  --text-on-amber: #0A0A0B;
+  --steel: #98989d;
   --amber: #FFB84D;
   --amber-glow: #FFC978;
   --amber-border: rgba(255, 184, 77, 0.24);
@@ -23,9 +27,21 @@
   --red: #FF6B57;
   --red-transparent: rgba(255, 107, 87, 0.6);
   --blue: #4DA3FF;
-  --divider: rgba(255, 255, 255, 0.08);
-  --divider-strong: rgba(255, 255, 255, 0.12);
-  --grid-line: rgba(255, 255, 255, 0.04);
+  --divider: rgba(255, 255, 255, 0.14);
+  --divider-strong: rgba(255, 255, 255, 0.2);
+  --grid-line: rgba(255, 255, 255, 0.05);
+  --surface-hover: rgba(255, 255, 255, 0.06);
+  --surface-active: rgba(255, 255, 255, 0.1);
+  --surface-input: rgba(255, 255, 255, 0.05);
+  --surface-input-focus: rgba(255, 255, 255, 0.07);
+  --border-subtle: rgba(255, 255, 255, 0.14);
+  --overlay-scrim: rgba(0, 0, 0, 0.5);
+  --noise-opacity: 0;
+}
+
+/* Apple-style sans-serif stack, used by headings/body typography classes below */
+:root {
+  --font-apple: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 html {
@@ -38,9 +54,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   position: relative;
+  isolation: isolate;
 }
 
-/* Subtle noise texture overlay */
+/* Subtle noise texture — background only, disabled by default (matches the app) */
 body::before {
   content: '';
   position: fixed;
@@ -49,8 +66,8 @@ body::before {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 9999;
-  opacity: 0.035;
+  z-index: 0;
+  opacity: var(--noise-opacity);
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
 }
 
@@ -116,10 +133,98 @@ body::before {
     background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
   }
 
-  /* Panel styles */
+  /* Minimal, subtle mesh — the app's amber/blue glow, baked into each solid
+     section color instead of a single fixed layer, so it still reads on
+     pages built from opaque per-section backgrounds (VASP, the Signal Store).
+     Deliberately faint: texture, not a hero moment. */
+  .vx-mesh-primary {
+    background:
+      radial-gradient(ellipse 70% 55% at 12% -15%, rgba(255, 184, 77, 0.055) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 45% at 92% 105%, rgba(77, 163, 255, 0.045) 0%, transparent 60%),
+      var(--bg-primary);
+  }
+
+  .vx-mesh-secondary {
+    background:
+      radial-gradient(ellipse 70% 55% at 12% -15%, rgba(255, 184, 77, 0.055) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 45% at 92% 105%, rgba(77, 163, 255, 0.045) 0%, transparent 60%),
+      var(--bg-secondary);
+  }
+
+  .vx-mesh-dark {
+    background:
+      radial-gradient(ellipse 70% 55% at 12% -15%, rgba(255, 184, 77, 0.05) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 45% at 92% 105%, rgba(77, 163, 255, 0.04) 0%, transparent 60%),
+      #000000;
+  }
+
+  /* Panel styles — liquid glass, matches the app */
   .vx-panel {
     background-color: var(--bg-panel);
     border: 1px solid var(--divider);
+  }
+
+  /* Soft Apple-style frosted mesh background — the app's signature surface */
+  .vx-home-surface {
+    background: var(--bg-secondary);
+    isolation: isolate;
+  }
+
+  .vx-home-surface::before {
+    content: '';
+    position: fixed;
+    inset: -10%;
+    pointer-events: none;
+    z-index: 0;
+    background:
+      radial-gradient(ellipse 50% 40% at 15% 0%, rgba(255, 184, 77, 0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 45% 35% at 85% 15%, rgba(77, 163, 255, 0.14) 0%, transparent 60%),
+      radial-gradient(ellipse 55% 45% at 50% 100%, rgba(255, 107, 87, 0.1) 0%, transparent 60%);
+    filter: blur(60px);
+  }
+
+  .vx-home-surface > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Feed-style cards — liquid glass, matches the app's dark theme */
+  .vx-feed-card {
+    background: linear-gradient(
+      165deg,
+      rgba(255, 255, 255, 0.07) 0%,
+      rgba(255, 255, 255, 0.03) 100%
+    );
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid var(--divider);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.05) inset,
+      0 1px 2px rgba(0, 0, 0, 0.2),
+      0 12px 40px rgba(0, 0, 0, 0.3);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .vx-feed-card:hover {
+    border-color: rgba(255, 184, 77, 0.3);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.07) inset,
+      0 1px 2px rgba(0, 0, 0, 0.22),
+      0 16px 48px rgba(0, 0, 0, 0.34),
+      0 0 0 1px rgba(255, 184, 77, 0.1);
+  }
+
+  .vx-feed-action {
+    border: 1px solid var(--divider);
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .vx-feed-action:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
   }
 
   /* Typography classes */
@@ -244,7 +349,7 @@ body::before {
     text-transform: uppercase;
     letter-spacing: 0.08em;
     background-color: var(--amber);
-    color: var(--bg-primary);
+    color: var(--text-on-amber);
     padding: 16px 32px;
     border: none;
     cursor: pointer;
@@ -272,14 +377,14 @@ body::before {
   .vx-btn-secondary:hover {
     border-color: var(--amber-border);
     color: var(--text-primary);
-    background-color: rgba(255, 255, 255, 0.03);
+    background-color: var(--surface-input);
   }
 
   /* Grid background for hero */
   .vx-grid-bg {
     background-image:
-      linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+      linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
     background-size: 60px 60px;
     -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
     mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
@@ -398,130 +503,6 @@ body::before {
     transform: translateY(0);
   }
 
-  /* Trust World Cup landing — scroll reveal, CTA glow, signal drift */
-  .twc-reveal {
-    opacity: 0;
-    transform: translateY(20px);
-    transition:
-      opacity 0.6s ease,
-      transform 0.6s ease;
-  }
-
-  .twc-reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  @keyframes twc-cta-glow {
-    0%,
-    100% {
-      box-shadow: 0 0 0 0 rgba(255, 184, 77, 0);
-    }
-    50% {
-      box-shadow: 0 0 28px 4px rgba(255, 184, 77, 0.22);
-    }
-  }
-
-  .twc-cta-glow {
-    animation: twc-cta-glow 3s ease-in-out infinite;
-  }
-
-  @keyframes twc-signal-drift {
-    0%,
-    100% {
-      transform: translate(0, 0) scale(1);
-      opacity: 0.4;
-    }
-    33% {
-      transform: translate(2%, -1%) scale(1.02);
-      opacity: 0.55;
-    }
-    66% {
-      transform: translate(-1%, 2%) scale(0.98);
-      opacity: 0.45;
-    }
-  }
-
-  .twc-signal-drift {
-    animation: twc-signal-drift 18s ease-in-out infinite;
-  }
-
-  .twc-sticky-bar {
-    height: 52px;
-    opacity: 0;
-    transform: translateY(-100%);
-    pointer-events: none;
-    transition:
-      opacity 0.35s ease,
-      transform 0.35s ease;
-  }
-
-  .twc-sticky-bar.visible {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-  }
-
-  /* Trust World Cup — single document scroll */
-  .twc-page {
-    width: 100%;
-    max-width: 100%;
-    overflow-x: clip;
-  }
-
-  .twc-section-inner {
-    width: 100%;
-    min-width: 0;
-    max-width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  /* Trust World Cup — responsive Syne headlines (no horizontal clip on phones) */
-  .twc-headline-display {
-    font-family: var(--font-syne), sans-serif;
-    font-weight: 800;
-    font-size: clamp(26px, 6.5vw, 80px);
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-    color: var(--text-primary);
-    text-wrap: balance;
-    overflow-wrap: break-word;
-    word-break: break-word;
-  }
-
-  @media (min-width: 640px) {
-    .twc-headline-display {
-      font-size: clamp(32px, 5.5vw, 80px);
-    }
-  }
-
-  .twc-headline-section {
-    font-family: var(--font-syne), sans-serif;
-    font-weight: 800;
-    font-size: clamp(28px, 5vw, 64px);
-    line-height: 1.08;
-    letter-spacing: -0.02em;
-    color: var(--text-primary);
-    text-wrap: balance;
-    overflow-wrap: break-word;
-    word-break: break-word;
-  }
-
-  @media (min-width: 768px) {
-    .twc-headline-section {
-      font-size: clamp(36px, 5vw, 80px);
-      line-height: 1.05;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .twc-section-pad-tight.vx-section {
-      padding-top: 64px;
-      padding-bottom: 64px;
-    }
-  }
-
 }
 
 @layer utilities {
@@ -544,4 +525,30 @@ body::before {
 
   .border-divider { border-color: var(--divider); }
   .border-amber { border-color: var(--amber-border); }
+  .bg-surface-subtle { background-color: var(--surface-input); }
+  .bg-surface-active { background-color: var(--surface-active); }
+  .hover-bg-surface:hover { background-color: var(--surface-hover); }
+}
+
+/* Custom scrollbar — matches the app's amber thumb */
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: var(--amber);
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--amber-glow);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--amber) transparent;
 }

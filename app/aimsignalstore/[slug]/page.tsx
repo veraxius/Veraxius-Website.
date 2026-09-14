@@ -11,8 +11,8 @@ export default async function AimSignalStoreSignalPage({ params }: Props) {
     <>
       <SiteHeader />
       <main
-        className="min-h-screen px-5 pb-24 pt-32 md:px-12 md:pt-40"
-        style={{ backgroundColor: "var(--bg-primary)", color: "var(--text-primary)" }}
+        className="vx-home-surface min-h-screen px-5 pb-24 pt-32 md:px-12 md:pt-40"
+        style={{ color: "var(--text-primary)" }}
       >
       <div className="mx-auto max-w-[720px] text-center">
         <p className="font-dm-mono text-[10px] uppercase tracking-[0.2em]" style={{ color: "var(--aim-accent)" }}>
@@ -25,7 +25,7 @@ export default async function AimSignalStoreSignalPage({ params }: Props) {
         <Link
           href="/aimsignalstore"
           className="mt-12 inline-block rounded-[4px] px-8 py-4 font-dm-mono text-[11px] font-medium uppercase tracking-[0.12em] transition-[filter] duration-200 hover:brightness-[0.92]"
-          style={{ backgroundColor: "var(--aim-accent)", color: "var(--bg-primary)" }}
+          style={{ backgroundColor: "var(--aim-accent)", color: "var(--text-on-amber)" }}
         >
           ← Back to store
         </Link>
