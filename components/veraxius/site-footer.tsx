@@ -150,6 +150,14 @@ export function SiteFooter() {
                   sizes="(min-width: 1536px) 860px, (min-width: 1280px) 780px, (min-width: 1024px) 700px, (min-width: 768px) 620px, (min-width: 640px) 500px, 95vw"
                 />
               </a>
+              <Image
+                src="/nvidia-inception-program-badge-rgb-for-screen.png"
+                alt="NVIDIA Inception Program"
+                width={451}
+                height={166}
+                className="h-10 w-auto max-w-[min(140px,100%)] shrink-0 object-contain opacity-90 transition-opacity hover:opacity-100 sm:h-14 sm:max-w-[min(180px,100%)] md:h-16 md:max-w-[min(200px,100%)] lg:h-20 lg:max-w-[min(230px,100%)] xl:h-24 2xl:h-28 2xl:max-w-[min(260px,100%)]"
+                sizes="(min-width: 1536px) 260px, (min-width: 1280px) 230px, (min-width: 1024px) 200px, (min-width: 768px) 180px, 140px"
+              />
             </div>
           </div>
         </motion.div>

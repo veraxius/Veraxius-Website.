@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { JOIN_NOW_LOGIN_URL, joinNowButtonClassName } from "./mvp4-launch-section";
 
 const containerVariants = {
@@ -148,6 +149,28 @@ export function HeroSection() {
             >
               See How It Works
             </a>
+          </motion.div>
+
+          {/* NVIDIA Inception badge */}
+          <motion.div variants={itemVariants} className="mt-10 text-left">
+            <p
+              className="font-dm-mono"
+              style={{
+                fontSize: "12px",
+                fontWeight: 300,
+                letterSpacing: "0.04em",
+                color: "var(--text-tertiary)",
+              }}
+            >
+              VERAXIUS IS A MEMBER OF THE NVIDIA INCEPTION PROGRAM
+            </p>
+            <Image
+              src="/nvidia-inception-program-badge-rgb-for-screen.png"
+              alt="NVIDIA Inception Program"
+              width={451}
+              height={166}
+              className="-ml-3 mt-4 h-10 w-auto max-w-[min(140px,100%)] shrink-0 object-contain object-left opacity-90 transition-opacity hover:opacity-100 sm:h-14 sm:max-w-[min(180px,100%)] md:h-16 md:max-w-[min(200px,100%)] lg:h-20 lg:max-w-[min(230px,100%)] xl:h-24 2xl:h-28 2xl:max-w-[min(260px,100%)]"
+            />
           </motion.div>
         </motion.div>
       </div>
