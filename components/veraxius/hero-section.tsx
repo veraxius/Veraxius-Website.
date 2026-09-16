@@ -169,7 +169,8 @@ export function HeroSection() {
               alt="NVIDIA Inception Program"
               width={451}
               height={166}
-              className="-ml-3 mt-4 h-10 w-auto max-w-[min(140px,100%)] shrink-0 object-contain object-left opacity-90 transition-opacity hover:opacity-100 sm:h-14 sm:max-w-[min(180px,100%)] md:h-16 md:max-w-[min(200px,100%)] lg:h-20 lg:max-w-[min(230px,100%)] xl:h-24 2xl:h-28 2xl:max-w-[min(260px,100%)]"
+              className="mt-4 h-10 w-auto max-w-[min(140px,100%)] shrink-0 object-contain object-left opacity-90 transition-opacity hover:opacity-100 sm:h-14 sm:max-w-[min(180px,100%)] md:h-16 md:max-w-[min(200px,100%)] lg:h-20 lg:max-w-[min(230px,100%)] xl:h-24 2xl:h-28 2xl:max-w-[min(260px,100%)]"
+              style={{ marginLeft: "-12px" }}
             />
           </motion.div>
         </motion.div>
