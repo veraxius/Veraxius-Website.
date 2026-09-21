@@ -168,7 +168,7 @@ function StateCard({ state, delay }: { state: AuthorityState; delay: number }) {
         </p>
         <ul className="mt-2.5 space-y-2">
           {state.items.map((item) => (
-            <li key={item} className="flex items-start gap-2">
+            <li key={item} className="flex min-w-0 items-start gap-2">
               <span
                 className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full"
                 style={{ backgroundColor: color, color: "var(--bg-panel)" }}
@@ -177,7 +177,7 @@ function StateCard({ state, delay }: { state: AuthorityState; delay: number }) {
                   <path d="M3 8.5 6.2 11.5 13 4.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </span>
-              <span style={{ fontSize: "12.5px", lineHeight: 1.4, color: "var(--text-secondary)" }}>{item}</span>
+              <span className="min-w-0" style={{ fontSize: "12.5px", lineHeight: 1.4, color: "var(--text-secondary)" }}>{item}</span>
             </li>
           ))}
         </ul>
@@ -205,7 +205,7 @@ function StateCard({ state, delay }: { state: AuthorityState; delay: number }) {
 
 export function AuthorityStatesPanels() {
   return (
-    <div className="flex flex-col gap-4 xl:flex-row">
+    <div className="grid grid-cols-2 gap-4 xl:flex xl:flex-row">
       {STATES.map((state, i) => (
         <StateCard key={state.n} state={state} delay={0.06 * i} />
       ))}

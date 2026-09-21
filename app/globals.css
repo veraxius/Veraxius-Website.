@@ -115,6 +115,21 @@ body::before {
     }
   }
 
+  /* Validation Window graphic — offset from the copy column at desktop widths
+     (unchanged from the original design); on phones/tablets, where the
+     columns stack, that offset just shrinks the graphic for no reason, so it
+     bleeds back out into the container's own side padding instead. */
+  .vx-validation-graphic {
+    margin-left: clamp(24px, 6vw, 90px);
+  }
+
+  @media (max-width: 768px) {
+    .vx-validation-graphic {
+      margin-left: -20px;
+      margin-right: -20px;
+    }
+  }
+
   /* Section with exact padding: 120px top and bottom */
   .vx-section {
     padding-top: 120px;

@@ -114,7 +114,7 @@ function StageCard({ stage, delay }: { stage: RoadmapStage; delay: number }) {
 
       <ul className="mt-4 space-y-2.5">
         {stage.items.map((item) => (
-          <li key={item} className="flex items-center gap-2.5">
+          <li key={item} className="flex min-w-0 items-center gap-2.5">
             <span
               className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full"
               style={{ backgroundColor: color, color: "var(--bg-panel)" }}
@@ -123,7 +123,7 @@ function StageCard({ stage, delay }: { stage: RoadmapStage; delay: number }) {
                 <path d="M3 8.5 6.2 11.5 13 4.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </span>
-            <span style={{ fontSize: "13px", color: "var(--text-secondary)" }}>{item}</span>
+            <span className="min-w-0" style={{ fontSize: "13px", color: "var(--text-secondary)" }}>{item}</span>
           </li>
         ))}
       </ul>
@@ -134,9 +134,9 @@ function StageCard({ stage, delay }: { stage: RoadmapStage; delay: number }) {
 export function RoadmapPanels() {
   return (
     <div>
-      <div className="flex flex-col items-stretch gap-6 xl:flex-row xl:items-stretch xl:gap-4">
+      <div className="grid grid-cols-2 items-stretch gap-6 xl:flex xl:flex-row xl:items-stretch xl:gap-4">
         {STAGES.map((stage, i) => (
-          <div key={stage.n} className="flex flex-1 items-center gap-4 xl:contents">
+          <div key={stage.n} className="flex min-w-0 flex-1 items-center gap-4 xl:contents">
             <StageCard stage={stage} delay={0.08 * i} />
             {i < STAGES.length - 1 && (
               <div className="hidden shrink-0 xl:flex xl:items-center xl:justify-center">

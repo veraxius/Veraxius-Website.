@@ -82,8 +82,7 @@ export function ValidationWindowSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
-            className="relative"
-            style={{ marginLeft: "clamp(24px, 6vw, 90px)" }}
+            className="relative vx-validation-graphic"
           >
             <Image
               src="/ChatGPT Image 20 sept 2026, 02_44_27 p.m..png"
@@ -104,7 +103,7 @@ export function ValidationWindowSection() {
                   width: `${cta.width}%`,
                   bottom: "13.3%",
                   height: "5.2%",
-                  fontSize: "clamp(7px, 0.8vw, 10px)",
+                  fontSize: "clamp(9px, 0.8vw, 10px)",
                   letterSpacing: "0.02em",
                   backgroundColor: cta.color,
                   color: cta.textColor ?? "#0A0A0B",

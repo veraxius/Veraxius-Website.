@@ -42,7 +42,12 @@ export function AboutSection() {
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
 
   return (
-    <section id="about" ref={sectionRef} className="relative max-w-full overflow-hidden aspect-[1632/964] min-h-[520px] scroll-mt-24">
+    <section
+      id="about"
+      ref={sectionRef}
+      className="relative max-w-full overflow-hidden aspect-[1632/964] scroll-mt-24"
+      style={{ minHeight: "clamp(320px, 60vw, 520px)" }}
+    >
       {/* Background photo — container matches the photo's own aspect ratio so
           object-cover never has to crop it; a taller box (from a long text
           block) would otherwise crop the top/bottom and collide with the

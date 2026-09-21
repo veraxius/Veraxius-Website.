@@ -73,12 +73,12 @@ function PanelShell({
       className="flex min-w-0 flex-1 flex-col rounded-2xl"
       style={{ backgroundColor: "#f5f5f7" }}
     >
-      <div className="flex items-start justify-between gap-2 px-4 pt-4 sm:px-5 sm:pt-5">
-        <div className="flex items-baseline gap-2">
+      <div className="flex min-w-0 items-start justify-between gap-2 px-4 pt-4 sm:px-5 sm:pt-5">
+        <div className="flex min-w-0 items-baseline gap-2">
           <span className="font-dm-mono font-bold" style={{ fontSize: "13px", color: "var(--amber)" }}>
             {n}
           </span>
-          <div>
+          <div className="min-w-0">
             <p className="font-syne font-bold leading-tight" style={{ fontSize: "15px", color: INK }}>
               {title}
             </p>
@@ -239,9 +239,9 @@ function AuthorityPill({ tone, state, note }: { tone: "execute" | "constrain"; s
 
 function NotifyBox({ children }: { children: React.ReactNode }) {
   return (
-    <div className="mt-3 flex items-start gap-2.5 rounded-xl px-3.5 py-3" style={{ backgroundColor: FAINT }}>
+    <div className="mt-3 flex min-w-0 items-start gap-2.5 rounded-xl px-3.5 py-3" style={{ backgroundColor: FAINT }}>
       <Icon d={ICONS.bell} className="mt-0.5 h-4 w-4 shrink-0" style={{ color: SUBTLE }} />
-      <p style={{ fontSize: "12px", lineHeight: 1.4, color: INK }}>{children}</p>
+      <p className="min-w-0" style={{ fontSize: "12px", lineHeight: 1.4, color: INK }}>{children}</p>
     </div>
   );
 }
@@ -263,7 +263,7 @@ const LINEAGE_ITEMS: { label: string; time: string; icon: string; tone: "positiv
 
 export function LiveInterfacePanels() {
   return (
-    <div className="flex flex-col gap-4 xl:flex-row">
+    <div className="grid grid-cols-2 gap-4 xl:flex xl:flex-row">
       {/* 01 — EVIDENCE */}
       <PanelShell n="01" title="Evidence" subtitle="Real signals. Real sources.">
         <div className="flex items-center justify-between">
@@ -370,9 +370,9 @@ export function LiveInterfacePanels() {
         <p className="mt-5 font-syne font-bold" style={{ fontSize: "14px", color: INK }}>
           Reason
         </p>
-        <div className="mt-2 flex items-start gap-2.5">
+        <div className="mt-2 flex min-w-0 items-start gap-2.5">
           <Icon d={ICONS.shield} className="mt-0.5 h-4 w-4 shrink-0" style={{ color: SUBTLE }} />
-          <p style={{ fontSize: "12px", lineHeight: 1.4, color: INK }}>Confidence decreased due to a new contradictory signal.</p>
+          <p className="min-w-0" style={{ fontSize: "12px", lineHeight: 1.4, color: INK }}>Confidence decreased due to a new contradictory signal.</p>
         </div>
       </PanelShell>
 
@@ -383,15 +383,15 @@ export function LiveInterfacePanels() {
         </p>
         <div className="mt-3 space-y-3">
           {WHY_ITEMS.map((item, i) => (
-            <div key={item.text} className="flex items-start justify-between gap-2">
-              <div className="flex items-start gap-2.5">
+            <div key={item.text} className="flex min-w-0 items-start justify-between gap-2">
+              <div className="flex min-w-0 items-start gap-2.5">
                 <span
                   className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full font-dm-mono font-bold"
                   style={{ fontSize: "10px", backgroundColor: FAINT, color: INK }}
                 >
                   {i + 1}
                 </span>
-                <p style={{ fontSize: "12.5px", lineHeight: 1.4, color: INK }}>{item.text}</p>
+                <p className="min-w-0" style={{ fontSize: "12.5px", lineHeight: 1.4, color: INK }}>{item.text}</p>
               </div>
               {item.value && (
                 <span
