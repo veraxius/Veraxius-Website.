@@ -17,7 +17,7 @@ const LINKS_COLUMN_1 = [
   { label: "AIM", href: "/#product" },
   { label: "Pilots", href: "#" },
   { label: "Research", href: "#" },
-  { label: "Developers", href: "#" },
+  { label: "Developers", href: "/aimsignalprogram" },
   { label: "Company", href: "#" },
   { label: "Investors", href: "#" },
 ];
@@ -25,7 +25,7 @@ const LINKS_COLUMN_1 = [
 const LINKS_COLUMN_2 = [
   { label: "Privacy", href: "#" },
   { label: "Terms", href: "#" },
-  { label: "Contact", href: "mailto:signal@veraxius.com" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export function SiteFooter() {

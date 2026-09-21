@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { Fragment, useEffect, useState } from "react";
-import { SiteHeader } from "@/components/veraxius";
+import { SiteFooter, SiteHeader } from "@/components/veraxius";
 import { cn } from "@/lib/utils";
 import {
   SvgBrokenShield,
@@ -272,6 +272,7 @@ function HeroReveal() {
 
 export function VaspLanding() {
   return (
+    <>
     <main className="min-h-screen" style={{ background: MESH_BG, color: TEXT }}>
       <SiteHeader />
       <HeroReveal />
@@ -571,61 +572,8 @@ export function VaspLanding() {
           </a>
         </div>
       </RevealSection>
-
-      {/* SECTION 13 — FOOTER */}
-      <RevealSection className="!pb-16 !pt-16">
-        <footer className="mx-auto max-w-3xl text-center md:text-left">
-          <div className="flex justify-center md:justify-start">
-            <Image
-              src="/aimprogram.png"
-              alt="Veraxius AIM Signal Operators Program (AIM Program)"
-              width={320}
-              height={320}
-              sizes="80px"
-              className="h-auto w-[80px] max-w-full shrink-0 object-contain object-left"
-              quality={90}
-            />
-          </div>
-          <div className="mt-8 space-y-2 font-dm-sans text-[max(0.85rem,13px)] leading-relaxed md:text-[0.95rem]" style={{ color: TEXT }}>
-            <p className="font-syne font-bold">Veraxius, Inc.</p>
-            <p style={{ color: MUTED }}>
-              The AIM Signal Operators Program is an initiative of Veraxius, Inc.
-            </p>
-            <p style={{ color: MUTED }}>
-              Veraxius AIM Model is a trademark of Veraxius IP Holdings, LLC
-            </p>
-            <p style={{ color: MUTED }}>All rights reserved © 2026</p>
-          </div>
-          <address className="mt-8 not-italic">
-            <ul className="space-y-2 font-dm-sans text-[max(0.85rem,13px)] md:text-[0.95rem]" style={{ color: MUTED }}>
-              <li>
-                Email:{" "}
-                <a href="mailto:aimprogram@veraxius.com" className="transition-colors hover:text-[#FFB84D]">
-                  aimprogram@veraxius.com
-                </a>
-              </li>
-              <li>
-                Phone:{" "}
-                <a href="tel:5612008845" className="transition-colors hover:text-[#FFB84D]">
-                  (561) 200-8845
-                </a>
-              </li>
-              <li>
-                Website:{" "}
-                <a
-                  href="https://veraxius.com/aimsignalprogram"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="transition-colors hover:text-[#FFB84D]"
-                >
-                  https://veraxius.com/aimsignalprogram
-                </a>
-              </li>
-              <li>Location: Boca Raton, FL, USA</li>
-            </ul>
-          </address>
-        </footer>
-      </RevealSection>
     </main>
+    <SiteFooter />
+    </>
   );
 }
