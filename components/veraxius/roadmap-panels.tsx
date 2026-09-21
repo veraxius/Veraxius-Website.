@@ -134,7 +134,7 @@ function StageCard({ stage, delay }: { stage: RoadmapStage; delay: number }) {
 export function RoadmapPanels() {
   return (
     <div>
-      <div className="grid grid-cols-2 items-stretch gap-6 xl:flex xl:flex-row xl:items-stretch xl:gap-4">
+      <div className="flex flex-col items-stretch gap-6 xl:flex-row xl:items-stretch xl:gap-4">
         {STAGES.map((stage, i) => (
           <div key={stage.n} className="flex min-w-0 flex-1 items-center gap-4 xl:contents">
             <StageCard stage={stage} delay={0.08 * i} />

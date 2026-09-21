@@ -205,7 +205,7 @@ function StateCard({ state, delay }: { state: AuthorityState; delay: number }) {
 
 export function AuthorityStatesPanels() {
   return (
-    <div className="grid grid-cols-2 gap-4 xl:flex xl:flex-row">
+    <div className="flex flex-col gap-4 xl:flex-row">
       {STATES.map((state, i) => (
         <StateCard key={state.n} state={state} delay={0.06 * i} />
       ))}

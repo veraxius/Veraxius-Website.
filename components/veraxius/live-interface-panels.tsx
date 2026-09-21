@@ -263,7 +263,7 @@ const LINEAGE_ITEMS: { label: string; time: string; icon: string; tone: "positiv
 
 export function LiveInterfacePanels() {
   return (
-    <div className="grid grid-cols-2 gap-4 xl:flex xl:flex-row">
+    <div className="flex flex-col gap-4 xl:flex-row">
       {/* 01 — EVIDENCE */}
       <PanelShell n="01" title="Evidence" subtitle="Real signals. Real sources.">
         <div className="flex items-center justify-between">

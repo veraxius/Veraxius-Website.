@@ -130,6 +130,27 @@ body::before {
     }
   }
 
+  /* About / NVIDIA Inception photo sections — the overlaid copy needs more
+     room than the section's own min-height once its column has wrapped onto
+     more lines (from ~1024px down through phones), which was clipping the
+     closing paragraph and CTA button entirely. Bumped just for that range;
+     above it the aspect-ratio-derived height already clears the content. */
+  @media (max-width: 1350px) {
+    #about {
+      min-height: 800px;
+    }
+  }
+
+  .vx-nvidia-photo {
+    min-height: 560px;
+  }
+
+  @media (max-width: 460px) {
+    .vx-nvidia-photo {
+      min-height: 680px;
+    }
+  }
+
   /* Section with exact padding: 120px top and bottom */
   .vx-section {
     padding-top: 120px;

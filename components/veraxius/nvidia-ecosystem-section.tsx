@@ -35,8 +35,8 @@ export function NvidiaEcosystemSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative max-w-full overflow-hidden aspect-[1774/887]"
-      style={{ backgroundColor: "#0d0d10", minHeight: "clamp(280px, 55vw, 560px)" }}
+      className="relative max-w-full overflow-hidden aspect-[1774/887] vx-nvidia-photo"
+      style={{ backgroundColor: "#0d0d10" }}
     >
       {/* Right panel — photo */}
       <div className="absolute inset-y-0 right-0 w-full lg:w-[58%]">
