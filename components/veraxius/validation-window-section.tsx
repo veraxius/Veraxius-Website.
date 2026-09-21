@@ -29,7 +29,7 @@ export function ValidationWindowSection() {
   return (
     <section id="validation" ref={sectionRef} className="vx-section overflow-hidden scroll-mt-24" style={{ backgroundColor: "var(--bg-primary)" }}>
       <div className="vx-container">
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1.8fr)] lg:items-center">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1.8fr)] lg:items-center">
           {/* LEFT — copy */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -42,7 +42,7 @@ export function ValidationWindowSection() {
             </span>
 
             <h2
-              className="font-syne font-extrabold mt-4 uppercase"
+              className="font-syne font-extrabold mt-4 uppercase break-words"
               style={{ fontSize: "clamp(26px, 3vw, 38px)", lineHeight: "1.15", letterSpacing: "-0.01em", color: "var(--text-primary)" }}
             >
               AIM needs more

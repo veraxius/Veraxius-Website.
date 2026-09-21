@@ -162,7 +162,7 @@ function ChecklistCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.6, delay, ease: [0.25, 0.1, 0.25, 1] }}
-      className="rounded-2xl border p-6 sm:p-7"
+      className="min-w-0 rounded-2xl border p-6 sm:p-7"
       style={{
         borderColor: isLight ? "rgba(19,19,22,0.08)" : "var(--divider)",
         backgroundColor: isLight ? "#f5f5f7" : "var(--bg-panel)",
@@ -194,13 +194,13 @@ function ChecklistCard({
         {items.map((item) => (
           <li
             key={item.label}
-            className="flex items-center justify-between gap-3 rounded-xl border px-3.5 py-3"
+            className="flex min-w-0 items-center justify-between gap-3 rounded-xl border px-3.5 py-3"
             style={{
               borderColor: isLight ? "rgba(19,19,22,0.08)" : "var(--divider)",
               backgroundColor: isLight ? "#ffffff" : "var(--bg-secondary)",
             }}
           >
-            <span className="flex items-center gap-3">
+            <span className="flex min-w-0 items-center gap-3">
               <span
                 className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
                 style={{
@@ -213,7 +213,7 @@ function ChecklistCard({
                 </svg>
               </span>
               <span
-                className="font-dm-sans font-medium"
+                className="min-w-0 font-dm-sans font-medium"
                 style={{ fontSize: "15px", color: isLight ? "#131316" : "var(--text-primary)" }}
               >
                 {item.label}
@@ -248,7 +248,7 @@ export function WhyNowSection() {
   return (
     <section ref={sectionRef} className="vx-section" style={{ backgroundColor: "var(--bg-primary)" }}>
       <div className="vx-container">
-        <div className="grid gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)] lg:items-center lg:gap-10">
+        <div className="grid grid-cols-1 gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)] lg:items-center lg:gap-10">
           {/* LEFT — copy */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -330,7 +330,7 @@ export function WhyNowSection() {
           </motion.div>
 
           {/* RIGHT — Capability -> Authority transition */}
-          <div className="grid items-center gap-6 sm:grid-cols-[1fr_auto_1fr]">
+          <div className="grid grid-cols-1 items-center gap-6 sm:grid-cols-[1fr_auto_1fr]">
             <ChecklistCard
               eyebrow="Capability"
               heading="Can the system act?"

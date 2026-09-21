@@ -42,7 +42,7 @@ export function AboutSection() {
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
 
   return (
-    <section id="about" ref={sectionRef} className="relative overflow-hidden aspect-[1632/964] min-h-[520px] scroll-mt-24">
+    <section id="about" ref={sectionRef} className="relative max-w-full overflow-hidden aspect-[1632/964] min-h-[520px] scroll-mt-24">
       {/* Background photo — container matches the photo's own aspect ratio so
           object-cover never has to crop it; a taller box (from a long text
           block) would otherwise crop the top/bottom and collide with the
@@ -75,7 +75,7 @@ export function AboutSection() {
           </span>
 
           <h2
-            className="font-syne font-extrabold mt-4 uppercase"
+            className="font-syne font-extrabold mt-4 uppercase break-words"
             style={{ fontSize: "clamp(30px, 3.6vw, 44px)", lineHeight: "1.15", letterSpacing: "-0.01em", color: "#ffffff" }}
           >
             Building the layer

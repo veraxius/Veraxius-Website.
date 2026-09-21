@@ -136,9 +136,14 @@ export function HeroSection() {
       />
 
       <div className="vx-container relative z-10">
-        <div className="grid gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] lg:items-start lg:gap-10">
-          {/* LEFT COLUMN — copy */}
-          <motion.div variants={containerVariants} initial="hidden" animate="visible" className="max-w-[560px]">
+        <div className="grid grid-cols-1 gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] lg:items-start lg:gap-x-10 lg:gap-y-0">
+          {/* LEFT COLUMN, TOP — copy above the visual */}
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="max-w-[560px] lg:col-start-1 lg:row-start-1"
+          >
             {/* Eyebrow */}
             <motion.div variants={itemVariants} className="flex items-center gap-3">
               <div className="w-6 h-px bg-[var(--amber)]"></div>
@@ -213,9 +218,40 @@ export function HeroSection() {
                 </span>
               ))}
             </motion.div>
+          </motion.div>
 
+          {/* PRODUCT VISUAL — on phones, sits between the copy above and the CTA row below;
+              on lg+ it becomes the right column, spanning the full height of both copy blocks. */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+            className="relative lg:col-start-2 lg:row-start-1 lg:row-span-2"
+          >
+            <div
+              className="overflow-hidden rounded-2xl border shadow-2xl"
+              style={{ borderColor: "var(--divider)" }}
+            >
+              <Image
+                src="/foto-hero.png"
+                alt="Veraxius AIM — live Trust and Authority dashboard"
+                width={1572}
+                height={1001}
+                priority
+                className="h-auto w-full"
+              />
+            </div>
+          </motion.div>
+
+          {/* LEFT COLUMN, BOTTOM — CTA + badge, below the visual on phones */}
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="max-w-[560px] lg:col-start-1 lg:row-start-2"
+          >
             {/* CTA Row */}
-            <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-4 mt-8">
+            <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-4" style={{ marginTop: "32px" }}>
               <a
                 href={JOIN_NOW_LOGIN_URL}
                 className="inline-flex items-center gap-2 rounded-full bg-[var(--amber)] px-7 py-3.5 font-dm-mono font-semibold text-[13px] uppercase tracking-cta text-[var(--text-on-amber)] transition hover:bg-[var(--amber-glow)]"
@@ -272,28 +308,6 @@ export function HeroSection() {
                 NVIDIA Inception program
               </p>
             </motion.div>
-          </motion.div>
-
-          {/* RIGHT COLUMN — product visual, matched to the copy column's height */}
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
-            className="relative"
-          >
-            <div
-              className="overflow-hidden rounded-2xl border shadow-2xl"
-              style={{ borderColor: "var(--divider)" }}
-            >
-              <Image
-                src="/foto-hero.png"
-                alt="Veraxius AIM — live Trust and Authority dashboard"
-                width={1572}
-                height={1001}
-                priority
-                className="h-auto w-full"
-              />
-            </div>
           </motion.div>
         </div>
       </div>

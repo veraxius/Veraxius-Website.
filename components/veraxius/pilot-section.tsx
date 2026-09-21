@@ -92,7 +92,7 @@ export function PilotSection() {
   return (
     <section id="use-cases" ref={sectionRef} className="vx-section scroll-mt-24" style={{ backgroundColor: "var(--bg-primary)" }}>
       <div className="vx-container">
-        <div className="grid gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)_minmax(0,0.75fr)] lg:items-start lg:gap-8">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1fr)_minmax(0,0.75fr)] lg:items-start lg:gap-8">
           {/* LEFT — copy */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}

@@ -123,7 +123,7 @@ export function TrustLineageSection() {
   return (
     <section ref={sectionRef} className="vx-section" style={{ backgroundColor: "var(--bg-primary)" }}>
       <div className="vx-container">
-        <div className="grid gap-14 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-center">
+        <div className="grid grid-cols-1 gap-14 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-center">
           {/* LEFT — copy */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}

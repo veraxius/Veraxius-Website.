@@ -217,7 +217,7 @@ export function ProductSection() {
   return (
     <section id="product" ref={sectionRef} className="vx-section overflow-hidden scroll-mt-24" style={{ backgroundColor: "var(--bg-secondary)" }}>
       <div className="vx-container">
-        <div className="grid gap-16 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:items-center">
+        <div className="grid grid-cols-1 gap-16 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:items-center">
           {/* LEFT — copy */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
