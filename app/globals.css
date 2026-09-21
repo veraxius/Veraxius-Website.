@@ -100,10 +100,10 @@ body::before {
 }
 
 @layer components {
-  /* Container with exact specs: max-width 1100px, 48px horizontal padding */
+  /* Container — wide, so content reaches closer to the viewport edges on large screens */
   .vx-container {
     @apply mx-auto w-full;
-    max-width: 1100px;
+    max-width: 1680px;
     padding-left: 48px;
     padding-right: 48px;
   }

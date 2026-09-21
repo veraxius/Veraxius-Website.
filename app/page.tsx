@@ -1,20 +1,18 @@
 import {
   SiteHeader,
   HeroSection,
-  Mvp4LaunchSection,
-  BreakdownSection,
-  NumbersSection,
-  SystemPreviewSection,
-  LineInSandSection,
-  CategorySection,
-  IntegrityStackSection,
-  ArchitectureDiagramSection,
-  HowItWorksSection,
-  CaseStudySection,
-  ImpactSection,
-  WhyThisWinsSection,
-  IntegrationSection,
-  CostSection,
+  WhyNowSection,
+  ProductSection,
+  LiveInterfaceSection,
+  AuthorityGateSection,
+  TrustLineageSection,
+  RoadmapSection,
+  PilotSection,
+  ResearchSection,
+  AboutSection,
+  ValidationWindowSection,
+  NvidiaEcosystemSection,
+  FinalCtaSection,
   SiteFooter,
   ScrollProgress,
 } from "@/components/veraxius";
@@ -30,20 +28,18 @@ export default function HomePage() {
       <ScrollProgress />
       <SiteHeader />
       <HeroSection />
-      <Mvp4LaunchSection />
-      <BreakdownSection />
-      <NumbersSection />
-      <SystemPreviewSection />
-      <LineInSandSection />
-      <CategorySection />
-      <IntegrityStackSection />
-      <ArchitectureDiagramSection />
-      <HowItWorksSection />
-      <CaseStudySection />
-      <ImpactSection />
-      <WhyThisWinsSection />
-      <IntegrationSection />
-      <CostSection />
+      <WhyNowSection />
+      <ProductSection />
+      <LiveInterfaceSection />
+      <AuthorityGateSection />
+      <TrustLineageSection />
+      <RoadmapSection />
+      <PilotSection />
+      <ResearchSection />
+      <AboutSection />
+      <ValidationWindowSection />
+      <NvidiaEcosystemSection />
+      <FinalCtaSection />
       <SiteFooter />
     </main>
   );

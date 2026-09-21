@@ -4,53 +4,55 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useCallback, useEffect, useState, type MouseEvent } from "react";
+import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
-import { JOIN_NOW_LOGIN_URL } from "./mvp4-launch-section";
-
-type HomeSectionId = "contact-us";
-
-function scrollToHomeSection(id: HomeSectionId) {
-  if (typeof window === "undefined") return;
-  const el = document.getElementById(id);
-  if (!el) return;
-  el.scrollIntoView({ behavior: "smooth", block: "start" });
-  const url = `${window.location.pathname}${window.location.search}#${id}`;
-  window.history.replaceState(null, "", url);
-}
+import { JOIN_NOW_LOGIN_URL } from "./constants";
 
 const navLinkClass =
-  "font-dm-mono font-medium text-[10px] uppercase transition-opacity hover:opacity-80 min-h-[44px] inline-flex items-center";
+  "font-dm-sans text-[14px] font-medium min-h-[44px] inline-flex items-center rounded-full px-3 transition-colors";
+
+function NavLink({ href, children, onClick }: { href: string; children: React.ReactNode; onClick?: () => void }) {
+  return (
+    <Link
+      href={href}
+      className={navLinkClass}
+      style={{ color: "var(--text-secondary-strong)" }}
+      onClick={onClick}
+      onMouseEnter={(e) => {
+        (e.currentTarget as HTMLElement).style.backgroundColor = "rgba(255,255,255,0.1)";
+      }}
+      onMouseLeave={(e) => {
+        (e.currentTarget as HTMLElement).style.backgroundColor = "transparent";
+      }}
+    >
+      {children}
+    </Link>
+  );
+}
+
+// Each item scrolls to the matching home-page section (works from any page,
+// since it's an absolute "/#id" path) rather than a bare "#" placeholder.
+const NAV_ITEMS = [
+  { label: "AIM", href: "/#product" },
+  { label: "Solutions", href: "/#solutions" },
+  { label: "Use Cases", href: "/#use-cases" },
+  { label: "Validation", href: "/#validation" },
+  { label: "About", href: "/#about" },
+];
+
+function ArrowIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 16 10" className={className} fill="none" aria-hidden="true">
+      <path d="M0.5 5H14.5M14.5 5L10.5 1M14.5 5L10.5 9" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
 
 export function SiteHeader() {
   const pathname = usePathname();
   const isStore = pathname?.startsWith("/aimsignalstore") ?? false;
-  const isHome = pathname === "/";
-  const contactHref =
-    pathname?.startsWith("/aimsignalstore") || pathname?.startsWith("/aimsignalprogram")
-      ? "/#contact-us"
-      : "#contact-us";
   const [storeScrolled, setStoreScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-
-  const onHomeInPageNav = useCallback(
-    (id: HomeSectionId) => (e: MouseEvent<HTMLAnchorElement>) => {
-      if (!isHome) return;
-      e.preventDefault();
-      setMenuOpen(false);
-      if (window.location.hash === `#${id}`) {
-        window.history.replaceState(
-          null,
-          "",
-          window.location.pathname + window.location.search,
-        );
-        requestAnimationFrame(() => scrollToHomeSection(id));
-        return;
-      }
-      scrollToHomeSection(id);
-    },
-    [isHome],
-  );
 
   useEffect(() => {
     if (!isStore) return;
@@ -72,38 +74,6 @@ export function SiteHeader() {
   }, [pathname]);
 
   const storeHeaderSolid = isStore && storeScrolled;
-
-  const navLinks = (
-    <>
-      <Link
-        href="/aimsignalprogram"
-        className={navLinkClass}
-        style={{ letterSpacing: "0.08em", color: "var(--amber)" }}
-        onClick={() => setMenuOpen(false)}
-      >
-        aim signal program
-      </Link>
-      <Link
-        href="/aimsignalstore"
-        className={navLinkClass}
-        style={{ letterSpacing: "0.08em", color: "var(--amber)" }}
-        onClick={() => setMenuOpen(false)}
-      >
-        aim signal store
-      </Link>
-      <a
-        href={contactHref}
-        className={navLinkClass}
-        style={{ color: "var(--amber)", letterSpacing: "0.08em" }}
-        onClick={(e) => {
-          onHomeInPageNav("contact-us")(e);
-          setMenuOpen(false);
-        }}
-      >
-        Contact Us
-      </a>
-    </>
-  );
 
   return (
     <motion.header
@@ -146,58 +116,54 @@ export function SiteHeader() {
           />
         </Link>
 
-        <div className="flex shrink-0 items-center gap-2 sm:gap-3 md:gap-4 lg:gap-6">
+        {/* Desktop nav */}
+        <nav className="hidden items-center gap-2 lg:flex" aria-label="Main navigation">
+          {NAV_ITEMS.map((item) => (
+            <NavLink key={item.label} href={item.href}>
+              {item.label}
+            </NavLink>
+          ))}
+        </nav>
+
+        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
           <a
             href={JOIN_NOW_LOGIN_URL}
-            className="hidden min-h-[44px] items-center justify-center font-dm-mono font-medium text-[11px] uppercase tracking-cta bg-[var(--amber)] px-4 py-3 text-[var(--text-on-amber)] transition-colors hover:bg-[var(--amber-glow)] sm:inline-flex md:px-5"
-            style={{ letterSpacing: "0.08em" }}
+            className="hidden min-h-[44px] items-center gap-1.5 rounded-full px-5 font-dm-mono font-semibold text-[12px] uppercase tracking-cta transition-colors sm:inline-flex"
+            style={{ letterSpacing: "0.06em", backgroundColor: "var(--amber)", color: "var(--text-on-amber)" }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLElement).style.backgroundColor = "var(--amber-glow)";
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLElement).style.backgroundColor = "var(--amber)";
+            }}
           >
-            Join Now
+            Pilot AIM
+            <ArrowIcon className="h-3 w-3" />
+          </a>
+          <a
+            href={JOIN_NOW_LOGIN_URL}
+            className="hidden min-h-[44px] items-center rounded-full border-2 px-5 font-dm-mono font-semibold text-[12px] uppercase tracking-cta transition-colors sm:inline-flex"
+            style={{ letterSpacing: "0.06em", borderColor: "var(--amber)", color: "var(--amber)", backgroundColor: "transparent" }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLElement).style.backgroundColor = "rgba(255,184,77,0.14)";
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLElement).style.backgroundColor = "transparent";
+            }}
+          >
+            Log in
           </a>
 
-          {/* Desktop nav */}
-          <nav
-            className="hidden items-center gap-4 lg:flex lg:gap-6"
-            style={{ color: "var(--amber)" }}
-            aria-label="Main navigation"
+          <p
+            className="hidden pl-4 xl:block font-dm-mono"
+            style={{ fontSize: "9px", fontWeight: 500, letterSpacing: "0.12em", lineHeight: 1.5, color: "var(--text-tertiary)" }}
           >
-            <Link
-              href="/aimsignalprogram"
-              className={navLinkClass}
-              style={{ letterSpacing: "0.08em", color: "var(--amber)" }}
-            >
-              aim signal program
-            </Link>
-            <span
-              className="font-dm-mono text-[10px] select-none leading-none"
-              style={{ color: "var(--amber)" }}
-              aria-hidden
-            >
-              |
-            </span>
-            <Link
-              href="/aimsignalstore"
-              className={navLinkClass}
-              style={{ letterSpacing: "0.08em", color: "var(--amber)" }}
-            >
-              aim signal store
-            </Link>
-            <span
-              className="font-dm-mono text-[10px] select-none leading-none"
-              style={{ color: "var(--amber)" }}
-              aria-hidden
-            >
-              |
-            </span>
-            <a
-              href={contactHref}
-              className={navLinkClass}
-              style={{ color: "var(--amber)", letterSpacing: "0.08em" }}
-              onClick={onHomeInPageNav("contact-us")}
-            >
-              Contact Us
-            </a>
-          </nav>
+            TRUST
+            <br />
+            MUST BE
+            <br />
+            MEASURED.
+          </p>
 
           {/* Mobile menu toggle */}
           <button
@@ -244,19 +210,29 @@ export function SiteHeader() {
             className="overflow-hidden border-t border-[var(--divider)] lg:hidden"
             style={{ backgroundColor: "var(--bg-header)" }}
           >
-            <nav
-              className="flex flex-col px-4 py-4"
-              style={{ color: "var(--amber)" }}
-              aria-label="Mobile navigation"
-            >
-              {navLinks}
-              <a
-                href={JOIN_NOW_LOGIN_URL}
-                className="mt-4 inline-flex min-h-[44px] w-full items-center justify-center font-dm-mono font-medium text-[11px] uppercase tracking-cta bg-[var(--amber)] px-5 py-3 text-[var(--text-on-amber)] transition-colors hover:bg-[var(--amber-glow)]"
-                style={{ letterSpacing: "0.08em" }}
-              >
-                Join Now
-              </a>
+            <nav className="flex flex-col gap-1 px-4 py-4" aria-label="Mobile navigation">
+              {NAV_ITEMS.map((item) => (
+                <NavLink key={item.label} href={item.href} onClick={() => setMenuOpen(false)}>
+                  {item.label}
+                </NavLink>
+              ))}
+              <div className="mt-3 flex flex-col gap-2">
+                <a
+                  href={JOIN_NOW_LOGIN_URL}
+                  className="inline-flex min-h-[44px] w-full items-center justify-center gap-1.5 rounded-full bg-[var(--amber)] font-dm-mono font-semibold text-[12px] uppercase tracking-cta text-[var(--text-on-amber)]"
+                  style={{ letterSpacing: "0.06em" }}
+                >
+                  Pilot AIM
+                  <ArrowIcon className="h-3 w-3" />
+                </a>
+                <a
+                  href={JOIN_NOW_LOGIN_URL}
+                  className="inline-flex min-h-[44px] w-full items-center justify-center rounded-full border-2 font-dm-mono font-semibold text-[12px] uppercase tracking-cta"
+                  style={{ letterSpacing: "0.06em", borderColor: "var(--amber)", color: "var(--amber)" }}
+                >
+                  Log in
+                </a>
+              </div>
             </nav>
           </motion.div>
         )}
