@@ -23,8 +23,8 @@ const LINKS_COLUMN_1 = [
 ];
 
 const LINKS_COLUMN_2 = [
-  { label: "Privacy", href: "#" },
-  { label: "Terms", href: "#" },
+  { label: "Privacy", href: "/privacy" },
+  { label: "Terms", href: "/terms" },
   { label: "Contact", href: "/contact" },
 ];
 
