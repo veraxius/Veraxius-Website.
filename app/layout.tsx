@@ -92,10 +92,11 @@ export default function RootLayout({
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
-            // Consent Mode v2 — granted by default (business decision:
-            // the banner in components/veraxius/consent-banner.tsx is shown
-            // for visibility, but Accept/Reject don't gate measurement —
-            // analytics_storage stays granted either way).
+            // Consent Mode v2 — granted by default so analytics measures
+            // from the visitor's first pageview. The banner in
+            // components/veraxius/consent-banner.tsx sends a
+            // gtag('consent','update', ...denied) if the visitor clicks
+            // Reject, which turns analytics off from that point on.
             gtag('consent', 'default', {
               'analytics_storage': 'granted',
               'ad_storage': 'granted',

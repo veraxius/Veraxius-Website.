@@ -2,10 +2,17 @@
 
 import { useEffect, useState } from "react";
 
-// Business decision: this banner is shown for visibility, but neither button
-// gates measurement — analytics_storage is granted by default in
-// app/layout.tsx regardless of what's clicked here. This only remembers
-// that the visitor dismissed the banner so it doesn't reappear.
+declare global {
+  interface Window {
+    gtag?: (...args: unknown[]) => void;
+  }
+}
+
+// Business decision: analytics_storage is granted by default in
+// app/layout.tsx, so measurement starts from the visitor's first pageview
+// regardless of this banner. Accept just dismisses (keeps the default).
+// Reject calls gtag('consent','update', ...denied) so analytics stops for
+// this visitor going forward, then dismisses.
 const DISMISSED_KEY = "vx_cookie_banner_dismissed";
 
 export function ConsentBanner() {
@@ -30,6 +37,16 @@ export function ConsentBanner() {
     setVisible(false);
   }
 
+  function reject() {
+    window.gtag?.("consent", "update", {
+      analytics_storage: "denied",
+      ad_storage: "denied",
+      ad_user_data: "denied",
+      ad_personalization: "denied",
+    });
+    dismiss();
+  }
+
   if (!visible) return null;
 
   return (
@@ -50,7 +67,7 @@ export function ConsentBanner() {
         <div className="flex shrink-0 items-center gap-3">
           <button
             type="button"
-            onClick={dismiss}
+            onClick={reject}
             className="rounded-full border px-5 py-2 font-dm-mono font-medium text-[12px] uppercase tracking-cta transition-colors"
             style={{ borderColor: "var(--divider)", color: "var(--text-secondary)" }}
           >

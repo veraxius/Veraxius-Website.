@@ -85,14 +85,14 @@ export default function PrivacyPage() {
             <H2>Analytics and cookies</H2>
             <P>
               We use Google Analytics to understand how visitors use the Site — for example, which pages are
-              viewed, how long visitors stay, approximate location derived from IP address, and general
-              device/browser information. Google Analytics sets cookies to do this. We do not currently run
-              advertising pixels or third-party ad trackers on this Site.
+              viewed, how long visitors stay, and general device/browser information. Google Analytics sets
+              cookies to do this. We do not currently run advertising pixels or third-party ad trackers on this
+              Site.
             </P>
             <P>
-              A cookie notice appears on your first visit. Google Analytics is enabled by default for all
-              visitors regardless of whether you accept, dismiss, or ignore that notice; the notice does not
-              currently change how analytics operates.
+              A cookie notice appears on your first visit. Analytics is on by default. If you click
+              &quot;Reject,&quot; analytics is turned off for you going forward; if you click &quot;Accept&quot; or
+              dismiss the notice, analytics continues as normal.
             </P>
 
             <H2>Third parties we use</H2>
