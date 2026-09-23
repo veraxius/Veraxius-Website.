@@ -92,14 +92,15 @@ export default function RootLayout({
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
-            // Consent Mode v2 — denied by default until the visitor accepts
-            // the cookie banner (components/veraxius/consent-banner.tsx),
-            // which calls gtag('consent','update',...) on Accept.
+            // Consent Mode v2 — granted by default (business decision:
+            // the banner in components/veraxius/consent-banner.tsx is shown
+            // for visibility, but Accept/Reject don't gate measurement —
+            // analytics_storage stays granted either way).
             gtag('consent', 'default', {
-              'analytics_storage': 'denied',
-              'ad_storage': 'denied',
-              'ad_user_data': 'denied',
-              'ad_personalization': 'denied'
+              'analytics_storage': 'granted',
+              'ad_storage': 'granted',
+              'ad_user_data': 'granted',
+              'ad_personalization': 'granted'
             });
             gtag('js', new Date());
             gtag('config', 'G-JG1KHEG2SP');

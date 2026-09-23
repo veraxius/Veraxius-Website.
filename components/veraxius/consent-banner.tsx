@@ -2,50 +2,31 @@
 
 import { useEffect, useState } from "react";
 
-const CONSENT_KEY = "vx_cookie_consent";
-
-declare global {
-  interface Window {
-    gtag?: (...args: unknown[]) => void;
-  }
-}
-
-function updateConsent(granted: boolean) {
-  window.gtag?.("consent", "update", {
-    analytics_storage: granted ? "granted" : "denied",
-    ad_storage: granted ? "granted" : "denied",
-    ad_user_data: granted ? "granted" : "denied",
-    ad_personalization: granted ? "granted" : "denied",
-  });
-}
+// Business decision: this banner is shown for visibility, but neither button
+// gates measurement — analytics_storage is granted by default in
+// app/layout.tsx regardless of what's clicked here. This only remembers
+// that the visitor dismissed the banner so it doesn't reappear.
+const DISMISSED_KEY = "vx_cookie_banner_dismissed";
 
 export function ConsentBanner() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     try {
-      const stored = localStorage.getItem(CONSENT_KEY);
-      if (stored === "granted") {
-        updateConsent(true);
-      } else if (stored !== "denied") {
+      if (localStorage.getItem(DISMISSED_KEY) !== "1") {
         setVisible(true);
       }
-      // stored === "denied": consent already stays at its default-denied
-      // state (set in app/layout.tsx), nothing to do.
     } catch {
-      // localStorage unavailable (private browsing, blocked storage) — show
-      // the banner every visit rather than silently assuming consent.
       setVisible(true);
     }
   }, []);
 
-  function choose(granted: boolean) {
+  function dismiss() {
     try {
-      localStorage.setItem(CONSENT_KEY, granted ? "granted" : "denied");
+      localStorage.setItem(DISMISSED_KEY, "1");
     } catch {
       // Ignore — worst case the banner reappears next visit.
     }
-    updateConsent(granted);
     setVisible(false);
   }
 
@@ -55,7 +36,7 @@ export function ConsentBanner() {
     <div
       role="dialog"
       aria-live="polite"
-      aria-label="Cookie consent"
+      aria-label="Cookie notice"
       className="fixed inset-x-0 bottom-0 z-[70] border-t"
       style={{ backgroundColor: "var(--bg-header)", backdropFilter: "blur(16px)", borderColor: "var(--divider)" }}
     >
@@ -69,7 +50,7 @@ export function ConsentBanner() {
         <div className="flex shrink-0 items-center gap-3">
           <button
             type="button"
-            onClick={() => choose(false)}
+            onClick={dismiss}
             className="rounded-full border px-5 py-2 font-dm-mono font-medium text-[12px] uppercase tracking-cta transition-colors"
             style={{ borderColor: "var(--divider)", color: "var(--text-secondary)" }}
           >
@@ -77,7 +58,7 @@ export function ConsentBanner() {
           </button>
           <button
             type="button"
-            onClick={() => choose(true)}
+            onClick={dismiss}
             className="rounded-full px-5 py-2 font-dm-mono font-semibold text-[12px] uppercase tracking-cta transition-colors"
             style={{ backgroundColor: "var(--amber)", color: "var(--text-on-amber)" }}
           >
