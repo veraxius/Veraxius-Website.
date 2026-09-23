@@ -53,7 +53,7 @@ export function AboutSection() {
           "Antonio Ant Lovera" caption baked into the lower-left of the photo. */}
       <div className="absolute inset-0">
         <Image
-          src="/Veraxius Website 2.0 -SECTION 10 PHOTO.png"
+          src="/about-section-founder-photo.png"
           alt="Antonio Lovera, Veraxius Founder, at his desk with the AIM interface"
           width={1632}
           height={964}

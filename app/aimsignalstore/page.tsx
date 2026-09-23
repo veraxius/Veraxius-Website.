@@ -8,8 +8,8 @@ import { useReveal } from "@/components/vasp/use-reveal";
 import { cn } from "@/lib/utils";
 
 const IMG = {
-  header: "/Veraxius AIM Signal Store -Header.png",
-  merch: "/Veraxius AIM Signal Store -Merch Signals.png",
+  header: "/aimsignalstore-header.png",
+  merch: "/aimsignalstore-merch-signals.png",
 } as const;
 
 function StoreReveal({

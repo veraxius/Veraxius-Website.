@@ -46,7 +46,7 @@ export function SiteFooter() {
           {/* Logo + tagline */}
           <div className="col-span-2 sm:col-span-1">
             <Image
-              src="/Veraxius Logo FINAL FINAL 2 Horizontal Version-02.png"
+              src="/veraxius-logo-horizontal.png"
               alt="Veraxius"
               width={200}
               height={40}

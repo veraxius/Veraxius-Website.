@@ -143,7 +143,7 @@ function LoopDiagram() {
           background: "radial-gradient(circle, var(--amber-glow-subtle) 0%, transparent 75%)",
         }}
       >
-        <Image src="/Veraxius AIM model Logo & Icon.png" alt="" width={80} height={80} className="h-10 w-10 sm:h-12 sm:w-12" />
+        <Image src="/veraxius-aim-model-icon.png" alt="Veraxius AIM model icon" width={80} height={80} className="h-10 w-10 sm:h-12 sm:w-12" />
         <span className="font-syne font-extrabold lowercase leading-none" style={{ fontSize: "clamp(28px, 4vw, 40px)", color: "var(--text-primary)" }}>
           aim
         </span>

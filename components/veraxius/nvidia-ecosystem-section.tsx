@@ -41,7 +41,7 @@ export function NvidiaEcosystemSection() {
       {/* Right panel — photo */}
       <div className="absolute inset-y-0 right-0 w-full lg:w-[58%]">
         <Image
-          src="/ChatGPT Image 20 sept 2026, 03_02_32 p.m..png"
+          src="/nvidia-inception-office-photo.png"
           alt="The NVIDIA Inception Program sign in a modern office"
           width={1774}
           height={887}

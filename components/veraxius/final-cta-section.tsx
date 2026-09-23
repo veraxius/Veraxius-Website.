@@ -22,7 +22,7 @@ export function FinalCtaSection() {
       {/* Background photo */}
       <div className="absolute inset-0">
         <Image
-          src="/Veraxius Website 2.0 -SECTION 14 PHOTO.png"
+          src="/final-cta-earth-photo.png"
           alt="Earth from orbit at dawn, with the Veraxius mark glowing on the horizon"
           width={1672}
           height={941}

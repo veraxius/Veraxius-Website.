@@ -85,7 +85,7 @@ export function ValidationWindowSection() {
             className="relative vx-validation-graphic"
           >
             <Image
-              src="/ChatGPT Image 20 sept 2026, 02_44_27 p.m..png"
+              src="/validation-window-pathways.png"
               alt="Enterprise: Test AIM. Research: Challenge AIM. Technology: Connect AIM. Capital: Scale AIM."
               width={1708}
               height={920}

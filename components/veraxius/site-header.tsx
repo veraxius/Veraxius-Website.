@@ -106,7 +106,7 @@ export function SiteHeader() {
           onClick={() => setMenuOpen(false)}
         >
           <Image
-            src="/Veraxius Logo FINAL FINAL 2 Horizontal Version-02.png"
+            src="/veraxius-logo-horizontal.png"
             alt="Veraxius"
             width={180}
             height={36}
