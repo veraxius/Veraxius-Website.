@@ -120,14 +120,24 @@ export function AboutSection() {
             Then scale what the evidence supports.
           </p>
 
-          <a
-            href={JOIN_NOW_LOGIN_URL}
-            className="mt-8 inline-flex items-center gap-2 rounded-full bg-[var(--amber)] px-7 py-3.5 font-dm-mono font-semibold text-[13px] uppercase tracking-cta text-[var(--text-on-amber)] transition hover:bg-[var(--amber-glow)]"
-            style={{ letterSpacing: "0.06em" }}
-          >
-            About Veraxius
-            <ArrowIcon className="h-3 w-3" />
-          </a>
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <a
+              href={JOIN_NOW_LOGIN_URL}
+              className="inline-flex items-center gap-2 rounded-full bg-[var(--amber)] px-7 py-3.5 font-dm-mono font-semibold text-[13px] uppercase tracking-cta text-[var(--text-on-amber)] transition hover:bg-[var(--amber-glow)]"
+              style={{ letterSpacing: "0.06em" }}
+            >
+              About Veraxius
+              <ArrowIcon className="h-3 w-3" />
+            </a>
+            <a
+              href="/about-us"
+              className="inline-flex items-center gap-2 rounded-full border border-[var(--amber)] px-7 py-3.5 font-dm-mono font-semibold text-[13px] uppercase tracking-cta text-[var(--amber)] transition hover:bg-[rgba(255,184,77,0.1)]"
+              style={{ letterSpacing: "0.06em" }}
+            >
+              About Us
+              <ArrowIcon className="h-3 w-3" />
+            </a>
+          </div>
         </motion.div>
         </div>
       </div>
