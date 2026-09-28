@@ -38,7 +38,7 @@ const FOUNDERS: Founder[] = [
     width: 1104,
     height: 974,
     quote:
-      "I build systems the way trust is built: slowly, transparently, and with proof. A machine deserves no authority it hasn't earned, and at Veraxius, I make sure AIM is not just intelligent, but accountable.",
+      "I build systems the way trust is built — slowly, transparently, and with proof. A machine deserves no authority it hasn't earned, and at Veraxius, I make sure AIM is not just intelligent, but accountable.",
     signature: "— Adriel Rodriguez",
   },
 ];
