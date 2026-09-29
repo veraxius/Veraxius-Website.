@@ -63,18 +63,16 @@ export function PilotVideo({ src, poster, label }: { src: string; poster: string
         }}
       >
         <span
-          className="relative flex h-[84px] w-[84px] items-center justify-center rounded-full transition-transform duration-300 ease-out group-hover:scale-110 sm:h-[104px] sm:w-[104px]"
-          style={{
-            backgroundColor: "var(--amber)",
-            boxShadow: "0 0 0 10px rgba(255,184,77,0.16), 0 18px 50px rgba(0,0,0,0.55), 0 0 40px rgba(255,184,77,0.35)",
-          }}
+          // Smaller on phones so it doesn't cover the video; full size from tablet up.
+          className="relative flex h-12 w-12 items-center justify-center rounded-full transition-transform duration-300 ease-out group-hover:scale-110 shadow-[0_0_0_4px_rgba(255,184,77,0.16),0_6px_18px_rgba(0,0,0,0.5)] sm:h-[84px] sm:w-[84px] sm:shadow-[0_0_0_8px_rgba(255,184,77,0.16),0_14px_40px_rgba(0,0,0,0.55),0_0_32px_rgba(255,184,77,0.3)] lg:h-[104px] lg:w-[104px] lg:shadow-[0_0_0_10px_rgba(255,184,77,0.16),0_18px_50px_rgba(0,0,0,0.55),0_0_40px_rgba(255,184,77,0.35)]"
+          style={{ backgroundColor: "var(--amber)" }}
         >
           {/* soft pulse ring */}
           <span className="absolute inset-0 rounded-full motion-safe:animate-ping" style={{ backgroundColor: "rgba(255,184,77,0.25)", animationDuration: "2.4s" }} />
           {loading ? (
-            <span className="relative h-7 w-7 animate-spin rounded-full border-[3px] border-black/30 border-t-black" />
+            <span className="relative h-4 w-4 animate-spin rounded-full border-2 border-black/30 border-t-black sm:h-7 sm:w-7 sm:border-[3px]" />
           ) : (
-            <svg viewBox="0 0 24 24" className="relative ml-1 h-9 w-9 sm:h-11 sm:w-11" aria-hidden="true">
+            <svg viewBox="0 0 24 24" className="relative ml-0.5 h-5 w-5 sm:ml-1 sm:h-9 sm:w-9 lg:h-11 lg:w-11" aria-hidden="true">
               <path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.4-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z" fill="#0A0A0B" />
             </svg>
           )}
@@ -83,11 +81,11 @@ export function PilotVideo({ src, poster, label }: { src: string; poster: string
 
       {/* bottom label, fades with the overlay */}
       <div
-        className="pointer-events-none absolute bottom-5 left-0 right-0 flex justify-center transition-opacity duration-500"
+        className="pointer-events-none absolute bottom-5 left-0 right-0 hidden justify-center transition-opacity duration-500 sm:flex"
         style={{ opacity: started ? 0 : 1 }}
       >
         <span
-          className="font-dm-mono rounded-full px-4 py-1.5 text-[11px] uppercase"
+          className="font-dm-mono rounded-full px-3 py-1 text-[9px] uppercase sm:px-4 sm:py-1.5 sm:text-[11px]"
           style={{ letterSpacing: "0.16em", color: "#ffffff", backgroundColor: "rgba(10,10,11,0.6)", border: "1px solid rgba(255,255,255,0.14)" }}
         >
           Watch · 1:47
