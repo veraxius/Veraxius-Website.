@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { JOIN_NOW_LOGIN_URL } from "./constants";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -253,7 +252,7 @@ export function HeroSection() {
             {/* CTA Row */}
             <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-4" style={{ marginTop: "32px" }}>
               <a
-                href={JOIN_NOW_LOGIN_URL}
+                href="/pilots"
                 className="inline-flex items-center gap-2 rounded-full bg-[var(--amber)] px-7 py-3.5 font-dm-mono font-semibold text-[13px] uppercase tracking-cta text-[var(--text-on-amber)] transition hover:bg-[var(--amber-glow)]"
                 style={{ letterSpacing: "0.06em" }}
               >

@@ -15,8 +15,8 @@ function ArrowIcon({ className }: { className?: string }) {
 
 // Percentages are matched to where each of the 4 cards sits inside the
 // graphic image, so these sit right at the bottom of their own card.
-const CARD_CTAS: { label: string; left: number; width: number; color: string; textColor?: string }[] = [
-  { label: "Build a pilot", left: 4.05, width: 19, color: "#34D6B0" },
+const CARD_CTAS: { label: string; left: number; width: number; color: string; textColor?: string; href?: string }[] = [
+  { label: "Build a pilot", left: 4.05, width: 19, color: "#34D6B0", href: "/pilots" },
   { label: "Research with us", left: 28.7, width: 19, color: "#4DA3FF" },
   { label: "Build with AIM", left: 53.5, width: 19, color: "var(--amber)" },
   { label: "Investor information", left: 77.4, width: 19, color: "#A78BFA" },
@@ -96,7 +96,7 @@ export function ValidationWindowSection() {
             {CARD_CTAS.map((cta) => (
               <a
                 key={cta.label}
-                href={JOIN_NOW_LOGIN_URL}
+                href={cta.href ?? JOIN_NOW_LOGIN_URL}
                 className="absolute flex items-center justify-center gap-1 overflow-hidden whitespace-nowrap rounded-full font-dm-mono font-semibold uppercase"
                 style={{
                   left: `${cta.left}%`,

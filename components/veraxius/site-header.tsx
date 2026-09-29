@@ -127,7 +127,7 @@ export function SiteHeader() {
 
         <div className="flex shrink-0 items-center gap-2 sm:gap-3">
           <a
-            href={JOIN_NOW_LOGIN_URL}
+            href="/pilots"
             className="hidden min-h-[44px] items-center gap-1.5 rounded-full px-5 font-dm-mono font-semibold text-[12px] uppercase tracking-cta transition-colors sm:inline-flex"
             style={{ letterSpacing: "0.06em", backgroundColor: "var(--amber)", color: "var(--text-on-amber)" }}
             onMouseEnter={(e) => {
@@ -218,7 +218,7 @@ export function SiteHeader() {
               ))}
               <div className="mt-3 flex flex-col gap-2">
                 <a
-                  href={JOIN_NOW_LOGIN_URL}
+                  href="/pilots"
                   className="inline-flex min-h-[44px] w-full items-center justify-center gap-1.5 rounded-full bg-[var(--amber)] font-dm-mono font-semibold text-[12px] uppercase tracking-cta text-[var(--text-on-amber)]"
                   style={{ letterSpacing: "0.06em" }}
                 >

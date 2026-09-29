@@ -2,7 +2,6 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { JOIN_NOW_LOGIN_URL } from "./constants";
 
 const ICON_PROPS = {
   viewBox: "0 0 24 24",
@@ -249,7 +248,7 @@ export function PilotSection() {
             <div className="mt-6 h-px w-full" style={{ backgroundColor: "rgba(87, 209, 140, 0.2)" }} />
 
             <a
-              href={JOIN_NOW_LOGIN_URL}
+              href="/pilots"
               className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-[var(--amber)] px-6 py-3.5 font-dm-mono font-semibold text-[13px] uppercase tracking-cta text-[var(--text-on-amber)] transition hover:bg-[var(--amber-glow)]"
               style={{ letterSpacing: "0.06em" }}
             >

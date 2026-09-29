@@ -69,7 +69,7 @@ export function FinalCtaSection() {
 
           <div className="mt-9 flex flex-wrap items-center gap-4">
             <a
-              href={JOIN_NOW_LOGIN_URL}
+              href="/pilots"
               className="inline-flex items-center gap-2 rounded-full bg-[var(--amber)] px-7 py-3.5 font-dm-mono font-semibold text-[13px] uppercase tracking-cta text-[var(--text-on-amber)] transition hover:bg-[var(--amber-glow)]"
               style={{ letterSpacing: "0.06em" }}
             >

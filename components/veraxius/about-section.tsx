@@ -3,7 +3,6 @@
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 import { useRef } from "react";
-import { JOIN_NOW_LOGIN_URL } from "./constants";
 
 const ICON_PROPS = {
   viewBox: "0 0 24 24",
@@ -80,7 +79,8 @@ export function AboutSection() {
 
           <h2
             className="font-syne font-extrabold mt-4 uppercase break-words"
-            style={{ fontSize: "clamp(30px, 3.6vw, 44px)", lineHeight: "1.15", letterSpacing: "-0.01em", color: "#ffffff" }}
+            // Sized so "INTELLIGENCE" (≈12.4× the font size wide) always fits its 520px column.
+            style={{ fontSize: "clamp(22px, 7vw, 40px)", lineHeight: "1.15", letterSpacing: "-0.01em", color: "#ffffff" }}
           >
             Building the layer
             <br />
@@ -122,16 +122,8 @@ export function AboutSection() {
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <a
-              href={JOIN_NOW_LOGIN_URL}
-              className="inline-flex items-center gap-2 rounded-full bg-[var(--amber)] px-7 py-3.5 font-dm-mono font-semibold text-[13px] uppercase tracking-cta text-[var(--text-on-amber)] transition hover:bg-[var(--amber-glow)]"
-              style={{ letterSpacing: "0.06em" }}
-            >
-              About Veraxius
-              <ArrowIcon className="h-3 w-3" />
-            </a>
-            <a
               href="/about-us"
-              className="inline-flex items-center gap-2 rounded-full border border-[var(--amber)] px-7 py-3.5 font-dm-mono font-semibold text-[13px] uppercase tracking-cta text-[var(--amber)] transition hover:bg-[rgba(255,184,77,0.1)]"
+              className="inline-flex items-center gap-2 rounded-full bg-[var(--amber)] px-7 py-3.5 font-dm-mono font-semibold text-[13px] uppercase tracking-cta text-[var(--text-on-amber)] transition hover:bg-[var(--amber-glow)]"
               style={{ letterSpacing: "0.06em" }}
             >
               About Us
