@@ -19,7 +19,7 @@ const CARD_CTAS: { label: string; left: number; width: number; color: string; te
   { label: "Build a pilot", left: 4.05, width: 19, color: "#34D6B0", href: "/pilots" },
   { label: "Research with us", left: 28.7, width: 19, color: "#4DA3FF" },
   { label: "Build with AIM", left: 53.5, width: 19, color: "var(--amber)" },
-  { label: "Investor information", left: 77.4, width: 19, color: "#A78BFA" },
+  { label: "Investor information", left: 77.4, width: 19, color: "#A78BFA", href: "/investors" },
 ];
 
 export function ValidationWindowSection() {

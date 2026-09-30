@@ -31,6 +31,7 @@ const nextConfig = {
       { source: "/vasp", destination: "/aimsignalprogram", permanent: true },
       { source: "/aimprogram", destination: "/aimsignalprogram", permanent: true },
       { source: "/aim-signal-store", destination: "/aimsignalstore", permanent: true },
+      { source: "/investor", destination: "/investors", permanent: true },
     ];
   },
   images: {

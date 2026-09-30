@@ -1,0 +1,2961 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Veraxius AIM — Trust & Authority API",
+    "version": "1.0.0",
+    "summary": "Decide what an AI is allowed to do, based on trust earned with evidence.",
+    "description": "The AIM API lets your systems ask one question before an AI acts: **is this agent allowed to do this, right now?**\n\nA typical integration: register your agents and a versioned policy, stream signals and evidence about how they behave,\nthen for every consequential action create a **decision**, evaluate **trust**, evaluate **authority**, and only execute\nthrough AIM when the authority allows it. Outcomes feed back into trust, and every step is written to a tamper-evident\ngovernance log.\n\n**Authentication** — every request carries your pilot's API key: `Authorization: Bearer <api_key>`. Keys are issued once\nper pilot organization and only their hash is stored. Human approvals additionally require an operator token\n(`X-Operator-Token`).\n\n**IDs** are prefixed by type: `ENT_`, `CTX_`, `POL_`, `SIG_`, `EVD_`, `DEC_`, `TRS_`, `AUT_`, `ACT_`, `OUT_`.\n\n**Idempotency** — decisions and actions accept an `idempotency_key`; retrying with the same key returns the original\nresult (`replayed: true`) and never executes twice.\n\n**Isolation** — each pilot organization only ever sees its own data.",
+    "contact": {
+      "name": "Veraxius",
+      "email": "signal@veraxius.com",
+      "url": "https://veraxius.com/pilots"
+    }
+  },
+  "servers": [
+    {
+      "url": "{baseUrl}",
+      "description": "Your pilot's API base URL (provided when your pilot starts).",
+      "variables": {
+        "baseUrl": {
+          "default": "https://api.example.com",
+          "description": "Replace with the base URL shared with your pilot."
+        }
+      }
+    }
+  ],
+  "security": [
+    {
+      "TenantApiKey": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Setup",
+      "description": "Register the actors, contexts and rules AIM will govern."
+    },
+    {
+      "name": "Evidence & Signals",
+      "description": "Tell AIM what actually happens. Trust is computed from these."
+    },
+    {
+      "name": "Decisions",
+      "description": "Every consequential action starts as a decision."
+    },
+    {
+      "name": "Trust",
+      "description": "How much the subject of a decision is trusted, from its evidence."
+    },
+    {
+      "name": "Authority",
+      "description": "What the AI may do: EXECUTE, CONSTRAIN, CHALLENGE, ESCALATE or BLOCK."
+    },
+    {
+      "name": "Actions & Outcomes",
+      "description": "Execute only with a valid authority, then report what happened."
+    },
+    {
+      "name": "Operators",
+      "description": "Your human reviewers, who resolve escalations."
+    },
+    {
+      "name": "Audit",
+      "description": "Tamper-evident governance log and operational alerts."
+    }
+  ],
+  "paths": {
+    "/api/entities": {
+      "get": {
+        "tags": [
+          "Setup"
+        ],
+        "summary": "List entities",
+        "operationId": "listEntities",
+        "responses": {
+          "200": {
+            "description": "Up to 100 most recent entities.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Entity"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid tenant API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid tenant API key"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded (120 requests per minute).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Too many requests, please try again later"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Setup"
+        ],
+        "summary": "Register an entity",
+        "operationId": "createEntity",
+        "description": "An entity is an actor AIM keeps a trust record for: an AI agent, a person, an organization, a device or a system.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateEntity"
+              },
+              "example": {
+                "entity_type": "ai_agent",
+                "name": "Refund Assistant",
+                "external_ref": "agent-42"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "entity_id": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "entity_id": "ENT_7f3a…",
+                  "status": "active"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body or parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid payload"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid tenant API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid tenant API key"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded (120 requests per minute).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Too many requests, please try again later"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/contexts": {
+      "post": {
+        "tags": [
+          "Setup"
+        ],
+        "summary": "Register a decision context",
+        "operationId": "createContext",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateContext"
+              },
+              "example": {
+                "context_type": "customer_refunds",
+                "risk_class": "high"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "context_id": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "context_id": "CTX_91b2…"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body or parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid payload"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid tenant API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid tenant API key"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded (120 requests per minute).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Too many requests, please try again later"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/policies": {
+      "get": {
+        "tags": [
+          "Setup"
+        ],
+        "summary": "List active policies",
+        "operationId": "listPolicies",
+        "responses": {
+          "200": {
+            "description": "Active policies.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PolicySummary"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid tenant API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid tenant API key"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded (120 requests per minute).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Too many requests, please try again later"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Setup"
+        ],
+        "summary": "Publish a policy version",
+        "operationId": "createPolicy",
+        "description": "Rules are evaluated top to bottom; the first matching rule sets the authority. Conditions can reference `trust_score`, `evidence_confidence` or any field of the decision payload. **Versions are immutable**: publishing the same `policy_key` + `version` again returns 409 — publish a new version instead.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePolicy"
+              },
+              "example": {
+                "policy_key": "refunds",
+                "decision_type": "refund",
+                "version": "1.0",
+                "rules": [
+                  {
+                    "condition": {
+                      "trust_score": {
+                        "lt": 40
+                      }
+                    },
+                    "authority": "BLOCK"
+                  },
+                  {
+                    "condition": {
+                      "amount": {
+                        "gt": 1000
+                      }
+                    },
+                    "authority": "ESCALATE"
+                  },
+                  {
+                    "condition": {
+                      "trust_score": {
+                        "gte": 60
+                      }
+                    },
+                    "authority": "EXECUTE",
+                    "envelope": {
+                      "amount": {
+                        "lte": 1000
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PolicySummary"
+                },
+                "example": {
+                  "policy_id": "POL_c4d1…",
+                  "policy_key": "refunds",
+                  "version": "1.0"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body or parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid payload"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid tenant API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid tenant API key"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "This policy_key + version already exists.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "policy_version_already_exists"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded (120 requests per minute).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Too many requests, please try again later"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/signals": {
+      "get": {
+        "tags": [
+          "Evidence & Signals"
+        ],
+        "summary": "List signals",
+        "operationId": "listSignals",
+        "responses": {
+          "200": {
+            "description": "Up to 100 most recent signals.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Signal"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid tenant API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid tenant API key"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded (120 requests per minute).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Too many requests, please try again later"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Evidence & Signals"
+        ],
+        "summary": "Send a signal",
+        "operationId": "createSignal",
+        "description": "A signal is a structured observation about an entity, claim or decision. Each one adds to the evidence confidence behind a trust evaluation; AIM will not authorize anything while evidence confidence is below 40 (it answers CHALLENGE).",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSignal"
+              },
+              "example": {
+                "dimension": "reliability",
+                "direction": "positive",
+                "strength": 0.9,
+                "confidence": 0.9,
+                "target_entity_id": "ENT_7f3a…"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "signal_id": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "signal_id": "SIG_0b7e…"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid body, no target, or decay model without half-life.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "signal_requires_a_target"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid tenant API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid tenant API key"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded (120 requests per minute).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Too many requests, please try again later"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/mvp5/evidence": {
+      "get": {
+        "tags": [
+          "Evidence & Signals"
+        ],
+        "summary": "List evidence",
+        "operationId": "listEvidence",
+        "responses": {
+          "200": {
+            "description": "Up to 100 most recent evidence records.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Evidence"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid tenant API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid tenant API key"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded (120 requests per minute).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Too many requests, please try again later"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Evidence & Signals"
+        ],
+        "summary": "Submit evidence",
+        "operationId": "createEvidence",
+        "description": "Structured evidence from outside the platform (documents, API responses, attestations, verified claims, machine events…). AIM stores a SHA-256 hash of the content for integrity.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateEvidence"
+              },
+              "example": {
+                "evidence_type": "api_response",
+                "content": {
+                  "check": "refund history reconciled"
+                },
+                "decision_id": "DEC_41c2…"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "evidence_id": {
+                      "type": "string"
+                    },
+                    "content_hash": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "evidence_id": "EVD_5a90…",
+                  "content_hash": "9f2c…a41e"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body or parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid payload"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid tenant API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid tenant API key"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded (120 requests per minute).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Too many requests, please try again later"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/decisions": {
+      "get": {
+        "tags": [
+          "Decisions"
+        ],
+        "summary": "List decisions",
+        "operationId": "listDecisions",
+        "responses": {
+          "200": {
+            "description": "50 most recent decisions.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DecisionSummary"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid tenant API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid tenant API key"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded (120 requests per minute).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Too many requests, please try again later"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Decisions"
+        ],
+        "summary": "Create a decision",
+        "operationId": "createDecision",
+        "description": "Register the action your AI wants to take **before** it happens. Nothing downstream (trust, authority, action) runs without a `decision_id`.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateDecision"
+              },
+              "example": {
+                "proposed_by_entity_id": "ENT_7f3a…",
+                "decision_type": "refund",
+                "proposed_action": "issue_refund",
+                "payload": {
+                  "amount": 200
+                },
+                "context_id": "CTX_91b2…",
+                "idempotency_key": "order-8841-refund"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Replayed: a decision with this idempotency_key already exists.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "decision_id": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "replayed": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "example": {
+                  "decision_id": "DEC_41c2…",
+                  "status": "created",
+                  "replayed": true
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "decision_id": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "decision_id": "DEC_41c2…",
+                  "status": "created"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body or parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid payload"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid tenant API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid tenant API key"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded (120 requests per minute).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Too many requests, please try again later"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/decisions/{decisionId}": {
+      "get": {
+        "tags": [
+          "Decisions"
+        ],
+        "summary": "Get a decision with its full history",
+        "operationId": "getDecision",
+        "parameters": [
+          {
+            "name": "decisionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "DEC_7f3a2c1e-…"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Decision with every trust evaluation, authority, action and outcome (oldest first).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DecisionDetail"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid tenant API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid tenant API key"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found in your organization.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "decision_not_found"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded (120 requests per minute).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Too many requests, please try again later"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/trust/evaluate": {
+      "post": {
+        "tags": [
+          "Trust"
+        ],
+        "summary": "Evaluate trust for a decision",
+        "operationId": "evaluateTrust",
+        "description": "Computes a new, immutable trust state for the decision's subject from its current signals (reliability, consistency, evidence strength, peer validation, contradiction and decay).",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "decision_id"
+                ],
+                "properties": {
+                  "decision_id": {
+                    "type": "string"
+                  },
+                  "context_id": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "decision_id": "DEC_41c2…"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Trust state.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TrustState"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body or parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid payload"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid tenant API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid tenant API key"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Decision not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "decision_not_found"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded (120 requests per minute).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Too many requests, please try again later"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/authority/evaluate": {
+      "post": {
+        "tags": [
+          "Authority"
+        ],
+        "summary": "Evaluate authority",
+        "operationId": "evaluateAuthority",
+        "description": "Applies your policy to the trust state and returns one of five states. `EXECUTE` and `CONSTRAIN` are immediately usable (`status: active`); `ESCALATE` requires a human operator; `CHALLENGE` needs more evidence; `BLOCK` is final. The response also lists the alternatives AIM rejected and why.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "decision_id",
+                  "trust_state_id",
+                  "policy_id"
+                ],
+                "properties": {
+                  "decision_id": {
+                    "type": "string"
+                  },
+                  "trust_state_id": {
+                    "type": "string"
+                  },
+                  "policy_id": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "decision_id": "DEC_41c2…",
+                "trust_state_id": "TRS_2d8f…",
+                "policy_id": "POL_c4d1…"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Authority issued.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorityResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body or parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid payload"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid tenant API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid tenant API key"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Decision, trust state or policy not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "trust_state_not_found"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded (120 requests per minute).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Too many requests, please try again later"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/authority/{authorityId}/approve": {
+      "post": {
+        "tags": [
+          "Authority",
+          "Operators"
+        ],
+        "summary": "Resolve an escalation (human approval)",
+        "operationId": "approveAuthority",
+        "description": "A signed-in operator of your organization resolves an ESCALATE authority. The original is never modified: AIM issues a new authority that supersedes it.",
+        "security": [
+          {
+            "TenantApiKey": [],
+            "OperatorToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "authorityId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "AUT_7f3a2c1e-…"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "grant"
+                ],
+                "properties": {
+                  "grant": {
+                    "type": "string",
+                    "enum": [
+                      "EXECUTE",
+                      "CONSTRAIN",
+                      "BLOCK"
+                    ]
+                  },
+                  "scope": {
+                    "type": "object",
+                    "additionalProperties": true
+                  },
+                  "reason": {
+                    "type": "string",
+                    "maxLength": 2000
+                  }
+                }
+              },
+              "example": {
+                "grant": "EXECUTE",
+                "reason": "Verified with the customer by phone"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "New superseding authority.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "authority_id": {
+                      "type": "string"
+                    },
+                    "authority": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "supersedes_authority_id": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "authority_id": "AUT_9d0e…",
+                  "authority": "EXECUTE",
+                  "status": "active",
+                  "supersedes_authority_id": "AUT_2b7c…"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body or parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid payload"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing/invalid API key or operator token.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid tenant API key"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Not an escalation, or already resolved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "authority_not_escalated_or_already_resolved"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded (120 requests per minute).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Too many requests, please try again later"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/authority/{authorityId}/revoke": {
+      "post": {
+        "tags": [
+          "Authority",
+          "Operators"
+        ],
+        "summary": "Revoke an unused authority",
+        "operationId": "revokeAuthority",
+        "security": [
+          {
+            "TenantApiKey": [],
+            "OperatorToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "authorityId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "AUT_7f3a2c1e-…"
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "reason": {
+                    "type": "string",
+                    "maxLength": 2000
+                  }
+                }
+              },
+              "example": {
+                "reason": "On hold pending review"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Revoked.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "authority_id": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "authority_id": "AUT_9d0e…",
+                  "status": "revoked"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid tenant API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid tenant API key"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Already consumed or not revocable.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "authority_not_revocable"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded (120 requests per minute).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Too many requests, please try again later"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/actions": {
+      "post": {
+        "tags": [
+          "Actions & Outcomes"
+        ],
+        "summary": "Execute an action",
+        "operationId": "executeAction",
+        "description": "Executes through AIM with a valid authority. Validation and consumption are atomic: an authority can be used **once**, the payload must fit the authorized envelope, and retries with the same `idempotency_key` return the original result.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateAction"
+              },
+              "example": {
+                "decision_id": "DEC_41c2…",
+                "authority_id": "AUT_9d0e…",
+                "action_type": "issue_refund",
+                "payload": {
+                  "amount": 200
+                },
+                "idempotency_key": "order-8841-refund-exec"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Replayed: this idempotency_key was already executed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "action_id": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "replayed": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "example": {
+                  "action_id": "ACT_5e18…",
+                  "status": "executed",
+                  "replayed": true
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Executed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "action_id": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "executed_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  }
+                },
+                "example": {
+                  "action_id": "ACT_5e18…",
+                  "status": "executed",
+                  "executed_at": "2026-09-29T14:02:11.000Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid body, or the authority belongs to another decision.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "authority_decision_mismatch"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid tenant API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid tenant API key"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Denied. Reasons: AUTHORITY_STATE_NOT_EXECUTABLE, AUTHORITY_NOT_ACTIVE, AUTHORITY_EXPIRED, ACTION_TYPE_PROHIBITED, ACTION_TYPE_NOT_PERMITTED, ENVELOPE_VIOLATION:<field>.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionDenied"
+                },
+                "example": {
+                  "error": "authority_denied",
+                  "reason": "ENVELOPE_VIOLATION:amount"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Authority not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "authority_not_found"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "A concurrent request consumed the authority first.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ActionDenied"
+                },
+                "example": {
+                  "error": "authority_denied",
+                  "reason": "AUTHORITY_ALREADY_CONSUMED"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded (120 requests per minute).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Too many requests, please try again later"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/outcomes": {
+      "post": {
+        "tags": [
+          "Actions & Outcomes"
+        ],
+        "summary": "Record an outcome",
+        "operationId": "recordOutcome",
+        "description": "Reports what happened after an action. AIM turns it into new evidence and a reliability signal, so the next trust evaluation reflects real performance.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOutcome"
+              },
+              "example": {
+                "action_id": "ACT_5e18…",
+                "outcome_type": "refund_settled",
+                "success": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Recorded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "outcome_id": {
+                      "type": "string"
+                    },
+                    "evidence_id": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "signal_id": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  }
+                },
+                "example": {
+                  "outcome_id": "OUT_a3f0…",
+                  "evidence_id": "EVD_77c1…",
+                  "signal_id": "SIG_d4e2…"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body or parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid payload"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid tenant API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid tenant API key"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Action not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "action_not_found"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "The action was not executed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "action_not_executed"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded (120 requests per minute).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Too many requests, please try again later"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tenant-operators": {
+      "post": {
+        "tags": [
+          "Operators"
+        ],
+        "summary": "Register an operator",
+        "operationId": "createOperator",
+        "description": "Registers one of your organization's human reviewers. Operators can only act for your organization.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string",
+                    "minLength": 6,
+                    "maxLength": 128
+                  },
+                  "name": {
+                    "type": "string",
+                    "maxLength": 200
+                  }
+                }
+              },
+              "example": {
+                "email": "ops@acme.com",
+                "password": "••••••••",
+                "name": "Ops Lead"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "operator_id": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body or parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid payload"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid tenant API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid tenant API key"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Operator already exists.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "operator_already_exists"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded (120 requests per minute).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Too many requests, please try again later"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tenant-operators/login": {
+      "post": {
+        "tags": [
+          "Operators"
+        ],
+        "summary": "Operator sign-in",
+        "operationId": "operatorLogin",
+        "description": "Exchanges an operator's credentials for a 12-hour operator token, sent as `X-Operator-Token` when approving or revoking.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "password"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "email": "ops@acme.com",
+                "password": "••••••••"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Signed in.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "operator_token": {
+                      "type": "string"
+                    },
+                    "operator_id": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "expires_in": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "operator_token": "eyJ…",
+                  "operator_id": "b21c…",
+                  "email": "ops@acme.com",
+                  "expires_in": "12h"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Wrong credentials.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "invalid_credentials"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded (120 requests per minute).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Too many requests, please try again later"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/decisions/{decisionId}/governance": {
+      "get": {
+        "tags": [
+          "Audit"
+        ],
+        "summary": "Governance log for a decision",
+        "operationId": "getGovernance",
+        "description": "Every event recorded for the decision, oldest first. Each event stores the hash of the previous one; `chain_valid` tells you whether the chain still verifies (i.e. nothing was altered).",
+        "parameters": [
+          {
+            "name": "decisionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "DEC_7f3a2c1e-…"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Governance log.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GovernanceLog"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid tenant API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid tenant API key"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Decision not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "decision_not_found"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded (120 requests per minute).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Too many requests, please try again later"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ops/alerts": {
+      "get": {
+        "tags": [
+          "Audit"
+        ],
+        "summary": "Operational alerts",
+        "operationId": "getAlerts",
+        "description": "What needs attention: escalations pending for more than 24 hours, authorities that expired unused, and open contradictions.",
+        "responses": {
+          "200": {
+            "description": "Alerts.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Alerts"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid tenant API key.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid tenant API key"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded (120 requests per minute).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Too many requests, please try again later"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "TenantApiKey": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Your pilot organization's API key: `Authorization: Bearer <api_key>`."
+      },
+      "OperatorToken": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-Operator-Token",
+        "description": "Operator token from `POST /api/tenant-operators/login`."
+      }
+    },
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "error"
+        ]
+      },
+      "ActionDenied": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "const": "authority_denied"
+          },
+          "reason": {
+            "type": "string"
+          }
+        }
+      },
+      "AuthorityState": {
+        "type": "string",
+        "enum": [
+          "EXECUTE",
+          "CONSTRAIN",
+          "CHALLENGE",
+          "ESCALATE",
+          "BLOCK"
+        ]
+      },
+      "Entity": {
+        "type": "object",
+        "properties": {
+          "entity_id": {
+            "type": "string"
+          },
+          "entity_type": {
+            "type": "string"
+          },
+          "name": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateEntity": {
+        "type": "object",
+        "required": [
+          "entity_type"
+        ],
+        "properties": {
+          "entity_type": {
+            "type": "string",
+            "enum": [
+              "member",
+              "ai_agent",
+              "organization",
+              "device",
+              "system"
+            ]
+          },
+          "external_ref": {
+            "type": "string",
+            "maxLength": 255,
+            "description": "Your own identifier for this actor."
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 255
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      },
+      "CreateContext": {
+        "type": "object",
+        "required": [
+          "context_type"
+        ],
+        "properties": {
+          "context_type": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "risk_class": {
+            "type": "string",
+            "maxLength": 50
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      },
+      "RuleCondition": {
+        "type": "object",
+        "description": "Field name → comparison. Fields: `trust_score`, `evidence_confidence`, or any decision payload field.",
+        "additionalProperties": {
+          "type": "object",
+          "properties": {
+            "lt": {
+              "type": "number"
+            },
+            "lte": {
+              "type": "number"
+            },
+            "gt": {
+              "type": "number"
+            },
+            "gte": {
+              "type": "number"
+            },
+            "eq": {
+              "type": [
+                "string",
+                "number",
+                "boolean"
+              ]
+            },
+            "in": {
+              "type": "array",
+              "items": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              }
+            },
+            "not_in": {
+              "type": "array",
+              "items": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "PolicyRule": {
+        "type": "object",
+        "required": [
+          "condition",
+          "authority"
+        ],
+        "properties": {
+          "condition": {
+            "$ref": "#/components/schemas/RuleCondition"
+          },
+          "authority": {
+            "$ref": "#/components/schemas/AuthorityState"
+          },
+          "envelope": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Limits the executed payload must respect (e.g. `{ \"amount\": { \"lte\": 1000 } }`)."
+          }
+        }
+      },
+      "CreatePolicy": {
+        "type": "object",
+        "required": [
+          "policy_key",
+          "decision_type",
+          "version",
+          "rules"
+        ],
+        "properties": {
+          "policy_key": {
+            "type": "string"
+          },
+          "decision_type": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "rules": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PolicyRule"
+            }
+          }
+        }
+      },
+      "PolicySummary": {
+        "type": "object",
+        "properties": {
+          "policy_id": {
+            "type": "string"
+          },
+          "policy_key": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
+          "decision_type": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateSignal": {
+        "type": "object",
+        "required": [
+          "dimension",
+          "direction",
+          "strength",
+          "confidence"
+        ],
+        "description": "At least one target (`target_entity_id`, `target_claim_id` or `target_decision_id`) is required.",
+        "properties": {
+          "dimension": {
+            "type": "string",
+            "enum": [
+              "reliability",
+              "consistency",
+              "peer_validation",
+              "contradiction",
+              "decay"
+            ]
+          },
+          "direction": {
+            "type": "string",
+            "enum": [
+              "positive",
+              "negative",
+              "neutral"
+            ]
+          },
+          "strength": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "source_entity_id": {
+            "type": "string"
+          },
+          "source_evidence_id": {
+            "type": "string"
+          },
+          "target_entity_id": {
+            "type": "string"
+          },
+          "target_claim_id": {
+            "type": "string"
+          },
+          "target_decision_id": {
+            "type": "string"
+          },
+          "observed_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "effective_from": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "decay_model": {
+            "type": "string",
+            "enum": [
+              "exponential"
+            ]
+          },
+          "half_life_days": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "description": "Required when decay_model is set."
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      },
+      "Signal": {
+        "type": "object",
+        "properties": {
+          "signal_id": {
+            "type": "string"
+          },
+          "dimension": {
+            "type": "string"
+          },
+          "direction": {
+            "type": "string"
+          },
+          "strength": {
+            "type": "number"
+          },
+          "confidence": {
+            "type": "number"
+          },
+          "target_entity_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "observed_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "CreateEvidence": {
+        "type": "object",
+        "required": [
+          "evidence_type",
+          "content"
+        ],
+        "properties": {
+          "evidence_type": {
+            "type": "string",
+            "enum": [
+              "document",
+              "observation",
+              "api_response",
+              "attestation",
+              "verified_claim",
+              "machine_event",
+              "human_verification",
+              "policy_result",
+              "historical_behavior"
+            ]
+          },
+          "content": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "provenance": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "claim_id": {
+            "type": "string"
+          },
+          "decision_id": {
+            "type": "string"
+          },
+          "observed_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Evidence": {
+        "type": "object",
+        "properties": {
+          "evidence_id": {
+            "type": "string"
+          },
+          "evidence_type": {
+            "type": "string"
+          },
+          "content": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "content_hash": {
+            "type": "string"
+          },
+          "observed_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "CreateDecision": {
+        "type": "object",
+        "required": [
+          "proposed_by_entity_id",
+          "decision_type",
+          "proposed_action",
+          "payload"
+        ],
+        "properties": {
+          "proposed_by_entity_id": {
+            "type": "string"
+          },
+          "target_entity_id": {
+            "type": "string",
+            "description": "Subject of the trust evaluation (defaults to the proposer)."
+          },
+          "decision_type": {
+            "type": "string"
+          },
+          "proposed_action": {
+            "type": "string"
+          },
+          "model_confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "context_id": {
+            "type": "string"
+          },
+          "risk_class": {
+            "type": "string"
+          },
+          "payload": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "What the AI wants to do. Policy conditions read these fields."
+          },
+          "idempotency_key": {
+            "type": "string",
+            "maxLength": 255
+          }
+        }
+      },
+      "DecisionSummary": {
+        "type": "object",
+        "properties": {
+          "decision_id": {
+            "type": "string"
+          },
+          "decision_type": {
+            "type": "string"
+          },
+          "proposed_action": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "payload": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "TrustState": {
+        "type": "object",
+        "properties": {
+          "trust_state_id": {
+            "type": "string"
+          },
+          "decision_id": {
+            "type": "string"
+          },
+          "trust": {
+            "type": "object",
+            "properties": {
+              "score": {
+                "type": "number",
+                "description": "0–100"
+              },
+              "class": {
+                "type": "string",
+                "enum": [
+                  "VERY_HIGH",
+                  "HIGH",
+                  "MODERATE",
+                  "UNCERTAIN",
+                  "LOW",
+                  "CRITICAL"
+                ]
+              }
+            }
+          },
+          "evidence_confidence": {
+            "type": "number",
+            "description": "0–100. Below 40, authority is CHALLENGE."
+          },
+          "dimensions": {
+            "type": "object",
+            "properties": {
+              "reliability": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "consistency": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "evidence_strength": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "peer_validation": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "contradiction": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "decay": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              }
+            }
+          },
+          "flags": {
+            "type": "object",
+            "properties": {
+              "material_contradiction": {
+                "type": "boolean"
+              },
+              "insufficient_evidence": {
+                "type": "boolean"
+              }
+            }
+          },
+          "valid_until": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "explanation": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "example": {
+          "trust_state_id": "TRS_2d8f…",
+          "decision_id": "DEC_41c2…",
+          "trust": {
+            "score": 91.6,
+            "class": "VERY_HIGH"
+          },
+          "evidence_confidence": 56,
+          "dimensions": {
+            "reliability": 92,
+            "consistency": null,
+            "evidence_strength": null,
+            "peer_validation": null,
+            "contradiction": null,
+            "decay": null
+          },
+          "flags": {
+            "material_contradiction": false,
+            "insufficient_evidence": false
+          }
+        }
+      },
+      "AuthorityResult": {
+        "type": "object",
+        "properties": {
+          "authority_id": {
+            "type": "string"
+          },
+          "authority": {
+            "$ref": "#/components/schemas/AuthorityState"
+          },
+          "reason_codes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "e.g. POLICY_RULE_MATCH, NO_POLICY_RULE_MATCHED, HIGH_CONSEQUENCE_ACTION, INSUFFICIENT_EVIDENCE_CONFIDENCE, MATERIAL_CONTRADICTION"
+          },
+          "constraints": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "additionalProperties": true,
+            "description": "The envelope the action must respect."
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "active",
+              "issued"
+            ]
+          },
+          "required_next_step": {
+            "type": [
+              "object",
+              "null"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "human_review"
+              }
+            }
+          },
+          "rejected_alternatives": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "authority": {
+                  "$ref": "#/components/schemas/AuthorityState"
+                },
+                "reason": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "example": {
+          "authority_id": "AUT_2b7c…",
+          "authority": "ESCALATE",
+          "reason_codes": [
+            "POLICY_RULE_MATCH"
+          ],
+          "constraints": {
+            "amount": 2400
+          },
+          "status": "issued",
+          "required_next_step": {
+            "type": "human_review"
+          },
+          "rejected_alternatives": [
+            {
+              "authority": "EXECUTE",
+              "reason": "exceeds autonomous authority envelope"
+            }
+          ]
+        }
+      },
+      "CreateAction": {
+        "type": "object",
+        "required": [
+          "decision_id",
+          "authority_id",
+          "action_type",
+          "idempotency_key"
+        ],
+        "properties": {
+          "decision_id": {
+            "type": "string"
+          },
+          "authority_id": {
+            "type": "string"
+          },
+          "action_type": {
+            "type": "string"
+          },
+          "payload": {
+            "type": "object",
+            "additionalProperties": true,
+            "default": {}
+          },
+          "idempotency_key": {
+            "type": "string",
+            "maxLength": 255
+          }
+        }
+      },
+      "CreateOutcome": {
+        "type": "object",
+        "required": [
+          "action_id",
+          "outcome_type",
+          "success"
+        ],
+        "properties": {
+          "action_id": {
+            "type": "string"
+          },
+          "outcome_type": {
+            "type": "string"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "observations": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      },
+      "DecisionDetail": {
+        "type": "object",
+        "properties": {
+          "decision_id": {
+            "type": "string"
+          },
+          "decision_type": {
+            "type": "string"
+          },
+          "proposed_action": {
+            "type": "string"
+          },
+          "proposed_by_entity_id": {
+            "type": "string"
+          },
+          "target_entity_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "status": {
+            "type": "string"
+          },
+          "payload": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "trust_states": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "authorities": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "actions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "outcomes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "GovernanceLog": {
+        "type": "object",
+        "properties": {
+          "decision_id": {
+            "type": "string"
+          },
+          "chain_valid": {
+            "type": "boolean"
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "event_type": {
+                  "type": "string"
+                },
+                "event_payload": {
+                  "type": "object",
+                  "additionalProperties": true
+                },
+                "rejected_alternatives": {
+                  "type": [
+                    "array",
+                    "null"
+                  ]
+                },
+                "policy_version": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "human_actor_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "previous_hash": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "event_hash": {
+                  "type": "string"
+                },
+                "created_at": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          }
+        },
+        "example": {
+          "decision_id": "DEC_41c2…",
+          "chain_valid": true,
+          "events": [
+            {
+              "event_type": "trust_state.evaluated",
+              "event_hash": "1a77…",
+              "previous_hash": null
+            },
+            {
+              "event_type": "authority.escalate",
+              "event_hash": "3830…",
+              "previous_hash": "1a77…"
+            }
+          ]
+        }
+      },
+      "Alerts": {
+        "type": "object",
+        "properties": {
+          "generated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "stale_escalation_threshold_hours": {
+            "type": "integer"
+          },
+          "alerts": {
+            "type": "object",
+            "properties": {
+              "stale_escalations": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              },
+              "expired_unconsumed_authorities": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              },
+              "open_contradictions": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "counts": {
+            "type": "object",
+            "properties": {
+              "stale_escalations": {
+                "type": "integer"
+              },
+              "expired_unconsumed_authorities": {
+                "type": "integer"
+              },
+              "open_contradictions": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

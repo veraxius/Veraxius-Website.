@@ -3,6 +3,7 @@
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 import { useRef } from "react";
+import { OPEN_COOKIE_SETTINGS_EVENT } from "./consent-banner";
 
 function LinkedInIcon({ className }: { className?: string }) {
   return (
@@ -18,8 +19,8 @@ const LINKS_COLUMN_1 = [
   { label: "Pilots", href: "/pilots" },
   { label: "Research", href: "#" },
   { label: "Developers", href: "/aimsignalprogram" },
-  { label: "Company", href: "#" },
-  { label: "Investors", href: "#" },
+  { label: "Company", href: "/about-us" },
+  { label: "Investors", href: "/investors" },
 ];
 
 const LINKS_COLUMN_2 = [
@@ -95,6 +96,14 @@ export function SiteFooter() {
                   {link.label}
                 </a>
               ))}
+              <button
+                type="button"
+                onClick={() => window.dispatchEvent(new Event(OPEN_COOKIE_SETTINGS_EVENT))}
+                className="text-left font-dm-sans transition-opacity hover:opacity-75"
+                style={{ fontSize: "15px", color: "var(--text-secondary)" }}
+              >
+                Cookie settings
+              </button>
             </div>
           </div>
 

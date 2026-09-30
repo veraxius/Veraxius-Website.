@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { SiteHeader, SiteFooter } from "@/components/veraxius";
+import { LinkedInIcon } from "@/components/veraxius/linkedin-icon";
 
 export const metadata: Metadata = {
   title: "About Us | Veraxius",
@@ -16,6 +17,7 @@ type Founder = {
   height: number;
   quote: string;
   signature: string;
+  linkedin: string;
 };
 
 const FOUNDERS: Founder[] = [
@@ -29,6 +31,7 @@ const FOUNDERS: Founder[] = [
     quote:
       "I learned that trust is not something we own. It is something we earn, lose, question, and earn again. AIM was born from that lesson. Not to teach machines how to be human, but to help humanity remember that power without earned trust should never become authority.",
     signature: "— Antonio “Ant” Lovera",
+    linkedin: "https://www.linkedin.com/in/antoniolovera/",
   },
   {
     name: "Adriel Rodriguez",
@@ -40,6 +43,7 @@ const FOUNDERS: Founder[] = [
     quote:
       "I build systems the way trust is built — slowly, transparently, and with proof. A machine deserves no authority it hasn't earned, and at Veraxius, I make sure AIM is not just intelligent, but accountable.",
     signature: "— Adriel Rodriguez",
+    linkedin: "https://www.linkedin.com/in/adriel-rodriguez-b5b05029b",
   },
 ];
 
@@ -86,6 +90,17 @@ function FounderCard({ founder, reverse }: { founder: Founder; reverse: boolean 
           >
             {founder.role}
           </p>
+          <a
+            href={founder.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${founder.name} on LinkedIn`}
+            title="LinkedIn"
+            className="mt-4 inline-flex h-10 w-10 items-center justify-center rounded-full border transition-opacity hover:opacity-75"
+            style={{ borderColor: "rgba(255,184,77,0.35)", color: "var(--amber)" }}
+          >
+            <LinkedInIcon className="h-5 w-5" />
+          </a>
         </figcaption>
       </figure>
     </article>

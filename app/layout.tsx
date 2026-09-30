@@ -1,7 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Syne, DM_Sans, DM_Mono } from "next/font/google";
-import Script from "next/script";
 import { ConsentBanner } from "@/components/veraxius/consent-banner";
 
 
@@ -84,29 +83,8 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-JG1KHEG2SP"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            // Consent Mode v2 — granted by default so analytics measures
-            // from the visitor's first pageview. The banner in
-            // components/veraxius/consent-banner.tsx sends a
-            // gtag('consent','update', ...denied) if the visitor clicks
-            // Reject, which turns analytics off from that point on.
-            gtag('consent', 'default', {
-              'analytics_storage': 'granted',
-              'ad_storage': 'granted',
-              'ad_user_data': 'granted',
-              'ad_personalization': 'granted'
-            });
-            gtag('js', new Date());
-            gtag('config', 'G-JG1KHEG2SP');
-          `}
-        </Script>
+        {/* Google Analytics is opt-in: it is loaded only after the visitor
+            clicks "Accept" — see components/veraxius/consent-banner.tsx. */}
       </head>
       <body>
         {children}
