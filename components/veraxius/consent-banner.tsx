@@ -16,10 +16,12 @@ declare global {
 const GA_ID = "G-JG1KHEG2SP";
 const CONSENT_KEY = "vx_analytics_consent"; // "accepted" | "rejected"
 export const OPEN_COOKIE_SETTINGS_EVENT = "vx-open-cookie-settings";
+// Fired after every Accept/Reject so other consent-gated tools (Vercel Analytics) can follow.
+export const CONSENT_CHANGED_EVENT = "vx-consent-changed";
 
 type Choice = "accepted" | "rejected";
 
-function readChoice(): Choice | null {
+export function readChoice(): Choice | null {
   try {
     const v = localStorage.getItem(CONSENT_KEY);
     return v === "accepted" || v === "rejected" ? v : null;
@@ -34,6 +36,7 @@ function saveChoice(choice: Choice) {
   } catch {
     // Ignore — worst case the notice reappears next visit (analytics stays off).
   }
+  window.dispatchEvent(new Event(CONSENT_CHANGED_EVENT));
 }
 
 function loadAnalytics() {

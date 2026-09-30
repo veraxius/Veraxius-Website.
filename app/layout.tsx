@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Syne, DM_Sans, DM_Mono } from "next/font/google";
 import { ConsentBanner } from "@/components/veraxius/consent-banner";
+import { VercelAnalytics } from "@/components/veraxius/vercel-analytics";
 import { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from "@/lib/seo";
 
 
@@ -81,6 +82,7 @@ export default function RootLayout({
       <body>
         {children}
         <ConsentBanner />
+        <VercelAnalytics />
       </body>
     </html>
   );
