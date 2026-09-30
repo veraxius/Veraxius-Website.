@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Syne, DM_Sans, DM_Mono } from "next/font/google";
 import { ConsentBanner } from "@/components/veraxius/consent-banner";
 import { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from "@/lib/seo";
+import { Analytics } from "@vercel/analytics/next";
 
 
 const syne = Syne({
@@ -81,6 +82,7 @@ export default function RootLayout({
       <body>
         {children}
         <ConsentBanner />
+        <Analytics />
       </body>
     </html>
   );
