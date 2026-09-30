@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
+import { routeMeta } from "@/lib/seo";
 import { SiteHeader, SiteFooter } from "@/components/veraxius";
 import { PilotRequestForm } from "./pilot-request-form";
 import { PilotVideo } from "./pilot-video";
 
-export const metadata: Metadata = {
-  title: "AIM Pilots | Veraxius",
-  description:
-    "Run an AIM pilot: give your AI authority it has earned with evidence, keep humans in charge where it matters, and audit every decision.",
-};
+export const metadata: Metadata = routeMeta(
+  "/pilots",
+  "AIM Pilots | Veraxius",
+  "Run an AIM pilot: give your AI authority it has earned with evidence, keep humans in charge where it matters, and audit every decision.",
+);
 
 const INCLUDES = [
   { title: "Your own isolated workspace", body: "A dedicated, private environment for your organization. Your data is never visible to anyone else." },

@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
+import { routeMeta } from "@/lib/seo";
 import Image from "next/image";
 import { SiteHeader, SiteFooter } from "@/components/veraxius";
 import { LinkedInIcon } from "@/components/veraxius/linkedin-icon";
 import { HeroActions } from "./hero-actions";
 import { InvestorForm } from "./investor-form";
 
-export const metadata: Metadata = {
-  title: "Investors | Veraxius",
-  description: "Veraxius decides what AI agents are allowed to do before they act. Investor information and contact.",
-};
+export const metadata: Metadata = routeMeta(
+  "/investors",
+  "Investors | Veraxius",
+  "Veraxius decides what AI agents are allowed to do before they act. Investor information and contact.",
+);
 
 const SNAPSHOT = [
   { label: "Product", value: "AIM MVP5 is live" },
@@ -160,6 +162,11 @@ export default function InvestorsPage() {
             </li>
           ))}
         </ul>
+        <p className="font-dm-sans mt-5 text-[15px]">
+          <a href="/security" className="underline hover:no-underline" style={{ color: "var(--amber)" }}>
+            See Security &amp; data
+          </a>
+        </p>
       </Section>
 
       <Section label="Where we start">

@@ -17,8 +17,7 @@ function LinkedInIcon({ className }: { className?: string }) {
 const LINKS_COLUMN_1 = [
   { label: "AIM", href: "/#product" },
   { label: "Pilots", href: "/pilots" },
-  { label: "Research", href: "#" },
-  { label: "Developers", href: "/aimsignalprogram" },
+  { label: "Developers", href: "/docs" },
   { label: "Company", href: "/about-us" },
   { label: "Investors", href: "/investors" },
 ];
@@ -26,6 +25,7 @@ const LINKS_COLUMN_1 = [
 const LINKS_COLUMN_2 = [
   { label: "Privacy", href: "/privacy" },
   { label: "Terms", href: "/terms" },
+  { label: "Security", href: "/security" },
   { label: "Contact", href: "/contact" },
 ];
 

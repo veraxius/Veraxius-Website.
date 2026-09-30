@@ -101,6 +101,7 @@ const spec = {
             { condition: { trust_score: { lt: 40 } }, authority: "BLOCK" },
             { condition: { amount: { gt: 1000 } }, authority: "ESCALATE" },
             { condition: { trust_score: { gte: 60 } }, authority: "EXECUTE", envelope: { amount: { lte: 1000 } } },
+            { condition: { trust_score: { gte: 0 } }, authority: "CONSTRAIN" },
           ],
         }),
         responses: {

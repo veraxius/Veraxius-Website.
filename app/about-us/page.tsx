@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
+import { routeMeta } from "@/lib/seo";
 import Image from "next/image";
 import { SiteHeader, SiteFooter } from "@/components/veraxius";
 import { LinkedInIcon } from "@/components/veraxius/linkedin-icon";
 
-export const metadata: Metadata = {
-  title: "About Us | Veraxius",
-  description: "The people building Veraxius and AIM, the trust + authority layer for AI.",
-};
+export const metadata: Metadata = routeMeta(
+  "/about-us",
+  "About Us | Veraxius",
+  "The founders building Veraxius and AIM, the authority layer for AI agents.",
+);
 
 type Founder = {
   name: string;

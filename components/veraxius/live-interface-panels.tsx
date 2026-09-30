@@ -104,8 +104,16 @@ function PanelShell({
   );
 }
 
-function StatusPill({ tone, children }: { tone: "positive" | "new"; children: React.ReactNode }) {
+function StatusPill({ tone, children }: { tone: "positive" | "new" | "decayed"; children: React.ReactNode }) {
   const isPositive = tone === "positive";
+  if (tone === "decayed") {
+    return (
+      <span className="inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-0.5 font-medium" style={{ fontSize: "10px", backgroundColor: FAINT, color: SUBTLE }}>
+        <Icon d={ICONS.refresh} className="h-2.5 w-2.5" />
+        {children}
+      </span>
+    );
+  }
   return (
     <span
       className="inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-0.5 font-medium"
@@ -121,7 +129,7 @@ function StatusPill({ tone, children }: { tone: "positive" | "new"; children: Re
   );
 }
 
-function EvidenceRow({ icon, label, source, value, tone }: { icon: string; label: string; source: string; value: string; tone: "positive" | "new" }) {
+function EvidenceRow({ icon, label, source, value, tone }: { icon: string; label: string; source: string; value: string; tone: "positive" | "new" | "decayed" }) {
   const positive = value.startsWith("+");
   return (
     <div className="flex items-center justify-between gap-2 py-2.5" style={{ borderTop: `1px solid ${FAINT}` }}>
@@ -139,7 +147,7 @@ function EvidenceRow({ icon, label, source, value, tone }: { icon: string; label
         </div>
       </div>
       <div className="flex shrink-0 items-center gap-2">
-        <StatusPill tone={tone}>{tone === "positive" ? "Positive" : "New"}</StatusPill>
+        <StatusPill tone={tone}>{tone === "positive" ? "Positive" : tone === "decayed" ? "Decayed" : "New"}</StatusPill>
         <span className="font-dm-mono font-semibold" style={{ fontSize: "12px", color: positive ? "#1e8a52" : "#c73a26" }}>
           {value}
         </span>
@@ -175,7 +183,7 @@ function RecentRow({ icon, label, time, value }: { icon: string; label: string; 
   );
 }
 
-function Ring({ value, label, color }: { value: number; label: string; color: string }) {
+function Ring({ value, label, sublabel, color }: { value: number; label: string; sublabel?: string; color: string }) {
   const r = 26;
   const c = 2 * Math.PI * r;
   const offset = c * (1 - value / 100);
@@ -190,8 +198,9 @@ function Ring({ value, label, color }: { value: number; label: string; color: st
           {value}
         </span>
       </div>
-      <span className="absolute -bottom-4 whitespace-nowrap" style={{ fontSize: "9px", color: SUBTLE }}>
+      <span className="absolute -bottom-4 whitespace-nowrap text-center leading-tight" style={{ fontSize: "9px", color: SUBTLE, transform: sublabel ? "translateY(50%)" : undefined }}>
         {label}
+        {sublabel && <span className="block">{sublabel}</span>}
       </span>
     </div>
   );
@@ -246,20 +255,34 @@ function NotifyBox({ children }: { children: React.ReactNode }) {
   );
 }
 
+// Sample data: the Billing Refund Agent example from /docs (policy refunds v1.0).
 const WHY_ITEMS: { text: string; value: string | null; tone: "positive" | "negative" | null }[] = [
-  { text: "Three positive signals support the current state.", value: "+0.78", tone: "positive" },
-  { text: "One contradiction reduced confidence.", value: "-0.27", tone: "negative" },
-  { text: "The unrestricted execution threshold is no longer satisfied.", value: null, tone: null },
+  { text: "Three positive signals support trust.", value: "+0.62", tone: "positive" },
+  { text: "One older contradiction, decayed.", value: "−0.08", tone: "negative" },
+  { text: "Policy refunds v1.0, rule 3 matched: trust ≥ 60 and amount ≤ $1,000 → EXECUTE", value: null, tone: null },
 ];
 
 const LINEAGE_ITEMS: { label: string; time: string; icon: string; tone: "positive" | "warn" }[] = [
-  { label: "Evidence received", time: "9/17/2026, 10:14:03 PM", icon: ICONS.document, tone: "positive" },
-  { label: "Trust recalculated", time: "9/17/2026, 10:14:05 PM", icon: ICONS.bars, tone: "positive" },
-  { label: "Authority changed", time: "9/17/2026, 10:14:08 PM", icon: ICONS.lock, tone: "warn" },
-  { label: "Action constrained", time: "9/17/2026, 10:14:08 PM", icon: ICONS.bolt, tone: "warn" },
-  { label: "Outcome recorded", time: "9/17/2026, 10:15:21 PM", icon: ICONS.check, tone: "positive" },
-  { label: "Trust updated", time: "9/17/2026, 10:15:22 PM", icon: ICONS.refresh, tone: "positive" },
+  { label: "Decision created", time: "9/29/2026, 2:02:10 PM", icon: ICONS.document, tone: "positive" },
+  { label: "Trust evaluated (70)", time: "9/29/2026, 2:02:10 PM", icon: ICONS.bars, tone: "positive" },
+  { label: "Authority issued (EXECUTE)", time: "9/29/2026, 2:02:10 PM", icon: ICONS.lock, tone: "positive" },
+  { label: "Refund executed ($180)", time: "9/29/2026, 2:02:11 PM", icon: ICONS.bolt, tone: "positive" },
+  { label: "Outcome recorded (refund_settled)", time: "9/29/2026, 2:05:40 PM", icon: ICONS.check, tone: "positive" },
+  { label: "Trust updated (70 → 72)", time: "9/29/2026, 2:05:41 PM", icon: ICONS.refresh, tone: "positive" },
 ];
+
+const REJECTED: { state: string; reason: string }[] = [
+  { state: "ESCALATE", reason: "amount is below the $1,000 human-review threshold" },
+  { state: "BLOCK", reason: "trust is above 40" },
+];
+
+function SubHead({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return (
+    <p className={`font-syne font-bold ${className}`} style={{ fontSize: "14px", color: INK }}>
+      {children}
+    </p>
+  );
+}
 
 export function LiveInterfacePanels() {
   return (
@@ -267,120 +290,102 @@ export function LiveInterfacePanels() {
       {/* 01 — EVIDENCE */}
       <PanelShell n="01" title="Evidence" subtitle="Real signals. Real sources.">
         <div className="flex items-center justify-between">
-          <p className="font-syne font-bold" style={{ fontSize: "14px", color: INK }}>
-            Top Drivers
-          </p>
+          <SubHead>Top Drivers</SubHead>
           <span className="rounded-md px-2 py-1 font-dm-mono" style={{ fontSize: "10px", backgroundColor: FAINT, color: SUBTLE }}>
             All Signals ⌄
           </span>
         </div>
         <div>
-          <EvidenceRow icon={ICONS.document} label="claim_verified" source="Official record" value="+0.32" tone="positive" />
-          <EvidenceRow icon={ICONS.bars} label="outcome_success" source="System log" value="+0.28" tone="positive" />
-          <EvidenceRow icon={ICONS.people} label="peer_endorsement" source="Trusted peer" value="+0.18" tone="positive" />
-          <EvidenceRow icon={ICONS.alert} label="contradiction" source="External report" value="-0.27" tone="new" />
+          <EvidenceRow icon={ICONS.bars} label="outcome_success" source="Payment system" value="+0.30" tone="positive" />
+          <EvidenceRow icon={ICONS.check} label="consistency" source="Governance log" value="+0.20" tone="positive" />
+          <EvidenceRow icon={ICONS.people} label="peer_validation" source="Support lead review" value="+0.12" tone="positive" />
+          <EvidenceRow icon={ICONS.alert} label="contradiction" source="Payment processor" value="−0.08" tone="decayed" />
         </div>
 
         <div className="mt-4 flex items-center justify-between">
-          <p className="font-syne font-bold" style={{ fontSize: "14px", color: INK }}>
-            Recent evidence
-          </p>
+          <SubHead>Recent evidence</SubHead>
           <span className="font-dm-mono" style={{ fontSize: "10px", color: "var(--amber-glow)" }}>
             View all →
           </span>
         </div>
         <div>
-          <RecentRow icon={ICONS.document} label="Research paper verified" time="18 min ago" value="+0.32" />
-          <RecentRow icon={ICONS.people} label="Peer endorsement added" time="2 hours ago" value="+0.18" />
-          <RecentRow icon={ICONS.bars} label="Successful outcome recorded" time="5 hours ago" value="+0.28" />
-          <RecentRow icon={ICONS.alert} label="Contradictory source detected" time="6 hours ago" value="-0.27" />
+          <RecentRow icon={ICONS.bars} label="Refund settled" time="2 minutes ago" value="+0.30" />
+          <RecentRow icon={ICONS.check} label="Actions matched policy (40 of 40)" time="1 hour ago" value="+0.20" />
+          <RecentRow icon={ICONS.people} label="Reviewed by support lead" time="1 day ago" value="+0.12" />
+          <RecentRow icon={ICONS.alert} label="Refund reversed by processor" time="21 days ago (decayed)" value="−0.08" />
         </div>
       </PanelShell>
 
       {/* 02 — TRUST STATE */}
       <PanelShell n="02" title="Trust State" subtitle="Dynamic. Always updated.">
         <div className="flex items-center justify-between">
-          <p className="font-syne font-bold" style={{ fontSize: "14px", color: INK }}>
-            Your AIM
-          </p>
+          <SubHead>Agent</SubHead>
           <Dots />
         </div>
         <div className="mt-3 flex items-center gap-3">
           <div
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full font-syne font-bold"
-            style={{ backgroundColor: "var(--amber)", color: "#3a2600", fontSize: "16px" }}
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full"
+            style={{ backgroundColor: "var(--amber)", color: "#3a2600" }}
           >
-            S
+            <Icon d={ICONS.bolt} className="h-5 w-5" />
           </div>
           <div className="min-w-0">
             <p className="truncate font-syne font-bold" style={{ fontSize: "13px", color: INK }}>
-              Sofia Martinez
+              Billing Refund Agent
             </p>
             <p className="truncate" style={{ fontSize: "10.5px", color: SUBTLE }}>
-              sofia.martinez@email.com
+              AI agent
             </p>
             <p className="truncate" style={{ fontSize: "10.5px", color: SUBTLE }}>
-              Digital Health Researcher · Boston, MA
+              decision type: refund
             </p>
           </div>
         </div>
 
         <div className="mt-6 flex items-center gap-4">
-          <div className="flex flex-col items-center gap-6">
-            <Ring value={72} label="Previous" color="rgba(19,19,22,0.35)" />
-            <Ring value={61} label="Current" color="var(--amber)" />
+          <div className="flex flex-col items-center gap-9 pb-4">
+            <Ring value={70} label="Previous" sublabel="at decision" color="rgba(19,19,22,0.35)" />
+            <Ring value={72} label="Current" sublabel="after outcome" color="var(--amber)" />
           </div>
-          <NotifyBox>New evidence received. Trust state updated.</NotifyBox>
+          <NotifyBox>Refund settled. Trust state updated.</NotifyBox>
         </div>
 
-        <p className="mt-6 font-syne font-bold" style={{ fontSize: "14px", color: INK }}>
-          Signal Impact
-        </p>
+        <SubHead className="mt-6">Signal Impact</SubHead>
         <div>
-          <SignalImpactRow label="Reliability" value="+12%" up />
-          <SignalImpactRow label="Peer validation" value="+8%" up />
-          <SignalImpactRow label="Contradiction" value="-15%" up={false} />
+          <SignalImpactRow label="Refund settled · Reliability" value="+2" up />
         </div>
       </PanelShell>
 
       {/* 03 — AUTHORITY */}
       <PanelShell n="03" title="Authority" subtitle="What should be permitted?" icon={ICONS.lock}>
-        <p className="font-syne font-bold" style={{ fontSize: "14px", color: INK }}>
-          Authority Status
+        <SubHead>Proposed action</SubHead>
+        <p className="mt-2 font-dm-mono" style={{ fontSize: "12px", color: INK }}>
+          issue_refund · $180
         </p>
 
-        <p className="mt-3" style={{ fontSize: "11px", color: SUBTLE }}>
-          Previous
-        </p>
-        <div className="mt-1">
-          <AuthorityPill tone="execute" state="EXECUTE" note="Unrestricted" />
+        <SubHead className="mt-4">Authority Status</SubHead>
+        <div className="mt-2">
+          <AuthorityPill tone="execute" state="EXECUTE" note="Within envelope: amount ≤ $1,000" />
         </div>
 
-        <div className="my-2 flex justify-center">
-          <Icon d={ICONS.arrowDown} className="h-4 w-4" style={{ color: SUBTLE }} />
-        </div>
+        <NotifyBox>Policy: refunds v1.0, rule 3 (trust ≥ 60 and amount ≤ $1,000)</NotifyBox>
 
-        <p style={{ fontSize: "11px", color: SUBTLE }}>Current</p>
-        <div className="mt-1">
-          <AuthorityPill tone="constrain" state="CONSTRAIN" note="Limited scope" />
-        </div>
-
-        <NotifyBox>The available evidence no longer supports unrestricted execution.</NotifyBox>
-
-        <p className="mt-5 font-syne font-bold" style={{ fontSize: "14px", color: INK }}>
-          Reason
-        </p>
-        <div className="mt-2 flex min-w-0 items-start gap-2.5">
-          <Icon d={ICONS.shield} className="mt-0.5 h-4 w-4 shrink-0" style={{ color: SUBTLE }} />
-          <p className="min-w-0" style={{ fontSize: "12px", lineHeight: 1.4, color: INK }}>Confidence decreased due to a new contradictory signal.</p>
+        <SubHead className="mt-5">Rejected alternatives</SubHead>
+        <div className="mt-2 space-y-2">
+          {REJECTED.map((r) => (
+            <div key={r.state} className="flex min-w-0 items-start gap-2.5">
+              <Icon d={ICONS.shield} className="mt-0.5 h-4 w-4 shrink-0" style={{ color: SUBTLE }} />
+              <p className="min-w-0" style={{ fontSize: "12px", lineHeight: 1.4, color: INK }}>
+                <span className="font-dm-mono font-semibold">{r.state}:</span> {r.reason}
+              </p>
+            </div>
+          ))}
         </div>
       </PanelShell>
 
       {/* 04 — WHY? */}
       <PanelShell n="04" title="Why?" subtitle="Clear and human-readable." icon={ICONS.question}>
-        <p className="font-syne font-bold" style={{ fontSize: "14px", color: INK }}>
-          Why your AIM is 61
-        </p>
+        <SubHead>Why the agent was allowed to act</SubHead>
         <div className="mt-3 space-y-3">
           {WHY_ITEMS.map((item, i) => (
             <div key={item.text} className="flex min-w-0 items-start justify-between gap-2">
@@ -407,7 +412,7 @@ export function LiveInterfacePanels() {
 
         <div className="mt-4 rounded-xl px-3.5 py-3" style={{ backgroundColor: "rgba(255,184,77,0.12)" }}>
           <p style={{ fontSize: "12px", lineHeight: 1.5, color: INK }}>
-            &quot;New contradictory evidence introduced reasonable doubt. AIM constrained authority to reduce risk.&quot;
+            &quot;Recent refunds settled cleanly and the amount is inside the agent&apos;s envelope. Anything above $1,000 would go to a human.&quot;
           </p>
         </div>
 
@@ -422,9 +427,7 @@ export function LiveInterfacePanels() {
 
       {/* 05 — TRUST LINEAGE */}
       <PanelShell n="05" title="Trust Lineage™" subtitle="Complete and auditable." icon={ICONS.network}>
-        <p className="font-syne font-bold" style={{ fontSize: "14px", color: INK }}>
-          Trust Lineage™
-        </p>
+        <SubHead>Trust Lineage™</SubHead>
         <div className="relative mt-4 pl-8">
           <div className="absolute left-[13px] top-2 bottom-2 w-px" style={{ backgroundColor: FAINT }} />
           <div className="space-y-4">

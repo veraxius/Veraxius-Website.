@@ -8,7 +8,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // the footer, so they're included. /aimsignalstore/[slug] is a dynamic
   // route with no known static slugs to enumerate here; add specific
   // product URLs once that catalog exists.
-  const routes = ["", "/contact", "/aimsignalprogram", "/aimsignalstore", "/privacy", "/terms"];
+  const routes = ["", "/contact", "/aimsignalprogram", "/aimsignalstore", "/privacy", "/terms", "/docs", "/investors", "/security"];
 
   return routes.map((route) => ({
     url: `${BASE_URL}${route}`,

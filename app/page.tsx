@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import { routeMeta } from "@/lib/seo";
 import {
   SiteHeader,
   HeroSection,
@@ -16,6 +18,12 @@ import {
   SiteFooter,
   ScrollProgress,
 } from "@/components/veraxius";
+
+export const metadata: Metadata = routeMeta(
+  "/",
+  "Veraxius | Decide what AI agents are allowed to do",
+  "Before every action, Veraxius decides whether an AI agent can execute, needs limits, or must ask a human, and records why.",
+);
 
 export default function HomePage() {
   return (

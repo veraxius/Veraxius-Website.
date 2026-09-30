@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { routeMeta } from "@/lib/seo";
 import { SiteHeader, SiteFooter } from "@/components/veraxius";
 
-export const metadata: Metadata = {
-  title: "Terms of Service | Veraxius",
-  description: "Terms governing use of veraxius.com.",
-};
+export const metadata: Metadata = routeMeta(
+  "/terms",
+  "Terms of Service | Veraxius",
+  "Terms governing use of veraxius.com.",
+);
 
 const LAST_UPDATED = "September 23, 2026";
 

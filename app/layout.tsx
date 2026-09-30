@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Syne, DM_Sans, DM_Mono } from "next/font/google";
 import { ConsentBanner } from "@/components/veraxius/consent-banner";
+import { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from "@/lib/seo";
 
 
 const syne = Syne({
@@ -25,21 +26,13 @@ const dmMono = DM_Mono({
   display: "swap",
 });
 
-// TODO-COPY: title/description below are unchanged on purpose — this exact
-// text ("Integrity Infrastructure for an AI-saturated world") doesn't match
-// the site's current messaging anymore. Marketing/copy owner should confirm
-// the final wording; not something to guess here.
-const SITE_TITLE = "Veraxius | Integrity Infrastructure";
-const SITE_DESCRIPTION =
-  "Veraxius replaces assumption with measurable integrity. Integrity Infrastructure for an AI-saturated world.";
-
+// Canonical URL and og:url are set per route (lib/seo.ts → routeMeta), never
+// here: a value in the root layout is inherited by every page and would point
+// them all at the home page.
 export const metadata: Metadata = {
-  metadataBase: new URL("https://veraxius.com"),
+  metadataBase: new URL(SITE_URL),
   title: SITE_TITLE,
   description: SITE_DESCRIPTION,
-  alternates: {
-    canonical: "https://veraxius.com",
-  },
   icons: {
     icon: "/veraxius-favicon.ico",
     shortcut: "/veraxius-favicon.ico",
@@ -47,7 +40,6 @@ export const metadata: Metadata = {
   openGraph: {
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
-    url: "https://veraxius.com",
     siteName: "Veraxius",
     type: "website",
     // TODO: no 1200x630 OG image exists yet in /public — add one and

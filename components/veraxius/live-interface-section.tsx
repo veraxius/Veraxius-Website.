@@ -37,7 +37,7 @@ export function LiveInterfaceSection() {
               className="font-dm-mono mt-5 uppercase"
               style={{ fontSize: "12px", letterSpacing: "0.1em", color: "var(--text-tertiary)" }}
             >
-              Real interface. Real evidence. Real explainability.
+              Real interface. Sample data. Real explainability.
             </p>
           </div>
 
@@ -55,14 +55,19 @@ export function LiveInterfaceSection() {
               In real time.
             </p>
             <p className="font-dm-sans" style={{ fontSize: "15px", lineHeight: 1.65, color: "var(--text-secondary)" }}>
-              The actual AIM interface showing how evidence becomes trust, and
-              trust informs authority.
+              The actual AIM interface, shown with sample data.
             </p>
           </div>
         </motion.div>
 
         {/* Live interface — built with real components, not a screenshot */}
         <div className="mt-12">
+          <span
+            className="mb-3 inline-flex items-center rounded-full border px-3 py-1 font-dm-mono text-[11px] uppercase"
+            style={{ letterSpacing: "0.14em", borderColor: "var(--divider)", color: "var(--text-tertiary)" }}
+          >
+            Sample data
+          </span>
           <LiveInterfacePanels />
         </div>
 

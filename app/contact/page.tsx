@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { routeMeta } from "@/lib/seo";
 import { SiteHeader, SiteFooter } from "@/components/veraxius";
 
-export const metadata: Metadata = {
-  title: "Contact | Veraxius",
-  description: "Get in touch with Veraxius.",
-};
+export const metadata: Metadata = routeMeta(
+  "/contact",
+  "Contact | Veraxius",
+  "Get in touch with Veraxius.",
+);
 
 function LinkedInIcon({ className }: { className?: string }) {
   return (

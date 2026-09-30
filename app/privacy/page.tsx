@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
+import { routeMeta } from "@/lib/seo";
 import { Fragment, type ReactNode } from "react";
 import { SiteHeader, SiteFooter } from "@/components/veraxius";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy | Veraxius",
-  description: "How Veraxius collects, uses, and protects information on veraxius.com.",
-};
+export const metadata: Metadata = routeMeta(
+  "/privacy",
+  "Privacy Policy | Veraxius",
+  "How Veraxius collects, uses, and protects information on veraxius.com.",
+);
 
 // Policy text exactly as provided. Bracketed placeholders (e.g. [DATE]) are
 // highlighted on the page until they are filled in.

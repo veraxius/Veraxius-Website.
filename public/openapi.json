@@ -377,6 +377,14 @@
                         "lte": 1000
                       }
                     }
+                  },
+                  {
+                    "condition": {
+                      "trust_score": {
+                        "gte": 0
+                      }
+                    },
+                    "authority": "CONSTRAIN"
                   }
                 ]
               }
