@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 const POLICY = `
 # Privacy Policy
 
-Last updated: [DATE]
+Last updated: September 30, 2026
 
 This Privacy Policy explains how Veraxius, Inc. ("Veraxius," "we," "us") handles personal information in connection with our website, veraxius.com (the "Site"). It does not cover the Veraxius AIM application at app.veraxius.com, which has its own privacy policy at app.veraxius.com/privacy.
 
@@ -46,7 +46,7 @@ We rely on legitimate interests to respond to pilot requests and inquiries and t
 
 ## 5. Who we share information with
 
-- **Service providers** that help us run the Site and handle requests, under contracts that limit how they use data: Google (Google Analytics), Zoho Corporation (forms), Resend (email delivery), [hosting provider].
+- **Service providers** that help us run the Site and handle requests, under contracts that limit how they use data: Google (Google Analytics), Zoho Corporation (forms), Resend (email delivery), Vercel (hosting).
 - **Authorities,** when required by law or to protect rights and safety.
 - **A buyer or successor,** if Veraxius is involved in a merger, acquisition, or sale of assets, subject to this policy.
 
