@@ -110,6 +110,27 @@ export default function PilotsPage() {
                 </div>
               ))}
             </div>
+
+            <div
+              className="mt-6 flex flex-col items-start gap-4 rounded-2xl border p-6 sm:flex-row sm:items-center sm:justify-between"
+              style={{ borderColor: "rgba(255,184,77,0.25)", backgroundColor: "rgba(255,184,77,0.04)" }}
+            >
+              <div>
+                <p className="font-syne font-bold text-[18px]" style={{ color: "#ffffff" }}>
+                  Want to see how the integration works?
+                </p>
+                <p className="font-dm-sans mt-1 text-[15px]" style={{ lineHeight: 1.6, color: "var(--text-secondary)" }}>
+                  Your engineers can review the full AIM API, with examples and measured performance, before the pilot starts.
+                </p>
+              </div>
+              <a
+                href="/docs"
+                className="inline-flex min-h-11 w-full shrink-0 items-center justify-center rounded-full border px-6 py-3 font-dm-mono font-semibold text-[12px] uppercase transition hover:opacity-80 sm:w-auto"
+                style={{ letterSpacing: "0.08em", borderColor: "rgba(255,184,77,0.45)", color: "var(--amber)" }}
+              >
+                Read the API docs →
+              </a>
+            </div>
           </div>
         </div>
       </section>
