@@ -164,9 +164,9 @@ export function PilotSection() {
                     transition={{ duration: 0.5, delay: 0.08 * i, ease: [0.25, 0.1, 0.25, 1] }}
                     className="relative flex items-center gap-4 rounded-2xl border-2 p-5"
                     style={{
-                      borderColor: `${step.color}66`,
-                      backgroundColor: `${step.color}0D`,
-                      boxShadow: `0 0 14px -8px ${step.color}66`,
+                      // Only the border carries the color (same as the authority-state cards).
+                      borderColor: step.color,
+                      backgroundColor: "var(--bg-panel)",
                     }}
                   >
                     <span
@@ -215,9 +215,8 @@ export function PilotSection() {
             transition={{ duration: 0.6, delay: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
             className="rounded-2xl border-2 p-6 sm:p-7"
             style={{
-              borderColor: "rgba(87, 209, 140, 0.55)",
-              backgroundColor: "rgba(87, 209, 140, 0.05)",
-              boxShadow: "0 0 16px -10px rgba(87, 209, 140, 0.7)",
+              borderColor: "var(--green)",
+              backgroundColor: "var(--bg-panel)",
             }}
           >
             <p className="font-dm-mono uppercase" style={{ fontSize: "11px", letterSpacing: "0.16em", color: "var(--green)" }}>

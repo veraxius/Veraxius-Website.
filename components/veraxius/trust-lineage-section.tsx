@@ -222,9 +222,9 @@ export function TrustLineageSection() {
                   <div
                     className="flex items-center gap-4 rounded-2xl border-2 p-4 sm:p-5"
                     style={{
-                      borderColor: `${step.color}66`,
-                      backgroundColor: `${step.color}0D`,
-                      boxShadow: `0 0 14px -8px ${step.color}66`,
+                      // Only the border carries the color; the fill is the neutral panel background (same as the authority-state cards).
+                      borderColor: step.color,
+                      backgroundColor: "var(--bg-panel)",
                     }}
                   >
                     <StepIcon step={step} size={44} />

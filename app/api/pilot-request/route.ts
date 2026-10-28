@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { clientIp, createRateLimiter, oneLine, tooLarge } from "@/lib/rate-limit";
 
 // Pilot requests from /pilots are emailed to the team through Resend.
 // PILOT_REQUEST_TO / PILOT_REQUEST_FROM can override the defaults per environment.
@@ -19,17 +20,7 @@ type Payload = {
 };
 
 // Small in-memory limit per IP (best effort; resets on redeploy).
-const WINDOW_MS = 10 * 60 * 1000;
-const MAX_PER_WINDOW = 5;
-const hits = new Map<string, number[]>();
-
-function rateLimited(ip: string) {
-  const now = Date.now();
-  const recent = (hits.get(ip) ?? []).filter((t) => now - t < WINDOW_MS);
-  recent.push(now);
-  hits.set(ip, recent);
-  return recent.length > MAX_PER_WINDOW;
-}
+const rateLimited = createRateLimiter(10 * 60 * 1000, 5);
 
 const isEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 const clean = (v: unknown, max: number) => (typeof v === "string" ? v.trim().slice(0, max) : "");
@@ -38,7 +29,8 @@ const escapeHtml = (v: string) =>
 
 export async function POST(request: Request) {
   try {
-    const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+    const ip = clientIp(request);
+    if (tooLarge(request)) return NextResponse.json({ error: "Invalid request." }, { status: 413 });
     if (rateLimited(ip)) {
       return NextResponse.json({ error: "Too many requests. Please try again later." }, { status: 429 });
     }
@@ -100,7 +92,7 @@ export async function POST(request: Request) {
       from: FROM,
       to: [TO],
       replyTo: email,
-      subject: `AIM pilot request: ${company} (${useCase})`,
+      subject: oneLine(`AIM pilot request: ${company} (${useCase})`),
       html,
       text,
     });

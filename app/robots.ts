@@ -6,9 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        // /test is a debug page, not a real marketing route — kept out of
-        // discovery entirely (also noindex'd on the page itself).
-        disallow: ["/test"],
       },
     ],
     sitemap: "https://veraxius.com/sitemap.xml",

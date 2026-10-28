@@ -14,7 +14,6 @@ export const metadata: Metadata = routeMeta(
 
 const SNAPSHOT = [
   { label: "Product", value: "AIM MVP5 is live" },
-  { label: "Pilots", value: "3 pilots underway" },
   { label: "Team", value: "2 full-time co-founders" },
   { label: "Ecosystem", value: "Member of the NVIDIA Inception program" },
 ];
@@ -90,7 +89,7 @@ export default function InvestorsPage() {
           </div>
 
           {/* Snapshot */}
-          <div className="mx-auto mt-14 grid max-w-[1100px] gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mx-auto mt-14 grid max-w-[1100px] gap-4 sm:grid-cols-3">
             {SNAPSHOT.map((s) => (
               <div key={s.label} className="rounded-2xl border p-6" style={cardStyle}>
                 <span className="font-dm-mono text-[11px] uppercase" style={{ letterSpacing: "0.14em", color: "var(--amber)" }}>
